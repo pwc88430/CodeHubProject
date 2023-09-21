@@ -3,7 +3,7 @@ const { db, bucket } = require('./firebaseInit')
 var express = require('express');
 var app = express();
 const { ref, set, get, child, remove } = require("firebase-admin/database")
-const cf = require('./newStorage')
+const FirebaseStorage = require('./FirebaseStorage')
 
 
 app.get('/', (req, res) => {
@@ -24,17 +24,16 @@ app.get('/send', async (req, res) => {
     res.send(200)
 })
 
-cf()
+app.get('/uploadFile', async (req, res) => {
+    FirebaseStorage.uploadFile();
+    res.sendStatus(200);
+})
 
 
-
-
-
-
-
-
-
-app.listen(8000);
+var PORT = 8000;
+app.listen(PORT, ()=>{
+    console.log("Server started on port: " + PORT);
+});
 
 
 
