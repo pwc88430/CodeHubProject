@@ -4,37 +4,41 @@ const { bucket, app } = require('./firebaseInit')
 // important: https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API
 
 module.exports = class FirebaseStorage {
-    static async uploadFile(){
-        // data to object | replace with inputted data in function | ex. uploadFile(audioBlob)
-        const obj = { hello: "world" };
-        // object to blob | replace with audio/mpeg blob or recordedChunks and turn to blob
-        const blob = new Blob([JSON.stringify(obj, null, 2)], {
-            type: "application/json",
+    static async requestFile(fileLocation){
+        const file = bucket.file(fileLocation);
+        const readStream = file.createReadStream();
+
+        return readStream;
+    }
+
+    static async uploadFile(audioObj, userName){
+        const blob = new Blob(audioObj, {
+            // audio/mpeg (mp3)
+            type: "audio/mpeg",
         });
-        // blob to arrayBuffer
+
+        // converting blob to buffer
         const arrayBuffer = await blob.arrayBuffer();
-        // arrayBuffer to buffer
         const buffer = Buffer.from(arrayBuffer);
 
-        // file destination for Firebase Storage
-        const destination = bucket.file("path/foo.json")
+        var userLocation = userName;
+        var fileName = new Date().getTime();
+
+        // file from destination for Firebase Storage (there is no file there yet)
+        const file = bucket.file(`audioFiles/${userLocation}/${fileName}.mp3`)
 
         // create stream to destination
-        const writeStream = destination.createWriteStream({
+        const writeStream = file.createWriteStream({
             metadata: {
-                // audio/mpeg
-                contentType: "application/json",
+                // audio/mpeg (mp3)
+                contentType: "audio/mpeg",
             },
         })
 
         // pipe buffer to stream (upload buffer to Storage)
         writeStream.end(buffer);
 
-        // bucket.upload(buffer, {
-        //     destination: "path/foo.json",
-        //     metadata: {
-        //         contentType: "application/json",
-        //     },
-        // })
+        // return file location so server can add it to whatever it needs
+        return `${userLocation}/${fileName}.mp3`;
     }
 }
