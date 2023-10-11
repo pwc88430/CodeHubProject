@@ -125,13 +125,15 @@ export default function RecordingPage({ changeScreen }) {
                     //this will be changed to that a prompt is not used
                     const clipName = prompt("Enter a name for your sound clip");
                     const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
-                    chunks = [];
+
                     const audioURL = window.URL.createObjectURL(blob);
                     //adds recording info to state of RecordingPage object, triggering a re-render
                     setRecordings([...recordings, {
                         url: audioURL,
-                        name: clipName
+                        name: clipName,
+                        raw: chunks
                     }])
+                    chunks = [];
                 };
             })
 
@@ -152,7 +154,7 @@ export default function RecordingPage({ changeScreen }) {
             console.log('deleting recording')
         }
         return (
-            <RecordingBlock key={index} audioURL={recording.url} clipLabel={recording.name} handleClick={deleteRecording} />
+            <RecordingBlock key={index} audioURL={recording.url} clipLabel={recording.name} handleClick={deleteRecording} chunks={recording.chunks} />
         )
     })
 

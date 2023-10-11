@@ -5,8 +5,18 @@ var app = express();
 app.use(express.json());
 const { ref, set, get, child, remove } = require("firebase-admin/database")
 const FirebaseStorage = require('./FirebaseStorage')
+var cors = require('cors');
 
 const secretToken = process.env.secret_token;
+
+
+app.use(cors({
+    allowedHeaders: ['Content-Type'],
+    exposedHeaders: ['Content-Type'],
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: true
+}));
 
 // should change every api function thing to its own script and make a helper class
 
@@ -36,6 +46,7 @@ app.post('/createPost', async (req, res) => {
     // UNTESTED
     // ------------------------------
     let info = req.body;
+    console.log('request recieved')
 
     // no verification yet
 
@@ -52,9 +63,10 @@ app.post('/createPost', async (req, res) => {
         visibility: 0,
     }
 
-    let storageResult = await uploadFile(info.audioChunks, info.userData.username).catch((err)=>{return false});
-    let databaseResult = await uploadToDb(info.userData.username + "Post:"+new Date().getTime(), post).catch((err)=>{return false});
-
+    let storageResult = await uploadFile(info.audioChunks, info.userData.username).catch((err) => { return false });
+    console.log(storageResult)
+    let databaseResult = await uploadToDb(info.userData.username + "Post:" + new Date().getTime(), post).catch((err) => { return false });
+    console.log(databaseResult)
     res.send((storageResult && databaseResult));
 })
 
@@ -107,7 +119,7 @@ app.post('/signIn', async (req, res) => {
     // UNTESTED
     // ------------------------------
     let info = req.body;
-    if(info.username && info.password){
+    if (info.username && info.password) {
         let username = info.username;
         let password = hash(info.password);
 
@@ -115,7 +127,7 @@ app.post('/signIn', async (req, res) => {
         let data = await recieveFromDb(`/UserData/${username}`);
 
         // check if both hashed passwords are the same
-        if(data.password === password){
+        if (data.password === password) {
             // will also need to send their private user data
             res.send(secretToken);
             return;
@@ -138,26 +150,26 @@ app.post('/signUp', async (req, res) => {
     // UNTESTED
     // ------------------------------
     let info = req.body;
-    if(info.username && info.password && info.displayName){
+    if (info.username && info.password && info.displayName) {
         let username = info.username;
         let password = info.password;
         let displayName = info.displayName;
 
         // check if username contains / or \ (this will mess up database if it does)
-        if(username.contains("/") || username.contains("\\")){
+        if (username.contains("/") || username.contains("\\")) {
             res.send(null);
             return;
         }
         // check if username exists
-        if(await recieveFromDb(`/UserData/${username}`) != null){
+        if (await recieveFromDb(`/UserData/${username}`) != null) {
             res.send(null);
             return;
         }
         // otherwise upload
-        let result = await uploadToDb(`/UserData/${username}`, {password: hash(password), displayName: displayName, dateCreated: new Date().getTime()})
-        
+        let result = await uploadToDb(`/UserData/${username}`, { password: hash(password), displayName: displayName, dateCreated: new Date().getTime() })
+
         // if successful, return secret token
-        if(result) {
+        if (result) {
             // will also need to send their private user data
             res.send(secretToken)
         }
@@ -189,7 +201,7 @@ app.post('/likePost', async (req, res) => {
 
 })
 
-async function updateLikes(info){
+async function updateLikes(info) {
     // recieveFromDb
     // uploadToDb
 }
@@ -200,55 +212,55 @@ function stringToHash(string) {
     var hash = 0;
     // if the length of the string is 0, return 0
     if (string.length == 0) return hash;
-        for (i = 0 ;i<string.length ; i++) {
-            ch = string.charCodeAt(i);
-            hash = ((hash << 5) - hash) + ch;
-            hash = hash & hash;
-        }
+    for (i = 0; i < string.length; i++) {
+        ch = string.charCodeAt(i);
+        hash = ((hash << 5) - hash) + ch;
+        hash = hash & hash;
+    }
     return hash;
 }
 
-async function recieveFromDb(info){
+async function recieveFromDb(info) {
     let result = (await db.ref(info.location).once('value')).val()
-    .then((data)=>{
-        return data;
-    })
-    .catch((err)=>{
-        return null;
-    })
+        .then((data) => {
+            return data;
+        })
+        .catch((err) => {
+            return null;
+        })
     return result;
 }
 
-async function uploadToDb(location, value){
+async function uploadToDb(location, value) {
     let result = await db.ref(location).set(value)
-    .then(()=>{
-        return true;
-    })
-    .catch(()=>{
-        return false;
-    })
+        .then(() => {
+            return true;
+        })
+        .catch(() => {
+            return false;
+        })
     // return result;
     return true;
 }
 
-async function removeFromDb(location){
+async function removeFromDb(location) {
     let result = await db.ref(location).remove()
-    .then(()=>{
-        return true;
-    })
-    .catch(()=>{
-        return false;
-    })
+        .then(() => {
+            return true;
+        })
+        .catch(() => {
+            return false;
+        })
     return result;
 }
 
-async function recieveFile(info){
+async function recieveFile(info) {
     var stream = await FirebaseStorage.requestFile(info.fileLocation);
     return stream;
-//  stream.pipe(res);
+    //  stream.pipe(res);
 }
 
-async function uploadFile(audioChunks, username){
+async function uploadFile(audioChunks, username) {
     // audioData = {dateCreated: 0185185158, chunks: []}
     // dateCreated in milliseconds
 
@@ -256,18 +268,18 @@ async function uploadFile(audioChunks, username){
     // dateCreated in milliseconds
 
     let result = await FirebaseStorage.uploadFile(audioChunks, username)
-    .then(()=>{
-        return true;
-    })
-    .catch((err) => {
-        console.log(err);
-        return false;
-    });
+        .then(() => {
+            return true;
+        })
+        .catch((err) => {
+            console.log(err);
+            return false;
+        });
     return result;
 }
 
 var PORT = 8000;
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log("Server started on port: " + PORT);
 });
 
