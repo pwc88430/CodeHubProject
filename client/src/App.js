@@ -3,6 +3,7 @@ import LoginForm from './LoginForm';
 import './LoginForm.css';
 import RecordingPage from './RecordingPage'
 import './RecordingPage.css'
+import HomePage from './HomePage';
 import { useState } from "react";
 
 function App() {
@@ -10,6 +11,9 @@ function App() {
 
   function toRecordingPage() {
     setScreen('recordingPage')
+  }
+  function toHomePage() {
+    setScreen('homePage')
   }
   function toMainPage() {
     setScreen('main')
@@ -19,7 +23,7 @@ function App() {
     return (
       <div className="App">
 
-        <LoginForm changeScreen={toRecordingPage} />
+        <LoginForm changeScreen={toRecordingPage} toHomePage={toHomePage} />
       </div>
     );
   }
@@ -27,6 +31,9 @@ function App() {
     return (
       <RecordingPage changeScreen={toMainPage} />
     )
+  }
+  else if (screen === 'homePage') {
+    return <HomePage />;
   }
 }
 

@@ -1,16 +1,15 @@
 
 import React, { useState } from 'react';
 
-function LoginForm({ changeScreen }) {
+function LoginForm({ changeScreen, toHomePage }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    toHomePage();
   };
-
-
 
 
   return (
@@ -35,7 +34,7 @@ function LoginForm({ changeScreen }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Log in</button>
       </form>
       <button onClick={changeScreen}>Create Test Recording</button>
     </div>
