@@ -1,0 +1,21 @@
+Font we want to use: 
+
+Color for website
+Icons in taskbar = Green = #64E005
+Thinking that for every hover in the header it could be a small grey circle similar to reddit's ui.
+
+Idea of order
+Logo Home searchbar message notifications and Picture and username
+
+
+Attributions
+Home button : <div> Icons made by <a href="https://www.flaticon.com/authors/bharat-icons" title="Bharat Icons"> Bharat Icons </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
+
+
+Message button : <div> Icons made by <a href="https://www.freepik.com" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
+
+Default Profile Button: <div> Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons"> Smashicons </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
+
+Notification Bell: <div> Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
+
+Notification Arrow: <div> Icons made by <a href="https://www.freepik.com" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
