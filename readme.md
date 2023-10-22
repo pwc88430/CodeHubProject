@@ -1,3 +1,6 @@
+**FOR US:**
+**DO NOT INCLUDE server/.env IF YOU DECIDE TO CLONE PROJECT PUBLICLY**
+
 This is a project as part of our CodeHub C
 
 **Project:**
@@ -7,3 +10,4 @@ This is a project as part of our CodeHub C
 - React.js
 - Express.js
 - Firebase
+
