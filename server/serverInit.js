@@ -29,7 +29,13 @@ app.get("/", (req, res) => {
 app.post("/createPost", async (req, res) => {
     // TODO: test, comments, authorize, make sure needed variables are sent
     let info = req.body;
-    console.log("request recieved");
+    console.log("Request recieved");
+
+    if (!info.userData || !info.userData.username || !info.userData.displayName || !info.visibility || !info.postTitle) {
+        res.send(false);
+        console.error("Request does not have necessary parameters");
+        return;
+    }
 
     // no verification yet
 
@@ -49,16 +55,19 @@ app.post("/createPost", async (req, res) => {
     };
 
     let storageResult = await uploadFile(info.audioChunks, info.userData.username).catch((err) => {
+        console.log(err);
         return false;
     });
     console.log(storageResult);
 
-    let databaseResult = await uploadToDb("Users/" + info.userData.username + "/Posts/" + currentTime, post).catch((err) => {
+    let databaseResult = await uploadToDb("/Users/" + info.userData.username + "/Posts/" + currentTime, post).catch((err) => {
+        console.log(err);
         return false;
     });
     console.log(databaseResult);
 
-    let databaseResult2 = await uploadToDb("Posts/" + info.userData.username + ":" + currentTime, post).catch((err) => {
+    let databaseResult2 = await uploadToDb("/Posts/" + info.userData.username + ":" + currentTime, post).catch((err) => {
+        console.log(err);
         return false;
     });
     console.log(databaseResult2);
