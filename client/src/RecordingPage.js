@@ -1,12 +1,10 @@
-import RecordingBlock from "./RecordingBlock"
+import RecordingBlock from "./RecordingBlock";
 import { useState } from "react";
 
 //this is the recording page which gives users a ability to record and store several recordings
 //there is also a audio visualizer functionality
 export default function RecordingPage({ changeScreen }) {
-    const [recordings, setRecordings] = useState([])
-
-
+    const [recordings, setRecordings] = useState([]);
 
     //checks to see if media recording device is available
     //if so, mediarecorder object is created and all buttons are assigned event handlers
@@ -19,18 +17,16 @@ export default function RecordingPage({ changeScreen }) {
                 // constraints - only audio needed for this app
                 {
                     audio: true,
-                },
+                }
             )
 
             // Success callback
             .then((stream) => {
                 const mediaRecorder = new MediaRecorder(stream);
-                const record = document.querySelector('#record')
-                const stop = document.querySelector('#stop')
-                const soundClips = document.querySelector('#clips')
-                const canvas = document.querySelector('.visualizer');
-
-
+                const record = document.querySelector("#record");
+                const stop = document.querySelector("#stop");
+                const soundClips = document.querySelector("#clips");
+                const canvas = document.querySelector(".visualizer");
 
                 // sets up the audio visualizer
                 let audioCtx;
@@ -45,39 +41,37 @@ export default function RecordingPage({ changeScreen }) {
                     const analyser = audioCtx.createAnalyser();
                     analyser.fftSize = 2048;
                     const bufferLength = analyser.frequencyBinCount;
-                    console.log(bufferLength)
+                    console.log(bufferLength);
                     //const bufferLength = 100;
                     const dataArray = new Uint8Array(bufferLength);
 
                     source.connect(analyser);
                     //analyser.connect(audioCtx.destination);
 
-                    draw()
+                    draw();
 
                     function draw() {
-                        const WIDTH = canvas.width
+                        const WIDTH = canvas.width;
                         const HEIGHT = canvas.height;
 
                         requestAnimationFrame(draw);
 
                         analyser.getByteTimeDomainData(dataArray);
 
-                        canvasCtx.fillStyle = 'rgb(256, 256, 256)';
+                        canvasCtx.fillStyle = "rgb(256, 256, 256)";
                         canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
-                        canvasCtx.lineWidth = .5;
-                        canvasCtx.strokeStyle = '	rgb(173, 216, 230)';
+                        canvasCtx.lineWidth = 0.5;
+                        canvasCtx.strokeStyle = "	rgb(173, 216, 230)";
 
                         canvasCtx.beginPath();
 
-                        let sliceWidth = WIDTH * 1.0 / bufferLength;
+                        let sliceWidth = (WIDTH * 1.0) / bufferLength;
                         let x = 0;
 
-
                         for (let i = 0; i < bufferLength; i++) {
-
                             let v = dataArray[i] / 128;
-                            let y = v * HEIGHT / 2;
+                            let y = (v * HEIGHT) / 2;
 
                             if (i === 0) {
                                 canvasCtx.moveTo(x, y);
@@ -90,10 +84,8 @@ export default function RecordingPage({ changeScreen }) {
 
                         canvasCtx.lineTo(canvas.width, canvas.height / 2);
                         canvasCtx.stroke();
-
                     }
                 }
-
 
                 // creates eventhandler for record button
                 record.onclick = () => {
@@ -128,11 +120,14 @@ export default function RecordingPage({ changeScreen }) {
 
                     const audioURL = window.URL.createObjectURL(blob);
                     //adds recording info to state of RecordingPage object, triggering a re-render
-                    setRecordings([...recordings, {
-                        url: audioURL,
-                        name: clipName,
-                        raw: chunks
-                    }])
+                    setRecordings([
+                        ...recordings,
+                        {
+                            url: audioURL,
+                            name: clipName,
+                            raw: blob,
+                        },
+                    ]);
                     chunks = [];
                 };
             })
@@ -145,32 +140,41 @@ export default function RecordingPage({ changeScreen }) {
         console.log("getUserMedia not supported on your browser!");
     }
 
-
     //maps the state array to an array RecordingBlock components, which is rendered
     const recordingListDisplay = recordings.map((recording, index) => {
         function deleteRecording(event) {
             let evtTgt = event.target;
             evtTgt.parentNode.parentNode.parentNode.removeChild(evtTgt.parentNode.parentNode);
-            console.log('deleting recording')
+            console.log("deleting recording");
         }
         return (
-            <RecordingBlock key={index} audioURL={recording.url} clipLabel={recording.name} handleClick={deleteRecording} chunks={recording.chunks} />
-        )
-    })
-
-
+            <RecordingBlock
+                key={index}
+                audioURL={recording.url}
+                clipLabel={recording.name}
+                handleClick={deleteRecording}
+                chunks={recording.raw}
+            />
+        );
+    });
 
     return (
-        <div id='recordingPage'>
+        <div id="recordingPage">
             <h1>Recording Page</h1>
             <canvas className="visualizer" height="60px"></canvas>
             <div id="record-buttons">
-                <button className="button" id="record">Start</button>
-                <button className="button" id="stop">Stop</button>
-                <ol id='recordingList'>{recordingListDisplay}</ol>
+                <button className="button" id="record">
+                    Start
+                </button>
+                <button className="button" id="stop">
+                    Stop
+                </button>
+                <ol id="recordingList">{recordingListDisplay}</ol>
             </div>
-            <button className="button" id="back" onClick={changeScreen}>Back</button>
+            <button className="button" id="back" onClick={changeScreen}>
+                Back
+            </button>
             <div id="clips"></div>
         </div>
-    )
+    );
 }

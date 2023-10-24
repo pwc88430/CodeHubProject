@@ -31,11 +31,12 @@ app.post("/createPost", async (req, res) => {
     let info = req.body;
     console.log("Request recieved");
 
-    if (!info.userData || !info.userData.username || !info.userData.displayName || !info.visibility || !info.postTitle) {
-        res.send(false);
-        console.error("Request does not have necessary parameters");
-        return;
-    }
+    //if (!info.userData || !info.userData.username || !info.userData.displayName || !info.visibility || !info.postTitle) {
+    //   console.log(info);
+    //  res.send(false);
+    //  console.error("Request does not have necessary parameters");
+    // return;
+    // }
 
     // no verification yet
 
@@ -348,7 +349,16 @@ async function recieveFile(info) {
 }
 
 async function uploadFile(audioChunks, username) {
-    let result = await FirebaseStorage.uploadFile(audioChunks, username)
+    audioChunks = audioChunks.substring(35, audioChunks.length);
+    const byteCharacters = atob(audioChunks);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    } // for
+    const byteArray = new Uint8Array(byteNumbers);
+    const audioBlob = new Blob([byteArray], { type: "audio/ogg; codecs=opus" });
+
+    let result = await FirebaseStorage.uploadFile(audioBlob, username)
         .then(() => {
             return true;
         })

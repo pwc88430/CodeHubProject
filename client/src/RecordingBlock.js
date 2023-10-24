@@ -1,25 +1,39 @@
 function RecordingBlock({ audioURL, clipLabel, handleClick, chunks }) {
     async function uploadClip() {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:8000/createPost");
-        xhr.setRequestHeader("Content-Type", "application/json");
+        console.log(chunks);
 
-        const body = JSON.stringify({
-            userData: {
-                username: "super1234",
-                displayName: "John",
-            },
-            postTitle: clipLabel,
-            audioChunks: chunks,
-        });
-        xhr.onload = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(JSON.parse(xhr.responseText));
-            } else {
-                console.log(`Error: ${xhr.status}`);
-            }
+        var reader = new FileReader();
+        reader.readAsDataURL(chunks);
+        reader.onloadend = function () {
+            var base64String = reader.result;
+
+            // Simply Print the Base64 Encoded String,
+            // without additional data: Attributes.
+            console.log("Base64 String without Tags- ", base64String.substr(base64String.indexOf(", ") + 1));
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8000/createPost");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            const body = JSON.stringify({
+                userData: {
+                    username: "wilber",
+                    displayName: "superpig",
+                },
+                visibility: 0,
+                postTitle: clipLabel,
+                audioChunks: base64String,
+            });
+
+            xhr.onload = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(JSON.parse(xhr.responseText));
+                } else {
+                    console.log(`Error: ${xhr.status}`);
+                }
+            };
+            xhr.send(body);
         };
-        xhr.send(body);
     }
 
     return (
