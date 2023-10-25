@@ -111,6 +111,7 @@ app.post("/editPost", async (req, res) => {
 // returns posts info
 app.post("/getPosts", async (req, res) => {
     // TODO: test, comments, limit amount sent
+
     let info = req.body;
     if (info.username && info.password && info.secretToken) {
         if (!authorized(info.username, info.password)) {
@@ -120,7 +121,11 @@ app.post("/getPosts", async (req, res) => {
         let data = await recieveFromDb("/Users/" + username + "/Posts/");
         let output = [];
         for (i = 0; i < data.length; i++) {
-            output.push(await recieveFromDb("/Posts/" + data[0]));
+            output.push({
+                postData: await recieveFromDb("/Posts/" + data[i]),
+                audioURL: await recieveFile("audioFiles/" + username + "/" + data[i] + ".mp3"),
+            });
+            console.log(output[i]);
         }
         res.send(output);
         return;
@@ -342,11 +347,13 @@ async function removeFromDb(location) {
     return result;
 }
 
-async function recieveFile(info) {
-    var stream = await FirebaseStorage.requestFile(info.fileLocation);
-    return stream;
+async function recieveFile(fileLocation) {
+    var url = await FirebaseStorage.requestFile(fileLocation);
+    return url;
     // how to send data to res: stream.pipe(res);
 }
+
+// recieveFile("audioFiles/wilber/1698185947265.mp3");
 
 async function uploadFile(audioChunks, username) {
     audioChunks = audioChunks.substring(35, audioChunks.length);

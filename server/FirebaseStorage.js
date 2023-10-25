@@ -5,7 +5,17 @@ const { bucket, app } = require("./firebaseInit");
 
 module.exports = class FirebaseStorage {
     static async requestFile(fileLocation) {
+        console.log(fileLocation);
         const file = bucket.file(fileLocation);
+        file.getSignedUrl(
+            {
+                action: "read",
+                expires: "10-26-2023",
+            },
+            (err, url) => {
+                console.log(url);
+            }
+        );
         const readStream = file.createReadStream();
 
         return readStream;
