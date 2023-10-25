@@ -325,9 +325,9 @@ function stringToHash(string) {
     return hash;
 }
 
-async function recieveFromDb(info) {
+async function recieveFromDb(location) {
     try {
-        let result = (await db.ref(info.location).once("value")).val();
+        let result = (await db.ref(location).once("value")).val();
         return result;
     } catch (error) {
         console.log(error);
