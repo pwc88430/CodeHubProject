@@ -35,10 +35,13 @@ function App() {
 
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.response == null) return;
+                console.log(xhr.response);
                 const result = JSON.parse(xhr.response);
                 sessionStorage.setItem("voxUsername", result.username);
                 sessionStorage.setItem("voxPassword", result.password);
                 sessionStorage.setItem("voxSecretKey", result.secretKey);
+                toHomePage();
             } else {
                 console.log(`Error: ${xhr.status}`);
             }
