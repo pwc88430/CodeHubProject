@@ -114,8 +114,8 @@ app.post("/getPosts", async (req, res) => {
     // TODO: test, comments
 
     let info = req.body;
-    if (info.username && info.password && info.secretToken) {
-        if (!authorized(info.username, info.password)) {
+    if (info.username && info.password && info.secretKey) {
+        if (!authorized(info.secretKey, info.username, info.password)) {
             res.send(null);
             return;
         }
@@ -157,9 +157,9 @@ app.post("/searchUser", async (req, res) => {
 app.post("/signIn", async (req, res) => {
     // TODO: test
     let info = req.body;
-    if (info.username && info.password) {
+    if (info.username && info.password && info.hashed) {
         let username = info.username;
-        let password = stringToHash(info.password);
+        let password = info.hashed ? info.password : stringToHash(info.password);
 
         // get user data from db
         let data = await recieveFromDb(`/Users/${username}`);

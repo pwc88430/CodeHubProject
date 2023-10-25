@@ -8,7 +8,7 @@ import { useState } from "react";
 import SignUpForm from "./SignUpForm";
 
 function App() {
-    const [screen, setScreen] = useState("recordingPage");
+    const [screen, setScreen] = useState("signUpPage");
     const [userInfo, setUserInfo] = useState({
         username: sessionStorage.getItem("voxUsername"),
         password: sessionStorage.getItem("voxPassword"),
@@ -16,6 +16,7 @@ function App() {
     });
 
     useEffect(() => {
+        console.log(userInfo);
         if (userInfo.username != null && userInfo.password != null && userInfo.secretKey != null) {
             signInUser(userInfo.username, userInfo.password);
         }
