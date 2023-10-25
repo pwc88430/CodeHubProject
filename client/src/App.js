@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoginForm from "./LoginForm";
 import "./LoginForm.css";
 import RecordingPage from "./RecordingPage";
@@ -9,6 +9,42 @@ import SignUpForm from "./SignUpForm";
 
 function App() {
     const [screen, setScreen] = useState("recordingPage");
+    const [userInfo, setUserInfo] = useState({
+        username: sessionStorage.getItem("voxUsername"),
+        password: sessionStorage.getItem("voxPassword"),
+        secretKey: sessionStorage.getItem("voxSecretKey"),
+    });
+
+    useEffect(() => {
+        if (userInfo.username != null && userInfo.password != null && userInfo.secretKey != null) {
+            signInUser(userInfo.username, userInfo.password);
+        }
+    }, []);
+
+    function signInUser(username, password) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:8000/signIn");
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        const body = {
+            username: username,
+            password: password,
+        };
+
+        console.log("username: " + username + "  password:" + password);
+
+        xhr.onload = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const result = JSON.parse(xhr.response);
+                sessionStorage.setItem("voxUsername", result.username);
+                sessionStorage.setItem("voxPassword", result.password);
+                sessionStorage.setItem("voxSecretKey", result.secretKey);
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };
+        xhr.send(JSON.stringify(body));
+    }
 
     function toRecordingPage() {
         setScreen("recordingPage");
@@ -27,7 +63,7 @@ function App() {
     if (screen === "main") {
         return (
             <div className="App">
-                <LoginForm changeScreen={toRecordingPage} toHomePage={toMainPage} toSignUpForm={toSignUpForm} />
+                <LoginForm changeScreen={toRecordingPage} toHomePage={toMainPage} toSignUpForm={toSignUpForm} signInUser={signInUser} />
             </div>
         );
     } else if (screen === "recordingPage") {

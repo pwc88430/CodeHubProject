@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function LoginForm({ changeScreen, toHomePage, toSignUpForm }) {
+function LoginForm({ changeScreen, toHomePage, toSignUpForm, signInUser }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -9,6 +9,12 @@ function LoginForm({ changeScreen, toHomePage, toSignUpForm }) {
         toHomePage();
     };
 
+    const userNameEl = document.querySelector("#username");
+    const passwordEl = document.querySelector("#password");
+
+    function signIn() {
+        signInUser(userNameEl.value, passwordEl.value);
+    }
     return (
         <div>
             <h2>Login</h2>
@@ -21,7 +27,9 @@ function LoginForm({ changeScreen, toHomePage, toSignUpForm }) {
                     <label htmlFor="password">Password:</label>
                     <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
-                <button type="submit">Log in</button>
+                <button type="submit" onClick={signIn}>
+                    Log in
+                </button>
             </form>
             <button onClick={changeScreen}>Create Test Recording</button>
             <button onClick={toSignUpForm}>Don't have an account? Sign up!</button>
