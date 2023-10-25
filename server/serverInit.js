@@ -162,7 +162,7 @@ app.post("/signIn", async (req, res) => {
         let password = stringToHash(info.password);
 
         // get user data from db
-        let data = await recieveFromDb(`/UserData/${username}`);
+        let data = await recieveFromDb(`/Users/${username}`);
 
         // check if both hashed passwords are the same
         if (data.password === password) {
@@ -187,9 +187,8 @@ app.post("/signIn", async (req, res) => {
 // signUp
 // username, password, displayName, ...
 // create account and sign in
-// returns secretToken if accepted, otherwise no
+// returns secretKey if accepted, otherwise null
 app.post("/signUp", async (req, res) => {
-    // TODO: test + can probably clean it up
     let info = req.body;
 
     if (!info.username || !info.password || !info.displayName) {
