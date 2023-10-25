@@ -322,14 +322,9 @@ function stringToHash(string) {
 }
 
 async function recieveFromDb(info) {
-    let result = (await db.ref(info.location).once("value"))
-        .val()
-        .then((data) => {
-            return data;
-        })
-        .catch((err) => {
-            return null;
-        });
+    let result = (await db.ref(info.location).once("value")).val().catch((err) => {
+        return null;
+    });
     return result;
 }
 
