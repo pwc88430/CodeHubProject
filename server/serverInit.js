@@ -209,7 +209,7 @@ app.post("/signUp", async (req, res) => {
         return;
     }
     // check if username exists
-    let userExists = await recieveFromDb(`/UserData/${username}`);
+    let userExists = await recieveFromDb(`/Users/${username}`);
     console.log(userExists);
     if (userExists != null) {
         console.error("Account already exists");
@@ -217,7 +217,7 @@ app.post("/signUp", async (req, res) => {
         return;
     }
     // otherwise upload signup data to database and create account
-    let result = await uploadToDb(`/UserData/${username}`, {
+    let result = await uploadToDb(`/Users/${username}`, {
         password: password,
         displayName: displayName,
         dateCreated: new Date().getTime(),
