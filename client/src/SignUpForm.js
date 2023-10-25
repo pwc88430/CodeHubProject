@@ -31,6 +31,7 @@ export default function SignUpForm({ changeScreen }) {
 
     return (
         <>
+            <h1>Sign Up</h1>
             <div>
                 <label>Display Name</label>
                 <input id="displayName"></input>

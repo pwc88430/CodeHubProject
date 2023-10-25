@@ -6,7 +6,6 @@ import "./RecordingPage.css";
 import HomePage from "./HomePage";
 import { useState } from "react";
 import SignUpForm from "./SignUpForm";
-import LoginSignPage from "./loginSignPage";
 
 function App() {
     const [screen, setScreen] = useState("signUpPage");
@@ -77,8 +76,8 @@ function App() {
         return <HomePage />;
     } else if (screen === "signUpPage") {
         return <SignUpForm changeScreen={toMainPage} />;
-    } else if (sceen == "loginSign") {
-        return <LoginSignPage />;
+    } else if (screen == "loginSign") {
+        //return <LoginSignPage />;
     }
 }
 
