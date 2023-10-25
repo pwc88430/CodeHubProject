@@ -204,12 +204,14 @@ app.post("/signUp", async (req, res) => {
 
     // check if username contains / or \ (this will mess up database if it does)
     if (username.includes("/") || username.includes("\\")) {
+        console.error("Username includes / or \\");
         res.send(null);
         return;
     }
     // check if username exists
     let userExists = await recieveFromDb(`/UserData/${username}`);
     if (userExists != null) {
+        console.error("Account already exists");
         res.send(null);
         return;
     }
@@ -222,6 +224,7 @@ app.post("/signUp", async (req, res) => {
 
     // if account creation is unsuccessful, return error
     if (!result) {
+        console.error("Account creation unsuccessful");
         res.send(null);
         return;
     }
@@ -233,7 +236,7 @@ app.post("/signUp", async (req, res) => {
         secretKey: stringToHash(username + password),
     };
 
-    res.send(output);
+    res.send(JSON.stringify(output));
 });
 
 // explorePosts
