@@ -1,46 +1,50 @@
-
-  form {
+form {
     display: flex;
     flex-direction: column;
-  }
-  
-  label {
+}
+
+label {
     font-weight: bold;
     margin-bottom: 5px;
-  }
-  
-  input {
+}
+
+input {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  
-  button {
+}
+
+button {
     background-color: #007bff;
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
+    margin: 5px;
+}
 
-  h2 {
+button:hover {
+    background-color: #0056b3;
+}
+
+h2 {
     text-align: center;
     color: #333;
-  }
+}
 
-  .App {
+.App {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-  }
+}
 
-  label {
+label {
     width: 120px;
-  }
+}
+
+input {
+    margin: 5px;
+}

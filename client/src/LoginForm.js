@@ -1,49 +1,32 @@
+import React, { useState } from "react";
 
-import React, { useState } from 'react';
+function LoginForm({ changeScreen, toHomePage, toSignUpForm }) {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-function LoginForm({ changeScreen, toHomePage }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        toHomePage();
+    };
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    toHomePage();
-  };
-
-
-  return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    return (
         <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+            <h2>Login</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="username">Username:</label>
+                    <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                </div>
+                <div>
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <button type="submit">Log in</button>
+            </form>
+            <button onClick={changeScreen}>Create Test Recording</button>
+            <button onClick={toSignUpForm}>Don't have an account? Sign up!</button>
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Log in</button>
-      </form>
-      <button onClick={changeScreen}>Create Test Recording</button>
-    </div>
-  );
+    );
 }
-
-
-
-
-
 
 export default LoginForm;
