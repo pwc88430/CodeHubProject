@@ -203,7 +203,7 @@ app.post("/signUp", async (req, res) => {
     let displayName = info.displayName;
 
     // check if username contains / or \ (this will mess up database if it does)
-    if (username.contains("/") || username.contains("\\")) {
+    if (username.includes("/") || username.includes("\\")) {
         res.send(null);
         return;
     }
