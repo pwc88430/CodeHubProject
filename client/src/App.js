@@ -57,6 +57,13 @@ function App() {
         xhr.send(JSON.stringify(body));
     }
 
+    function signOutUser() {
+        sessionStorage.setItem("voxUsername", "");
+        sessionStorage.setItem("voxPassword", "");
+        sessionStorage.setItem("voxSecretKey", "");
+        toHomePage();
+    }
+
     function toRecordingPage() {
         setScreen("recordingPage");
     }
@@ -80,7 +87,7 @@ function App() {
     } else if (screen === "recordingPage") {
         return <RecordingPage changeScreen={toMainPage} />;
     } else if (screen === "homePage") {
-        return <HomePage />;
+        return <HomePage signOutUser={signOutUser} userInfo={userInfo} />;
     } else if (screen === "signUpPage") {
         return <SignUpForm changeScreen={toMainPage} />;
     } else if (screen == "loginSign") {
