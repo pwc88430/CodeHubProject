@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 // createPost
-// secretToken, userData: {username, displayName}, postTitle, audioChunks, visibility
+// secretToken, userData: {username, password, secretKey, displayName}, postTitle, audioChunks, visibility
 // creates post
 // returns if post is allowed to upload
 app.post("/createPost", async (req, res) => {
@@ -53,6 +53,7 @@ app.post("/createPost", async (req, res) => {
         author: info.userData.username,
         authorName: info.userData.displayName,
         visibility: info.visibility,
+        edited: false,
     };
 
     let storageResult = await uploadFile(info.audioChunks, info.userData.username).catch((err) => {
@@ -110,7 +111,7 @@ app.post("/editPost", async (req, res) => {
 // gets posts of specific user, does not update views
 // returns posts info
 app.post("/getPosts", async (req, res) => {
-    // TODO: test, comments, limit amount sent
+    // TODO: test, comments
 
     let info = req.body;
     if (info.username && info.password && info.secretToken) {
@@ -120,7 +121,7 @@ app.post("/getPosts", async (req, res) => {
         }
         let data = await recieveFromDb("/Users/" + username + "/Posts/");
         let output = [];
-        for (i = 0; i < data.length; i++) {
+        for (i = 0; i < Math.max(data.length, 50); i++) {
             output.push({
                 postData: await recieveFromDb("/Posts/" + data[i]),
                 audioURL: await recieveFile("audioFiles/" + username + "/" + data[i] + ".mp3"),
@@ -158,15 +159,20 @@ app.post("/signIn", async (req, res) => {
     let info = req.body;
     if (info.username && info.password) {
         let username = info.username;
-        let password = hash(info.password);
+        let password = stringToHash(info.password);
 
         // get user data from db
         let data = await recieveFromDb(`/UserData/${username}`);
 
         // check if both hashed passwords are the same
         if (data.password === password) {
-            // will also need to send their secret code
-            res.send(stringToHash(username + password));
+            // sends username, hashed password, and secret key for verification
+            output = {
+                username: username,
+                password: password,
+                secretKey: stringToHash(username + password),
+            };
+            res.send(output);
             return;
         } else {
             // otherwise dont allow
@@ -185,42 +191,49 @@ app.post("/signIn", async (req, res) => {
 app.post("/signUp", async (req, res) => {
     // TODO: test + can probably clean it up
     let info = req.body;
-    if (info.username && info.password && info.displayName) {
-        let username = info.username;
-        let password = stringToHash(info.password);
-        let displayName = info.displayName;
 
-        // check if username contains / or \ (this will mess up database if it does)
-        if (username.contains("/") || username.contains("\\")) {
-            res.send(null);
-            return;
-        }
-        // check if username exists
-        if ((await recieveFromDb(`/UserData/${username}`)) != null) {
-            res.send(null);
-            return;
-        }
-        // otherwise upload
-        let result = await uploadToDb(`/UserData/${username}`, {
-            password: password,
-            displayName: displayName,
-            dateCreated: new Date().getTime(),
-        });
-
-        // if successful, return secret token
-        if (result) {
-            // will also need to send their private user data
-            res.send(stringToHash(username + password));
-        }
-        // otherwise notify client
-        else {
-            res.send(null);
-        }
-    }
-    // if not given the correct information, dont do anything
-    else {
+    if (!info.username || !info.password || !info.displayName) {
+        console.error("Necessary parameters not given. (/signUp)");
         res.send(null);
+        return;
     }
+
+    let username = info.username;
+    let password = stringToHash(info.password);
+    let displayName = info.displayName;
+
+    // check if username contains / or \ (this will mess up database if it does)
+    if (username.contains("/") || username.contains("\\")) {
+        res.send(null);
+        return;
+    }
+    // check if username exists
+    let userExists = await recieveFromDb(`/UserData/${username}`);
+    if (userExists != null) {
+        res.send(null);
+        return;
+    }
+    // otherwise upload signup data to database and create account
+    let result = await uploadToDb(`/UserData/${username}`, {
+        password: password,
+        displayName: displayName,
+        dateCreated: new Date().getTime(),
+    });
+
+    // if account creation is unsuccessful, return error
+    if (!result) {
+        res.send(null);
+        return;
+    }
+
+    // otherwise when successful, sends username, hashed password, and secret key for verification
+    let output = {
+        username: username,
+        password: password,
+        secretKey: stringToHash(username + password),
+    };
+
+    res.send(output);
 });
 
 // explorePosts
