@@ -156,8 +156,9 @@ app.post("/searchUser", async (req, res) => {
 // returns secretToken if accepted, otherwise no
 app.post("/signIn", async (req, res) => {
     // TODO: test
+    console.log("sing in request received");
     let info = req.body;
-    if (info.username && info.password && info.hashed) {
+    if (info.username && info.password && info.hashed != null) {
         let username = info.username;
         let password = info.hashed ? info.password : stringToHash(info.password);
 
@@ -172,14 +173,17 @@ app.post("/signIn", async (req, res) => {
                 password: password,
                 secretKey: stringToHash(username + password),
             };
+            console.log("correct credentials");
             res.send(output);
             return;
         } else {
             // otherwise dont allow
+            console.log("incorrect credentials");
             res.send(null);
             return;
         }
     } else {
+        console.log("password not hashed");
         res.send(null);
     }
 });

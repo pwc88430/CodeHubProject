@@ -18,11 +18,11 @@ function App() {
     useEffect(() => {
         console.log(userInfo);
         if (userInfo.username != null && userInfo.password != null && userInfo.secretKey != null) {
-            signInUser(userInfo.username, userInfo.password);
+            signInUser(userInfo.username, userInfo.password, true);
         }
     }, []);
 
-    function signInUser(username, password) {
+    function signInUser(username, password, hashed) {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:8000/signIn");
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -30,6 +30,7 @@ function App() {
         const body = {
             username: username,
             password: password,
+            hashed: hashed,
         };
 
         console.log("username: " + username + "  password:" + password);
@@ -38,10 +39,16 @@ function App() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 if (xhr.response == "") return;
                 console.log(xhr.response);
+                console.log("successful");
                 const result = JSON.parse(xhr.response);
                 sessionStorage.setItem("voxUsername", result.username);
                 sessionStorage.setItem("voxPassword", result.password);
                 sessionStorage.setItem("voxSecretKey", result.secretKey);
+                setUserInfo({
+                    username: result.username,
+                    password: result.password,
+                    secretKey: result.secretKey,
+                });
                 toHomePage();
             } else {
                 console.log(`Error: ${xhr.status}`);

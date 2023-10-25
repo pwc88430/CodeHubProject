@@ -13,7 +13,7 @@ function LoginForm({ changeScreen, toHomePage, toSignUpForm, signInUser }) {
     const passwordEl = document.querySelector("#password");
 
     function signIn() {
-        signInUser(userNameEl.value, passwordEl.value);
+        signInUser(userNameEl.value, passwordEl.value, false);
     }
     return (
         <div>
