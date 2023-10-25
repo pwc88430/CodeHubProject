@@ -35,7 +35,7 @@ function App() {
 
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                if (xhr.response == null) return;
+                if (xhr.response == "") return;
                 console.log(xhr.response);
                 const result = JSON.parse(xhr.response);
                 sessionStorage.setItem("voxUsername", result.username);
