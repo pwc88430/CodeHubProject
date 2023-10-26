@@ -7,15 +7,10 @@ router.post("/", async (req, res) => {
     let info = req.body;
     console.log("Request recieved");
 
-    if (info.userData == null || !info.userData.username || !info.userData.displayName || !info.visibility || !info.postTitle) {
-        console.log(info);
+    if (!Helper.authorized(info.secretKey, info.userData.username, info.userData.password)) {
         res.send(false);
-        console.error("Request does not have necessary parameters");
-        return;
-    }
-
-    if (!authorized(info.secretCode, info.username, info.password)) {
-        res.send(false);
+        console.log("not authorized");
+        console.log(info.secretKey + " " + info.userData.username + " " + info.userData.password);
         return;
     }
 
