@@ -1,10 +1,19 @@
-const { db, bucket } = require("./firebaseInit");
 var express = require("express");
 var app = express();
 app.use(express.json());
-const { ref, set, get, child, remove } = require("firebase-admin/database");
-const FirebaseStorage = require("./FirebaseStorage");
 var cors = require("cors");
+
+const createPostRoute = require("./methods/createPost");
+const deletePostRoute = require("./methods/deletePost");
+const editPostRoute = require("./methods/editPost");
+const explorePostsRoute = require("./methods/explorePosts");
+const getLikedPostsRoute = require("./methods/getLikedPosts");
+const getPostsRoute = require("./methods/getPosts");
+const likePostRoute = require("./methods/likePost");
+const searchPostsRoute = require("./methods/searchPosts");
+const searchUserRoute = require("./methods/searchUser");
+const signInRoute = require("./methods/signIn");
+const signUpRoute = require("./methods/signUp");
 
 app.use(
     cors({
@@ -15,8 +24,6 @@ app.use(
         preflightContinue: true,
     })
 );
-
-// ! should change every method to its own script and also make a helper class
 
 app.get("/", (req, res) => {
     res.send("Server online");
@@ -112,8 +119,6 @@ app.post("/editPost", async (req, res) => {
 // returns posts info
 app.post("/getPosts", async (req, res) => {
     // TODO: test, comments
-
-    console.log("get posts request recieved");
 
     let info = req.body;
     if (info.username && info.password && info.secretKey) {
