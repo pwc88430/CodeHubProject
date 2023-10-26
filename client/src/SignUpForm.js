@@ -1,11 +1,11 @@
-export default function SignUpForm({ changeScreen }) {
+export default function SignUpForm() {
     function logResult(result) {
         console.log(result);
     }
     function signUpUser() {
         const displayNameEl = document.querySelector("#displayName");
-        const passwordEl = document.querySelector("#password");
-        const userNameEl = document.querySelector("#username");
+        const passwordEl = document.querySelector("#signupPassword");
+        const userNameEl = document.querySelector("#signupUsername");
 
         const body = {
             username: userNameEl.value,
@@ -31,22 +31,23 @@ export default function SignUpForm({ changeScreen }) {
 
     return (
         <>
-            <h1>Sign Up</h1>
+            <h2>Sign Up</h2>
             <div>
-                <label>Display Name</label>
+                <label>Username:</label>
+                <input id="signupUsername"></input>
+            </div>
+            <div>
+                <label>Password:</label>
+                <input id="signupPassword"></input>
+            </div>
+
+            <div>
+                <label>Display Name:</label>
                 <input id="displayName"></input>
             </div>
-            <div>
-                <label>Password</label>
-                <input id="password"></input>
-            </div>
-            <div>
-                <label>User Name</label>
-                <input id="username"></input>
-            </div>
-            <button onClick={signUpUser}>Create Account</button>
-            <button className="button" id="back" onClick={changeScreen}>
-                Back
+
+            <button className="button" onClick={signUpUser}>
+                Create Account
             </button>
         </>
     );

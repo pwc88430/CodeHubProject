@@ -2,58 +2,46 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background: #f5abc9;
+    background: #ffffff;
     color: grey;
-}
-
-img {
-    display: block;
-    width: 100%;
-    border-radius: 0.5rem;
-    object-fit: cover;
-    height: 30rem;
-    margin-bottom: 2rem;
-}
-
-.section-center {
-    width: 90vw;
-    margin: 0 auto;
-    max-width: 1170px;
-    min-width: 340px;
-    padding: 5rem 0;
+    display: flex;
+    justify-content: center;
 }
 
 .tabs {
-    background: #ffe5e2;
+    margin-top: 200px;
+    background: #cbe1f7;
     border-radius: 0.5rem;
     grid-template-rows: auto 1fr;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+    min-width: 500px;
 }
 
-.button {
+.mainButton {
     padding: 1rem 0;
     border: none;
     font-size: 1rem;
     background: #b6c9f0;
     cursor: pointer;
-    transition: all 0.3s linear;
+    transition: all 0.1s linear;
     letter-spacing: 0.25rem;
 }
 
 .btn-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 }
 
-.button:nth-child(1) {
+.mainButton:nth-child(1) {
     border-top-left-radius: 0.5rem;
 }
 
-.button:nth-child(3) {
+.mainButton:nth-child(2) {
     border-top-right-radius: 0.5rem;
 }
 
-.button:hover:not(.live) {
-    background: #e93b81;
+.mainButton:hover:not(.live) {
+    background: #6485f2;
     color: white;
 }
 
@@ -81,6 +69,23 @@ img {
     display: block;
 }
 
-.button.live {
-    background: #ffe5e2;
+.mainButton.live {
+    background: #cbe1f7;
+}
+
+.error {
+    display: none;
+}
+
+.error.live {
+    margin-top: 10px;
+    width: 500px;
+    height: 100px;
+    background-color: rgb(247, 228, 228);
+    border-radius: 0.5rem;
+    border: 1px solid red;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    color: red;
+    display: block;
 }

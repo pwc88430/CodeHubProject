@@ -18,7 +18,9 @@ function HomePage({ userInfo, signOutUser }) {
                     </button>
                 </div>
 
-                <button id="back">Back</button>
+                <button id="back" onClick={signOutUser}>
+                    Sign Out
+                </button>
             </header>
             <h1>Welcome {userInfo.username}!</h1>
         </>

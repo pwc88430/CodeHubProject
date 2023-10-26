@@ -4,10 +4,10 @@ function LoginForm({ changeScreen, toHomePage, toSignUpForm, signInUser }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        toHomePage();
-    };
+    //const handleSubmit = (e) => {
+    //  e.preventDefault();
+    // toHomePage();
+    // };
 
     const userNameEl = document.querySelector("#username");
     const passwordEl = document.querySelector("#password");
@@ -18,7 +18,7 @@ function LoginForm({ changeScreen, toHomePage, toSignUpForm, signInUser }) {
     return (
         <div>
             <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+            <div id="form">
                 <div>
                     <label htmlFor="username">Username:</label>
                     <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -27,12 +27,14 @@ function LoginForm({ changeScreen, toHomePage, toSignUpForm, signInUser }) {
                     <label htmlFor="password">Password:</label>
                     <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
-                <button type="submit" onClick={signIn}>
+                <button className="button" type="submit" onClick={signIn}>
                     Log in
                 </button>
-            </form>
-            <button onClick={changeScreen}>Create Test Recording</button>
-            <button onClick={toSignUpForm}>Don't have an account? Sign up!</button>
+            </div>
+
+            <button className="button" onClick={toSignUpForm}>
+                Don't have an account? Sign up!
+            </button>
         </div>
     );
 }

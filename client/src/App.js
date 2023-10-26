@@ -6,14 +6,17 @@ import "./RecordingPage.css";
 import HomePage from "./HomePage";
 import { useState } from "react";
 import SignUpForm from "./SignUpForm";
+import LoginSignPage from "./loginSignPage";
+import "./LoginSignPage.css";
 
 function App() {
-    const [screen, setScreen] = useState("signUpPage");
+    const [screen, setScreen] = useState("loginSign");
     const [userInfo, setUserInfo] = useState({
         username: sessionStorage.getItem("voxUsername"),
         password: sessionStorage.getItem("voxPassword"),
         secretKey: sessionStorage.getItem("voxSecretKey"),
     });
+    const [error, setError] = useState("");
 
     useEffect(() => {
         console.log(userInfo);
@@ -33,14 +36,12 @@ function App() {
             hashed: hashed,
         };
 
-        console.log("username: " + username + "  password:" + password);
-
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 if (xhr.response == "") return;
-                console.log(xhr.response);
-                console.log("successful");
+
                 const result = JSON.parse(xhr.response);
+                console.log(result);
                 sessionStorage.setItem("voxUsername", result.username);
                 sessionStorage.setItem("voxPassword", result.password);
                 sessionStorage.setItem("voxSecretKey", result.secretKey);
@@ -61,7 +62,13 @@ function App() {
         sessionStorage.setItem("voxUsername", "");
         sessionStorage.setItem("voxPassword", "");
         sessionStorage.setItem("voxSecretKey", "");
-        toHomePage();
+        setUserInfo({
+            username: "",
+            password: "",
+            secretKey: "",
+        });
+        toMainPage();
+        console.log(userInfo);
     }
 
     function toRecordingPage() {
@@ -79,19 +86,13 @@ function App() {
     }
 
     if (screen === "main") {
-        return (
-            <div className="App">
-                <LoginForm changeScreen={toRecordingPage} toHomePage={toMainPage} toSignUpForm={toSignUpForm} signInUser={signInUser} />
-            </div>
-        );
+        return <LoginSignPage signInUser={signInUser} error={error} />;
     } else if (screen === "recordingPage") {
         return <RecordingPage changeScreen={toMainPage} />;
     } else if (screen === "homePage") {
         return <HomePage signOutUser={signOutUser} userInfo={userInfo} />;
-    } else if (screen === "signUpPage") {
-        return <SignUpForm changeScreen={toMainPage} />;
     } else if (screen == "loginSign") {
-        //return <LoginSignPage />;
+        return <LoginSignPage signInUser={signInUser} />;
     }
 }
 

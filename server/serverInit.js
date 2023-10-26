@@ -165,6 +165,11 @@ app.post("/signIn", async (req, res) => {
         // get user data from db
         let data = await recieveFromDb(`/Users/${username}`);
 
+        //checks if user exists
+        if (data == null) {
+            res.send("username not found");
+        }
+
         // check if both hashed passwords are the same
         if (data.password === password) {
             // sends username, hashed password, and secret key for verification
@@ -173,13 +178,14 @@ app.post("/signIn", async (req, res) => {
                 password: password,
                 secretKey: stringToHash(username + password),
             };
-            console.log("correct credentials");
+            console.log("correct password");
+
             res.send(output);
             return;
         } else {
             // otherwise dont allow
             console.log("incorrect credentials");
-            res.send(null);
+            res.send("incorrect password");
             return;
         }
     } else {
