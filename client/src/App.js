@@ -15,6 +15,7 @@ function App() {
         username: sessionStorage.getItem("voxUsername"),
         password: sessionStorage.getItem("voxPassword"),
         secretKey: sessionStorage.getItem("voxSecretKey"),
+        secretKey: sessionStorage.getItem("voxDisplayName"),
     });
     const [error, setError] = useState("");
 
@@ -45,12 +46,16 @@ function App() {
                 sessionStorage.setItem("voxUsername", result.username);
                 sessionStorage.setItem("voxPassword", result.password);
                 sessionStorage.setItem("voxSecretKey", result.secretKey);
+                sessionStorage.setItem("voxDisplayName", result.displayName);
+                console.log(result.displayName);
                 setUserInfo({
                     username: result.username,
                     password: result.password,
                     secretKey: result.secretKey,
+                    displayName: result.displayName,
                 });
-                toHomePage();
+
+                if (result.username != null) toHomePage();
             } else {
                 console.log(`Error: ${xhr.status}`);
             }

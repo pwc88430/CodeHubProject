@@ -18,12 +18,15 @@ function RecordingBlock({ audioURL, clipLabel, handleClick, chunks, userInfo }) 
             const body = JSON.stringify({
                 userData: {
                     username: userInfo.username,
-                    displayName: "hania",
+                    displayName: userInfo.displayName,
+                    password: userInfo.password,
                 },
                 visibility: 0,
                 postTitle: clipLabel,
                 audioChunks: base64String,
+                secretKey: userInfo.secretKey,
             });
+            console.log(userInfo);
 
             console.log(userInfo.displayName);
             console.log(userInfo.username);
