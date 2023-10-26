@@ -92,6 +92,6 @@ module.exports = class Helper {
     }
 
     static authorized(secretToken, username, password) {
-        return secretToken === Helper.stringToHash(username + Helper.stringToHash(password));
+        return secretToken === Helper.stringToHash(username + password);
     }
 };
