@@ -17,16 +17,14 @@ router.post("/", async (req, res) => {
 
     // check if username contains / or \ (this will mess up database if it does)
     if (username.includes("/") || username.includes("\\")) {
-        console.error("Username includes / or \\");
-        res.send(null);
+        res.send(Helper.Error("Do not include / or \\ in username."));
         return;
     }
     // check if username exists
     let userExists = await Helper.recieveFromDb(`/Users/${username}`);
     console.log(userExists);
     if (userExists != null) {
-        console.error("Account already exists");
-        res.send(null);
+        res.send(Helper.Error("Account already exists."));
         return;
     }
     // otherwise upload signup data to database and create account
@@ -38,8 +36,7 @@ router.post("/", async (req, res) => {
 
     // if account creation is unsuccessful, return error
     if (!result) {
-        console.error("Account creation unsuccessful");
-        res.send(null);
+        res.send(Helper.Error("Account creation unsuccessful."));
         return;
     }
 

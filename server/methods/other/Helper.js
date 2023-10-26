@@ -3,6 +3,7 @@ const FirebaseStorage = require("../../FirebaseStorage");
 
 module.exports = class Helper {
     static Error(message) {
+        console.error(message);
         return {
             type: "Error",
             error: message,
@@ -91,6 +92,6 @@ module.exports = class Helper {
     }
 
     static authorized(secretToken, username, password) {
-        return secretToken === stringToHash(username + stringToHash(password));
+        return secretToken === Helper.stringToHash(username + Helper.stringToHash(password));
     }
 };

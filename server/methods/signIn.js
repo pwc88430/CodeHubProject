@@ -29,13 +29,11 @@ router.post("/", async (req, res) => {
                 displayName: data.displayName,
                 type: "Account Info",
             };
-            console.log("correct password");
 
             res.send(output);
             return;
         } else {
             // otherwise dont allow
-            console.log("incorrect credentials");
             res.send(Helper.Error("Incorrect password."));
             return;
         }

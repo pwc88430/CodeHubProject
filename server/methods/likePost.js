@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
 
     let result = await Helper.recieveFromDb("/Posts/" + info.postId);
     if (result == null) {
-        res.send(null);
+        res.send(Helper.Error("Post does not exist."));
         return;
     }
 
