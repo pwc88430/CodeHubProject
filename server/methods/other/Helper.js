@@ -2,6 +2,13 @@ const { db, bucket } = require("../../firebaseInit");
 const FirebaseStorage = require("../../FirebaseStorage");
 
 module.exports = class Helper {
+    static Error(message) {
+        return {
+            type: "Error",
+            error: message,
+        };
+    }
+
     // stolen hash function // https://www.educba.com/javascript-hash/
     static stringToHash(string) {
         //set variable hash as 0

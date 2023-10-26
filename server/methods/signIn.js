@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
 
         //checks if user exists
         if (data == null) {
-            res.send("username not found");
+            res.send(Helper.Error("User does not exist."));
             return;
         }
 
@@ -27,6 +27,7 @@ router.post("/", async (req, res) => {
                 password: password,
                 secretKey: Helper.stringToHash(username + password),
                 displayName: data.displayName,
+                type: "Account Info",
             };
             console.log("correct password");
 
@@ -35,13 +36,11 @@ router.post("/", async (req, res) => {
         } else {
             // otherwise dont allow
             console.log("incorrect credentials");
-            res.send("incorrect password");
+            res.send(Helper.Error("Incorrect password."));
             return;
         }
-    } else {
-        console.log("password not hashed");
-        res.send(null);
     }
+    res.send(Helper.Error("Necessary inputs not given."));
 });
 
 module.exports = router;
