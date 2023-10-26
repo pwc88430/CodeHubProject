@@ -3,7 +3,7 @@ import { useState } from "react";
 
 //this is the recording page which gives users a ability to record and store several recordings
 //there is also a audio visualizer functionality
-export default function RecordingPage({ changeScreen }) {
+export default function RecordingPage({ changeScreen, userInfo }) {
     const [recordings, setRecordings] = useState([]);
 
     //checks to see if media recording device is available
@@ -154,13 +154,13 @@ export default function RecordingPage({ changeScreen }) {
                 clipLabel={recording.name}
                 handleClick={deleteRecording}
                 chunks={recording.raw}
+                userInfo={userInfo}
             />
         );
     });
 
     return (
         <div id="recordingPage">
-            <h1>Recording Page</h1>
             <canvas className="visualizer" height="60px"></canvas>
             <div id="record-buttons">
                 <button className="button" id="record">
@@ -171,9 +171,7 @@ export default function RecordingPage({ changeScreen }) {
                 </button>
                 <ol id="recordingList">{recordingListDisplay}</ol>
             </div>
-            <button className="button" id="back" onClick={changeScreen}>
-                Back
-            </button>
+
             <div id="clips"></div>
         </div>
     );

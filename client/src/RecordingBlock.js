@@ -1,4 +1,4 @@
-function RecordingBlock({ audioURL, clipLabel, handleClick, chunks }) {
+function RecordingBlock({ audioURL, clipLabel, handleClick, chunks, userInfo }) {
     async function uploadClip() {
         console.log(chunks);
 
@@ -17,13 +17,16 @@ function RecordingBlock({ audioURL, clipLabel, handleClick, chunks }) {
 
             const body = JSON.stringify({
                 userData: {
-                    username: "wilber",
-                    displayName: "superpig",
+                    username: userInfo.username,
+                    displayName: "hania",
                 },
                 visibility: 0,
                 postTitle: clipLabel,
                 audioChunks: base64String,
             });
+
+            console.log(userInfo.displayName);
+            console.log(userInfo.username);
 
             xhr.onload = () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {

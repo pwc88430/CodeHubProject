@@ -113,6 +113,8 @@ app.post("/editPost", async (req, res) => {
 app.post("/getPosts", async (req, res) => {
     // TODO: test, comments
 
+    console.log("get posts request recieved");
+
     let info = req.body;
     if (info.username && info.password && info.secretKey) {
         if (!authorized(info.secretKey, info.username, info.password)) {
