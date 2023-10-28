@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function LoginForm({ changeScreen, toHomePage, toSignUpForm, signInUser }) {
+function LoginForm({ changeScreen, toHomePage, toSignUpForm, signInUser, setErrorMessage }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 

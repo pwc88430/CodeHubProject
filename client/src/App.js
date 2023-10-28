@@ -26,7 +26,7 @@ function App() {
         }
     }, []);
 
-    function signInUser(username, password, hashed) {
+    function signInUser(username, password, hashed, handleError) {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:8000/signIn");
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -39,6 +39,7 @@ function App() {
 
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.response.type == "Error") console.log("error");
                 if (xhr.response == "") return;
 
                 const result = JSON.parse(xhr.response);
@@ -90,9 +91,7 @@ function App() {
         setScreen("signUpPage");
     }
 
-    if (screen === "main") {
-        return <LoginSignPage signInUser={signInUser} error={error} />;
-    } else if (screen === "recordingPage") {
+    if (screen === "recordingPage") {
         return <RecordingPage changeScreen={toMainPage} />;
     } else if (screen === "homePage") {
         return <HomePage signOutUser={signOutUser} userInfo={userInfo} />;

@@ -1,8 +1,14 @@
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
-import { useRef } from "react";
+import { useState } from "react";
 
-export default function LoginSignPage({ signInUser, error }) {
+export default function LoginSignPage({ signInUser }) {
+    const [error, setError] = useState();
+
+    function setErrorMessage(newError) {
+        setError(newError);
+    }
+
     function changeTabs(event) {
         const btns = document.querySelectorAll(".mainButton");
         const articles = document.querySelectorAll(".content");
@@ -40,14 +46,14 @@ export default function LoginSignPage({ signInUser, error }) {
                 </div>
                 <div className="tabs-content">
                     <div className="content live" id="signup">
-                        <SignUpForm />
+                        <SignUpForm etErrorMessage={setErrorMessage} />
                     </div>
                     <div className="content" id="login">
-                        <LoginForm signInUser={signIn} />
+                        <LoginForm signInUser={signIn} setErrorMessage={setErrorMessage} />
                     </div>
                 </div>
             </div>
-            <div className="error">Error</div>
+            <div className="error">Error {error}</div>
         </>
     );
 }
