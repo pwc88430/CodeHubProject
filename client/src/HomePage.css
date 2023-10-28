@@ -5,27 +5,38 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
+}
 
-  
-  .header-icons {
+.header-icons {
     display: flex;
     gap: 10px;
-  }
-  
-  .home-button {
-    background: transparent;
-    border: none;
-    padding: 0;
- }
-  .message-button {
-    background: transparent;
-    border: none;
-    padding: 0;
-  }
+}
 
-  .notification-button {
+.home-button {
     background: transparent;
     border: none;
     padding: 0;
- }
+}
+.message-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+.notification-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+#createNewRecordingContainer {
+}
+
+#myRecordingsContainer {
+}
+
+#myProfileContainer {
+}
+
+#myFeedContainer {
+}

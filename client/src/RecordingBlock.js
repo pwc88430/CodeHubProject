@@ -26,10 +26,6 @@ function RecordingBlock({ audioURL, clipLabel, handleClick, chunks, userInfo }) 
                 audioChunks: base64String,
                 secretKey: userInfo.secretKey,
             });
-            console.log(userInfo);
-
-            console.log(userInfo.displayName);
-            console.log(userInfo.username);
 
             xhr.onload = () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
