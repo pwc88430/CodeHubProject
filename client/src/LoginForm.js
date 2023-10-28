@@ -23,7 +23,7 @@ function LoginForm({ changeScreen, toHomePage, signInUser, setErrorMessage, toSi
             setErrorMessage("Please enter a password");
         } else {
             setErrorMessage("");
-            signInUser(userNameEl.value, passwordEl.value, false);
+            signInUser(userNameEl.value, passwordEl.value, false, setErrorMessage);
         }
     }
     return (
@@ -38,7 +38,7 @@ function LoginForm({ changeScreen, toHomePage, signInUser, setErrorMessage, toSi
                     <label htmlFor="password">Password:</label>
                     <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
-                <button className="button" type="submit" onClick={signIn}>
+                <button id="loginButton" className="button" type="submit" onClick={signIn}>
                     Log in
                 </button>
             </div>

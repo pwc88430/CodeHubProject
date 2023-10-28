@@ -38,24 +38,27 @@ function App() {
 
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                if (xhr.response.type == "Error") console.log("error");
-                if (xhr.response == "") return;
-
                 const result = JSON.parse(xhr.response);
-                console.log(result);
-                sessionStorage.setItem("voxUsername", result.username);
-                sessionStorage.setItem("voxPassword", result.password);
-                sessionStorage.setItem("voxSecretKey", result.secretKey);
-                sessionStorage.setItem("voxDisplayName", result.displayName);
-                console.log(result.displayName);
-                setUserInfo({
-                    username: result.username,
-                    password: result.password,
-                    secretKey: result.secretKey,
-                    displayName: result.displayName,
-                });
+                if (result.type == "Error") {
+                    if (handleError != null) {
+                        handleError(result.error);
+                    } // if
+                } else {
+                    console.log(result);
+                    sessionStorage.setItem("voxUsername", result.username);
+                    sessionStorage.setItem("voxPassword", result.password);
+                    sessionStorage.setItem("voxSecretKey", result.secretKey);
+                    sessionStorage.setItem("voxDisplayName", result.displayName);
+                    console.log(result.displayName);
+                    setUserInfo({
+                        username: result.username,
+                        password: result.password,
+                        secretKey: result.secretKey,
+                        displayName: result.displayName,
+                    });
 
-                if (result.username != null) toHomePage();
+                    if (result.username != null) toHomePage();
+                }
             } else {
                 //console.log(`Error: ${xhr.status}`);
             }
@@ -72,7 +75,7 @@ function App() {
             password: "",
             secretKey: "",
         });
-        toMainPage();
+        toLoginSignup();
         console.log(userInfo);
     }
 
@@ -84,6 +87,10 @@ function App() {
     }
     function toMainPage() {
         setScreen("main");
+    }
+
+    function toLoginSignup() {
+        setScreen("loginSign");
     }
 
     function toSignUpForm() {

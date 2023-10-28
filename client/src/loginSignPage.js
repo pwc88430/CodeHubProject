@@ -36,14 +36,14 @@ export default function LoginSignPage({ signInUser }) {
         }
     }
 
-    function signIn(username, password) {
-        signInUser(username, password, false);
+    function signIn(username, password, hashed, handleError) {
+        signInUser(username, password, false, handleError);
     }
 
     return (
         <>
             <div className="tabs" onClick={changeTabs}>
-                <div className="btn-container">
+                <div className="btn-container" onClick={() => setError("")}>
                     <button id="sign-up-tab-button" className="mainButton live" data-id="signup">
                         Sign Up
                     </button>

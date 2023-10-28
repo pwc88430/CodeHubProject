@@ -26,9 +26,12 @@ export default function SignUpForm({ setErrorMessage }) {
 
             xhr.onload = () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    logResult(xhr.responseText);
-                    logResult(xhr.response);
-                    console.log(JSON.parse(xhr.response));
+                    const result = JSON.parse(xhr.response);
+                    if (result.type == "Error") {
+                        setErrorMessage(result.error);
+                    } else {
+                        setErrorMessage("Account Created!");
+                    }
                 } else {
                     console.log(`Error: ${xhr.status}`);
                 }
