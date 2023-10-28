@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function LoginForm({ changeScreen, toHomePage, toSignUpForm, signInUser, setErrorMessage }) {
+function LoginForm({ changeScreen, toHomePage, signInUser, setErrorMessage, toSignUpPage }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -13,7 +13,18 @@ function LoginForm({ changeScreen, toHomePage, toSignUpForm, signInUser, setErro
     const passwordEl = document.querySelector("#password");
 
     function signIn() {
-        signInUser(userNameEl.value, passwordEl.value, false);
+        console.log(userNameEl.value);
+        console.log(passwordEl.value);
+        if (userNameEl.value == "") {
+            console.log("no username");
+            setErrorMessage("Please enter a username");
+        } else if (passwordEl.value == "") {
+            console.log("no password");
+            setErrorMessage("Please enter a password");
+        } else {
+            setErrorMessage("");
+            signInUser(userNameEl.value, passwordEl.value, false);
+        }
     }
     return (
         <div>
@@ -32,7 +43,7 @@ function LoginForm({ changeScreen, toHomePage, toSignUpForm, signInUser, setErro
                 </button>
             </div>
 
-            <button className="button" onClick={toSignUpForm}>
+            <button className="button" onClick={toSignUpPage}>
                 Don't have an account? Sign up!
             </button>
         </div>

@@ -1,12 +1,19 @@
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import { useState } from "react";
+import ErrorBox from "./ErrorBox";
 
 export default function LoginSignPage({ signInUser }) {
-    const [error, setError] = useState();
+    const [error, setError] = useState("");
 
     function setErrorMessage(newError) {
         setError(newError);
+    }
+
+    function toSignUpPage() {
+        const btnEl = document.querySelector("#sign-up-tab-button");
+        btnEl.click();
+        setError("");
     }
 
     function changeTabs(event) {
@@ -37,7 +44,7 @@ export default function LoginSignPage({ signInUser }) {
         <>
             <div className="tabs" onClick={changeTabs}>
                 <div className="btn-container">
-                    <button className="mainButton live" data-id="signup">
+                    <button id="sign-up-tab-button" className="mainButton live" data-id="signup">
                         Sign Up
                     </button>
                     <button className="mainButton" data-id="login">
@@ -49,11 +56,11 @@ export default function LoginSignPage({ signInUser }) {
                         <SignUpForm etErrorMessage={setErrorMessage} />
                     </div>
                     <div className="content" id="login">
-                        <LoginForm signInUser={signIn} setErrorMessage={setErrorMessage} />
+                        <LoginForm signInUser={signIn} setErrorMessage={setErrorMessage} toSignUpPage={toSignUpPage} />
                     </div>
                 </div>
             </div>
-            <div className="error">Error {error}</div>
+            <ErrorBox error={error} />
         </>
     );
 }

@@ -80,7 +80,7 @@ body {
 .error.live {
     margin-top: 10px;
     width: 500px;
-    height: 100px;
+    height: fit-content;
     background-color: rgb(247, 228, 228);
     border-radius: 0.5rem;
     border: 1px solid red;

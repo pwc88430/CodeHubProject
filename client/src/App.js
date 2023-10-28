@@ -20,7 +20,6 @@ function App() {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        console.log(userInfo);
         if (userInfo.username != null && userInfo.password != null && userInfo.secretKey != null) {
             signInUser(userInfo.username, userInfo.password, true);
         }
@@ -58,7 +57,7 @@ function App() {
 
                 if (result.username != null) toHomePage();
             } else {
-                console.log(`Error: ${xhr.status}`);
+                //console.log(`Error: ${xhr.status}`);
             }
         };
         xhr.send(JSON.stringify(body));
