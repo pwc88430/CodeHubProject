@@ -53,7 +53,7 @@ export default function LoginSignPage({ signInUser }) {
                 </div>
                 <div className="tabs-content">
                     <div className="content live" id="signup">
-                        <SignUpForm etErrorMessage={setErrorMessage} />
+                        <SignUpForm setErrorMessage={setErrorMessage} />
                     </div>
                     <div className="content" id="login">
                         <LoginForm signInUser={signIn} setErrorMessage={setErrorMessage} toSignUpPage={toSignUpPage} />

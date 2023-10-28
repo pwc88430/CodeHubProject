@@ -1,4 +1,4 @@
-export default function SignUpForm() {
+export default function SignUpForm({ setErrorMessage }) {
     function logResult(result) {
         console.log(result);
     }
@@ -7,26 +7,35 @@ export default function SignUpForm() {
         const passwordEl = document.querySelector("#signupPassword");
         const userNameEl = document.querySelector("#signupUsername");
 
-        const body = {
-            username: userNameEl.value,
-            password: passwordEl.value,
-            displayName: displayNameEl.value,
-        };
+        if (userNameEl.value == "") {
+            setErrorMessage("Please enter a username");
+        } else if (passwordEl.value == "") {
+            setErrorMessage("Please enter a password");
+        } else if (displayNameEl.value == "") {
+            setErrorMessage("Please enter a display name");
+        } else {
+            const body = {
+                username: userNameEl.value,
+                password: passwordEl.value,
+                displayName: displayNameEl.value,
+            };
 
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:8000/signUp");
-        xhr.setRequestHeader("Content-Type", "application/json");
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8000/signUp");
+            xhr.setRequestHeader("Content-Type", "application/json");
 
-        xhr.onload = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                logResult(xhr.responseText);
-                logResult(xhr.response);
-                console.log(JSON.parse(xhr.response));
-            } else {
-                console.log(`Error: ${xhr.status}`);
-            }
-        };
-        xhr.send(JSON.stringify(body));
+            xhr.onload = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    logResult(xhr.responseText);
+                    logResult(xhr.response);
+                    console.log(JSON.parse(xhr.response));
+                } else {
+                    console.log(`Error: ${xhr.status}`);
+                }
+            };
+            xhr.send(JSON.stringify(body));
+            setErrorMessage("");
+        } // else
     }
 
     return (
