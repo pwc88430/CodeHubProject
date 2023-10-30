@@ -1,3 +1,3 @@
-export default function CreateNewRecordingContainer() {
-    return <div id="createNewRecordingContainer"></div>;
+export default function CreateNewRecordingContainer({ toCreateView }) {
+    return <div onClick={toCreateView} id="createNewRecordingContainer"></div>;
 }

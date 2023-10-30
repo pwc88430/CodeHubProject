@@ -5,6 +5,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    grid-area: header;
+}
+
+body {
+    width: 100%;
+    padding: 0;
 }
 
 .header-icons {
@@ -29,14 +35,141 @@
     padding: 0;
 }
 
+#homePageContainer.profileMyRecordings {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100px 120px 120px 240px 240px;
+    transition: width 2s linear 1s;
+    grid-template-areas:
+        "header header header"
+        "profile feed search"
+        "profile feed myPosts"
+        "profile feed myPosts"
+        "newRecording feed myPosts";
+}
+
+#homePageContainer.profileMyRecordings #createNewRecordingContainer:hover {
+    transform: scale(1.01);
+}
+#homePageContainer.profileMyRecordings #searchContainer:hover {
+    transform: scale(1.01);
+}
+
+#homePageContainer.newRecordingMyRecordings {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100px 120px 120px 240px 240px;
+    grid-template-areas:
+        "header header header"
+        "profile feed search"
+        "newRecording feed myPosts"
+        "newRecording feed myPosts"
+        "newRecording feed myPosts";
+}
+#homePageContainer.newRecordingMyRecordings #myProfileContainer:hover {
+    transform: scale(1.01);
+}
+#homePageContainer.newRecordingMyRecordings #searchContainer:hover {
+    transform: scale(1.01);
+}
+
+#homePageContainer.newRecordingSearch {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100px 120px 120px 240px 240px;
+    grid-template-areas:
+        "header header header"
+        "profile feed search"
+        "newRecording feed search"
+        "newRecording feed search"
+        "newRecording feed myPosts";
+}
+
+#homePageContainer.newRecordingSearch #myProfileContainer:hover {
+    transform: scale(1.01);
+}
+#homePageContainer.newRecordingSearch #myRecordingsContainer:hover {
+    transform: scale(1.01);
+}
+
+#homePageContainer.profileSearch {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100px 120px 120px 240px 240px;
+    grid-template-areas:
+        "header header header"
+        "profile feed search"
+        "profile feed search"
+        "profile feed search"
+        "newRecording feed myPosts";
+}
+#homePageContainer.profileSearch #createNewRecordingContainer:hover {
+    transform: scale(1.01);
+}
+#homePageContainer.profileSearch #myRecordingsContainer:hover {
+    transform: scale(1.01);
+}
+
 #createNewRecordingContainer {
+    grid-area: newRecording;
+    background-color: rgb(183, 220, 250);
+    margin: 20px;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 7px;
 }
 
 #myRecordingsContainer {
+    grid-area: myPosts;
+    background-color: rgb(183, 220, 250);
+    margin: 20px;
+    margin-top: 7px;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #myProfileContainer {
+    background-color: rgb(183, 220, 250);
+    grid-area: profile;
+    margin: 20px;
+    margin-bottom: 7px;
+    margin-top: 50px;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#myProfileContainer p h3 {
+    color: black;
+    display: inline;
 }
 
 #myFeedContainer {
+    grid-area: feed;
+    background-color: rgb(183, 220, 250);
+    margin: 20px;
+    margin-top: 50px;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#homePageContainer h3 {
+    margin-bottom: 5px;
+}
+
+#searchContainer {
+    grid-area: search;
+    background-color: rgb(183, 220, 250);
+    margin: 20px;
+    margin-bottom: 7px;
+    margin-top: 50px;
+    border-radius: 20px;
+    padding-left: 20px;
 }

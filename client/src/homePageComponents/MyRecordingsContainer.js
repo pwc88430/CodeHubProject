@@ -1,3 +1,8 @@
-export default function MyRecordingsContainer() {
-    return <div id="myRecordingsContainer"></div>;
+export default function MyRecordingsContainer({ toMyRecordingsView }) {
+    return (
+        <div onClick={toMyRecordingsView} id="myRecordingsContainer">
+            <h3>My Recordings</h3>
+            <hr></hr>
+        </div>
+    );
 }
