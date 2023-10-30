@@ -16,12 +16,15 @@ export default function MyRecordingsContainer({ toMyRecordingsView, userInfo }) 
 
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(JSON.parse(xhr.response));
             } else {
                 console.log(`Error: ${xhr.status}`);
             }
         };
         xhr.send(JSON.stringify(body));
     }
+
+    loadPosts();
 
     return (
         <div onClick={toMyRecordingsView} id="myRecordingsContainer">
