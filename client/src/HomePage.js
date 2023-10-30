@@ -90,16 +90,15 @@ function HomePage({ userInfo, signOutUser }) {
                     </button>
                 </div>
 
-                <button id="back" onClick={signOutUser}>
+                <button id="back" className="button" onClick={signOutUser}>
                     Sign Out
                 </button>
             </header>
 
-            <RecordingPage userInfo={userInfo} />
             <MyProfileContainer toProfileView={toProfileView} userInfo={userInfo} />
             <MyFeedContainer />
-            <MyRecordingsContainer toMyRecordingsView={toMyRecordingsView} />
-            <CreateNewRecordingContainer toCreateView={toCreateView} />
+            <MyRecordingsContainer toMyRecordingsView={toMyRecordingsView} userInfo={userInfo} />
+            <CreateNewRecordingContainer toCreateView={toCreateView} userInfo={userInfo} />
             <SearchContainer toSearchView={toSearchView} />
         </div>
     );

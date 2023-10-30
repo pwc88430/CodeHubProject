@@ -72,12 +72,13 @@ audio::-webkit-media-controls-panel {
 }
 
 .RecordingBlock {
-    background-color: blue;
-    border-radius: 5px;
+    background-color: rgb(61, 203, 246);
+    border-radius: 20px;
     padding: 10px;
     margin-bottom: 10px;
-    width: fit-content;
+    width: auto;
     display: flex;
+    margin-top: 20px;
 }
 
 .recordingBlockComponent {

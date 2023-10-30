@@ -44,7 +44,7 @@ function RecordingBlock({ audioURL, clipLabel, handleClick, chunks, userInfo }) 
                 <h4 id="audioTrackLabel">{clipLabel}</h4>
                 <audio src={audioURL} controls></audio>
                 <button onClick={handleClick} id="deleteTrackButton">
-                    Delete
+                    Discard
                 </button>
             </div>
             <button id="uploadTrackButton" onClick={uploadClip}>
