@@ -6,29 +6,37 @@ router.post("/", async (req, res) => {
     // TODO: test, comments
 
     let info = req.body;
-    if (info.username && info.password && info.secretKey) {
+    if (info.username && info.password && info.targetUsername && info.secretKey && info.startIndex && info.toIfExists) {
         if (!Helper.authorized(info.secretKey, info.username, info.password)) {
             res.send(null);
             return;
         }
-        let data = await Helper.recieveFromDb("/Users/" + info.username + "/Posts/");
-        data = Object.values(data);
+        let data = await Helper.recieveFromDb("/Users/" + info.targetUsername + "/Posts/");
+        console.log("DATA:");
         console.log(data);
 
-        let output = [];
-        for (i = 0; i < Math.max(data.length, 50); i++) {
-            output.push({
-                postData: await Helper.recieveFromDb("/Posts/" + data[i]),
-                audioURL: await Helper.recieveFile("audioFiles/" + info.username + "/" + data[i] + ".mp3"),
-            });
-            console.log(output[i]);
+        if (data == null) {
+            res.send([]);
+            return;
         }
-        console.log(output);
+
+        if (info.toIfExists - info.startIndex > 150) {
+            res.send(Helper.Error("The limit amount is 150 posts."));
+        }
+
+        let keys = Object.keys(data);
+        let output = [];
+        for (i = info.startIndex; i < Math.min(keys.length, info.toIfExists); i++) {
+            output.push({
+                postData: await Helper.recieveFromDb("/Posts/" + info.targetUsername + ":" + keys[i]),
+                audioURL: await Helper.recieveFile(data[keys[i]].audioLocation + ".mp3"),
+            });
+        }
         console.log("sending posts");
         res.send(output);
         return;
     }
-    res.send(null);
+    res.send(Helper.Error("Necessary parameters not given."));
 });
 
 module.exports = router;

@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
         edited: false,
     };
 
-    let storageResult = await Helper.uploadFile(info.audioChunks, info.userData.username).catch((err) => {
+    let storageResult = await Helper.uploadFile(info.audioChunks, info.userData.username, currentTime).catch((err) => {
         console.log(err);
         return false;
     });

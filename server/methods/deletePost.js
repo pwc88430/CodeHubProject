@@ -14,12 +14,12 @@ router.post("/", async (req, res) => {
         Helper.authorized(info.secretToken, info.username, info.password)
     ) {
         let post = Helper.recieveFromDb("/Posts/" + info.postId);
-        let user = Helper.recieveFromDb("/Users/" + info.username);
+        let user = Helper.recieveFromDb("/Users/" + user + ":" + info.username);
         if (!user || !post || post.author != user.username) {
             res.send(null);
             return;
         }
-        await db.remove("/Posts/" + info.postId);
+        await db.remove("/Posts/" + user + ":" + info.postId);
         await db.remove("/Users/" + user + "/Posts/" + info.postId);
     }
     res.send(0);

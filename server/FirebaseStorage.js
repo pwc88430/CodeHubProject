@@ -10,7 +10,7 @@ module.exports = class FirebaseStorage {
         file.getSignedUrl(
             {
                 action: "read",
-                expires: "10-26-2023",
+                expires: "01-01-2150",
             },
             (err, url) => {
                 console.log(url);
@@ -21,7 +21,7 @@ module.exports = class FirebaseStorage {
         return readStream;
     }
 
-    static async uploadFile(audioObj, userName) {
+    static async uploadFile(audioObj, userName, givenTime) {
         //const blob = new Blob(audioObj, {
         // audio/mpeg (mp3)
         // type: "audio/mpeg",
@@ -32,10 +32,9 @@ module.exports = class FirebaseStorage {
         const buffer = Buffer.from(arrayBuffer);
 
         var userLocation = userName;
-        var fileName = new Date().getTime();
 
         // file from destination for Firebase Storage (there is no file there yet)
-        const file = bucket.file(`audioFiles/${userLocation}/${fileName}.mp3`);
+        const file = bucket.file(`audioFiles/${userLocation}/${givenTime}.mp3`);
 
         // create stream to destination
         const writeStream = file.createWriteStream({

@@ -2,6 +2,11 @@ const { db, bucket } = require("../../firebaseInit");
 const FirebaseStorage = require("../../FirebaseStorage");
 
 module.exports = class Helper {
+    /**
+     * This function creates an error object and returns it.
+     * @param {String} message The error message to give.
+     * @returns Returns error object.
+     */
     static Error(message) {
         console.error(message);
         return {
@@ -10,7 +15,12 @@ module.exports = class Helper {
         };
     }
 
-    // stolen hash function // https://www.educba.com/javascript-hash/
+    /** This is a modified stolen hash function https://www.educba.com/javascript-hash/
+     *
+     * Converts given string to hash.
+     * @param {String} string The string to hash.
+     * @returns {String} Returns hashed version of the given string.
+     */
     static stringToHash(string) {
         //set variable hash as 0
         var hash = 0;
@@ -65,12 +75,9 @@ module.exports = class Helper {
     static async recieveFile(fileLocation) {
         var url = await FirebaseStorage.requestFile(fileLocation);
         return url;
-        // how to send data to res: stream.pipe(res);
     }
 
-    // recieveFile("audioFiles/wilber/1698185947265.mp3");
-
-    static async uploadFile(audioChunks, username) {
+    static async uploadFile(audioChunks, username, currentTime) {
         audioChunks = audioChunks.substring(35, audioChunks.length);
         const byteCharacters = atob(audioChunks);
         const byteNumbers = new Array(byteCharacters.length);
@@ -80,7 +87,7 @@ module.exports = class Helper {
         const byteArray = new Uint8Array(byteNumbers);
         const audioBlob = new Blob([byteArray], { type: "audio/ogg; codecs=opus" });
 
-        let result = await FirebaseStorage.uploadFile(audioBlob, username)
+        let result = await FirebaseStorage.uploadFile(audioBlob, username, currentTime)
             .then(() => {
                 return true;
             })

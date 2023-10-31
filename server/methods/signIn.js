@@ -3,7 +3,6 @@ var router = express.Router();
 var Helper = require("./other/Helper");
 
 router.post("/", async (req, res) => {
-    // TODO: test
     console.log("sign in request received");
     let info = req.body;
     if (info.username && info.password && info.hashed != null) {
