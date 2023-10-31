@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function MyRecordingsContainer({ toMyRecordingsView, userInfo }) {
     const [posts, setPosts] = useState([]);
+    let startingIndex = 0;
     function loadPosts() {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:8000/getPosts");
@@ -11,8 +12,11 @@ export default function MyRecordingsContainer({ toMyRecordingsView, userInfo }) 
             username: userInfo.username,
             password: userInfo.password,
             secretKey: userInfo.secretKey,
+            startIndex: startingIndex,
+            toIfExists: startingIndex + 50,
+            targetUsername: userInfo.username,
         };
-        console.log(body.username + " " + body.password + " " + body.secretKey);
+        console.log(body);
 
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
