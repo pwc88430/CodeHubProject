@@ -1,7 +1,14 @@
 import { useState } from "react";
+import Post from "../Post";
+import { useEffect } from "react";
 
 export default function MyRecordingsContainer({ toMyRecordingsView, userInfo }) {
     const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        loadPosts();
+    }, []);
+
     let startingIndex = 0;
     function loadPosts() {
         const xhr = new XMLHttpRequest();
@@ -20,7 +27,9 @@ export default function MyRecordingsContainer({ toMyRecordingsView, userInfo }) 
 
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(JSON.parse(xhr.response));
+                const newPosts = JSON.parse(xhr.response);
+                console.log(newPosts);
+                setPosts([...posts, ...newPosts]);
             } else {
                 console.log(`Error: ${xhr.status}`);
             }
@@ -28,12 +37,15 @@ export default function MyRecordingsContainer({ toMyRecordingsView, userInfo }) 
         xhr.send(JSON.stringify(body));
     }
 
-    loadPosts();
+    const loadedPosts = posts.map((post) => {
+        return <Post post={post} />;
+    });
 
     return (
         <div onClick={toMyRecordingsView} id="myRecordingsContainer">
             <h3>My Posts</h3>
             <hr></hr>
+            <ol>{loadedPosts}</ol>
         </div>
     );
 }
