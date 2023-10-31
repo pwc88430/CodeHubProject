@@ -6,7 +6,14 @@ router.post("/", async (req, res) => {
     // TODO: test, comments
 
     let info = req.body;
-    if (info.username && info.password && info.targetUsername && info.secretKey && info.startIndex && info.toIfExists) {
+    if (
+        info.username != null &&
+        info.password != null &&
+        info.targetUsername != null &&
+        info.secretKey != null &&
+        info.startIndex != null &&
+        info.toIfExists != null
+    ) {
         if (!Helper.authorized(info.secretKey, info.username, info.password)) {
             res.send(null);
             return;

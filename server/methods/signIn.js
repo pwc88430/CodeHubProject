@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
         }
 
         // check if both hashed passwords are the same
-        if (data.password === password) {
+        if (data.password == password) {
             // sends username, hashed password, and secret key for verification
             output = {
                 username: username,
