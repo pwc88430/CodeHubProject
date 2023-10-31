@@ -7,18 +7,28 @@ module.exports = class FirebaseStorage {
     static async requestFile(fileLocation) {
         console.log(fileLocation);
         const file = bucket.file(fileLocation);
-        file.getSignedUrl(
-            {
-                action: "read",
-                expires: "01-01-2150",
-            },
-            (err, url) => {
-                console.log(url);
-            }
-        );
-        const readStream = file.createReadStream();
-
-        return readStream;
+        const getUrlPromise = new Promise((resolve, reject) => {
+            file.getSignedUrl(
+                {
+                    action: "read",
+                    expires: "01-01-2150",
+                },
+                (err, url) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(url);
+                    }
+                }
+            );
+        });
+        let output = null;
+        try {
+            output = await getUrlPromise;
+        } catch (err) {
+            console.error(err);
+        }
+        return output;
     }
 
     static async uploadFile(audioObj, userName, givenTime) {
