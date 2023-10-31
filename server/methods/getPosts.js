@@ -39,6 +39,7 @@ router.post("/", async (req, res) => {
                 audioURL: await Helper.recieveFile(data[keys[i]].audioLocation + ".mp3"),
             });
         }
+        res.send(output);
         return;
     }
     res.send(Helper.Error("Necessary parameters not given."));
