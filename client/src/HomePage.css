@@ -195,3 +195,16 @@ body {
     border-radius: 20px;
     padding-left: 20px;
 }
+
+#searchContainer textarea {
+    background: rgb(183, 220, 250);
+    border: none;
+    resize: none;
+    overflow: none;
+    outline: none;
+    padding: 15px;
+    height: 50%;
+    width: 90%;
+    font-size: 20px;
+    padding-left: 0px;
+}

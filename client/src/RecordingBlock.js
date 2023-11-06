@@ -60,14 +60,14 @@ function RecordingBlock({ audioURL, clipLabel, handleClick, chunks, userInfo }) 
                 <h4 id="newDescription">Description</h4>
                 <textarea onChange={handleWcChange} maxlength="100"></textarea>
             </div>
-            <div id="uploadDiscard">
-                <button onClick={handleClick} id="deleteTrackButton">
-                    Discard
-                </button>
-                <button id="uploadTrackButton" onClick={uploadClip}>
-                    Upload
-                </button>
-            </div>
+
+            <button id="uploadTrackButton" onClick={uploadClip}>
+                Upload
+            </button>
+
+            <button onClick={handleClick} id="deleteTrackButton">
+                Discard
+            </button>
         </div>
     );
 }
