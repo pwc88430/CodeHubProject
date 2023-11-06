@@ -41,13 +41,12 @@ audio::-webkit-media-controls-panel {
 }
 
 #uploadTrackButton {
-    background-color: green;
-    height: 50px;
+    background-color: rgb(119, 239, 119);
+
     border: none;
     border-radius: 5px;
     margin: 0;
     margin-left: 10px;
-    height: auto;
 }
 
 #deleteTrackButton {

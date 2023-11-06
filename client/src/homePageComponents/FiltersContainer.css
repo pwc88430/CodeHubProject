@@ -1,6 +1,10 @@
 .filter {
     background-color: rgb(183, 220, 250);
-    padding: 10px;
+    padding: 10px 15px;
     margin: 5px;
-    border-radius: 15px;
+    border-radius: 20px;
+}
+
+.filter.liveFilter {
+    background-color: rgb(83, 175, 249);
 }

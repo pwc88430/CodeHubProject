@@ -129,7 +129,7 @@ body {
     grid-area: myPosts;
     background-color: rgb(183, 220, 250);
     margin: 20px;
-    margin-top: 7px;
+    margin-top: -25px;
     border-radius: 20px;
     padding-left: 20px;
     padding-right: 20px;
@@ -137,9 +137,14 @@ body {
 }
 
 #post-container {
-    height: 90%;
+    height: 88%;
     overflow: scroll;
-    padding-bottom: 100px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+#post-container::-webkit-scrollbar {
+    display: none;
 }
 
 #filters-container {
@@ -185,7 +190,7 @@ body {
     grid-area: search;
     background-color: rgb(183, 220, 250);
     margin: 20px;
-    margin-bottom: 7px;
+    margin-bottom: 40px;
 
     border-radius: 20px;
     padding-left: 20px;

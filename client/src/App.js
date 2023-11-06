@@ -8,6 +8,7 @@ import { useState } from "react";
 import SignUpForm from "./SignUpForm";
 import LoginSignPage from "./loginSignPage";
 import "./LoginSignPage.css";
+import Header from "./Header";
 
 function App() {
     const [screen, setScreen] = useState("loginSign");
@@ -102,7 +103,11 @@ function App() {
     } else if (screen === "homePage") {
         return <HomePage signOutUser={signOutUser} userInfo={userInfo} />;
     } else if (screen == "loginSign") {
-        return <LoginSignPage signInUser={signInUser} />;
+        return (
+            <>
+                <LoginSignPage signInUser={signInUser} />
+            </>
+        );
     }
 }
 

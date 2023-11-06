@@ -140,7 +140,7 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
         console.log("reloading recording");
         function deleteRecording(event) {
             let evtTgt = event.target;
-            evtTgt.parentNode.parentNode.parentNode.removeChild(evtTgt.parentNode.parentNode);
+            evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
             console.log("deleting recording");
         }
         return (

@@ -5,6 +5,7 @@ export default function MyProfileContainer({ toProfileView, userInfo }) {
             <h3>
                 {userInfo.displayName} ({userInfo.username})
             </h3>
+            <img src="../assets/Default-icon.jpeg" alt="profile picture" />
             <b>0 </b>posts
         </div>
     );
