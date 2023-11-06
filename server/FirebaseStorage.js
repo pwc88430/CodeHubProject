@@ -58,6 +58,6 @@ module.exports = class FirebaseStorage {
         writeStream.end(buffer);
 
         // return file location so server can add it to whatever it needs
-        return `${userLocation}/${fileName}.mp3`;
+        return `${userLocation}/${givenTime}.mp3`;
     }
 };
