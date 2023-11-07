@@ -22,9 +22,15 @@ router.post("/", async (req, res) => {
         return;
     }
 
-    // TODO: NEED TO CHECK IF USER HAS ALREADY LIKED POST, UNLIKE IF THEY HAVE
+    let userLikes = await Helper.recieveFromDb("/Users/" + info.username + "/likedPosts/" + info.postId);
+    if (userLikes == null) {
+        await Helper.uploadToDb("/Users/" + info.username + "/likedPosts/" + info.postId, "");
+        await Helper.uploadToDb("/Posts/" + info.postId + "/likes", result.likes + 1);
+    } else {
+        await db.remove("/Users/" + info.username + "/likedPosts/" + info.postId);
+        await Helper.uploadToDb("/Posts/" + info.postId + "/likes", result.likes - 1);
+    }
 
-    let output = await Helper.uploadToDb("/Posts/" + info.postId + "/likes", result.likes + 1);
     res.send(0);
 });
 

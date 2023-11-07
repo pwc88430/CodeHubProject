@@ -3,7 +3,7 @@ var router = express.Router();
 var Helper = require("./other/Helper");
 
 router.post("/", async (req, res) => {
-    // TODO: test, comments, authorize, make sure needed variables are sent
+    // TODO: test, make sure needed variables are sent
     let info = req.body;
     console.log("Request recieved");
 

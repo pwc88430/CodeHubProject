@@ -35,8 +35,8 @@ router.post("/", async (req, res) => {
         let output = [];
         for (i = info.startIndex; i < Math.min(keys.length, info.toIfExists); i++) {
             output.push({
-                postData: await Helper.recieveFromDb("/Posts/" + info.targetUsername + ":" + keys[i]),
                 audioURL: await Helper.recieveFile(data[keys[i]].audioLocation + ".mp3"),
+                postData: await Helper.recieveFromDb("/Posts/" + info.targetUsername + ":" + keys[i]),
             });
         }
         res.send(output);

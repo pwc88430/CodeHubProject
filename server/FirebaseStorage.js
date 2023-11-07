@@ -7,7 +7,7 @@ module.exports = class FirebaseStorage {
     static async requestFile(fileLocation) {
         console.log(fileLocation);
         const file = bucket.file(fileLocation);
-        const getUrlPromise = new Promise((resolve, reject) => {
+        const getUrlPromise = new Promise(async (resolve, reject) => {
             file.getSignedUrl(
                 {
                     action: "read",
@@ -22,6 +22,7 @@ module.exports = class FirebaseStorage {
                 }
             );
         });
+
         let output = null;
         try {
             output = await getUrlPromise;
