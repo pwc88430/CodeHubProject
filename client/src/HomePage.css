@@ -43,7 +43,7 @@ body {
     transition: width 2s linear 1s;
     grid-template-areas:
         "header header header"
-        "profile feed search"
+        "profile filters search"
         "profile feed myPosts"
         "profile feed myPosts"
         "newRecording feed myPosts";
@@ -63,7 +63,7 @@ body {
     grid-template-rows: 100px 120px 120px 240px 240px;
     grid-template-areas:
         "header header header"
-        "profile feed search"
+        "profile filters search"
         "newRecording feed myPosts"
         "newRecording feed myPosts"
         "newRecording feed myPosts";
@@ -82,7 +82,7 @@ body {
     grid-template-rows: 100px 120px 120px 240px 240px;
     grid-template-areas:
         "header header header"
-        "profile feed search"
+        "profile filters search"
         "newRecording feed search"
         "newRecording feed search"
         "newRecording feed myPosts";
@@ -102,7 +102,7 @@ body {
     grid-template-rows: 100px 120px 120px 240px 240px;
     grid-template-areas:
         "header header header"
-        "profile feed search"
+        "profile filters search"
         "profile feed search"
         "profile feed search"
         "newRecording feed myPosts";
@@ -129,10 +129,30 @@ body {
     grid-area: myPosts;
     background-color: rgb(183, 220, 250);
     margin: 20px;
-    margin-top: 7px;
+    margin-top: -25px;
     border-radius: 20px;
     padding-left: 20px;
     padding-right: 20px;
+    overflow: hidden;
+}
+
+#post-container {
+    height: 88%;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+#post-container::-webkit-scrollbar {
+    display: none;
+}
+
+#filters-container {
+    grid-area: filters;
+    display: flex;
+    height: fit-content;
+    margin: 15px;
+    margin-left: 20px;
 }
 
 #myProfileContainer {
@@ -140,7 +160,7 @@ body {
     grid-area: profile;
     margin: 20px;
     margin-bottom: 7px;
-    margin-top: 50px;
+
     border-radius: 20px;
     padding-left: 20px;
     padding-right: 20px;
@@ -156,7 +176,7 @@ body {
     grid-area: feed;
     background-color: rgb(183, 220, 250);
     margin: 20px;
-    margin-top: 50px;
+    margin-top: -55px;
     border-radius: 20px;
     padding-left: 20px;
     padding-right: 20px;
@@ -170,8 +190,21 @@ body {
     grid-area: search;
     background-color: rgb(183, 220, 250);
     margin: 20px;
-    margin-bottom: 7px;
-    margin-top: 50px;
+    margin-bottom: 40px;
+
     border-radius: 20px;
     padding-left: 20px;
+}
+
+#searchContainer textarea {
+    background: rgb(183, 220, 250);
+    border: none;
+    resize: none;
+    overflow: none;
+    outline: none;
+    padding: 15px;
+    height: 50%;
+    width: 90%;
+    font-size: 20px;
+    padding-left: 0px;
 }

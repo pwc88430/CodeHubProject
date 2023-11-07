@@ -45,7 +45,7 @@ export default function MyRecordingsContainer({ toMyRecordingsView, userInfo }) 
         <div onClick={toMyRecordingsView} id="myRecordingsContainer">
             <h3>My Posts</h3>
             <hr></hr>
-            <ol>{loadedPosts}</ol>
+            <div id="post-container">{loadedPosts}</div>
         </div>
     );
 }

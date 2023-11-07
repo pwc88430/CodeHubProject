@@ -7,6 +7,7 @@ import CreateNewRecordingContainer from "./homePageComponents/CreateNewRecording
 import MyFeedContainer from "./homePageComponents/MyFeedContainer";
 import MyRecordingsContainer from "./homePageComponents/MyRecordingsContainer";
 import SearchContainer from "./homePageComponents/SearchContainer";
+import FiltersContainer from "./homePageComponents/FiltersContainer";
 
 function HomePage({ userInfo, signOutUser }) {
     function getRecordings() {
@@ -94,7 +95,7 @@ function HomePage({ userInfo, signOutUser }) {
                     Sign Out
                 </button>
             </header>
-
+            <FiltersContainer />
             <MyProfileContainer toProfileView={toProfileView} userInfo={userInfo} />
             <MyFeedContainer />
             <MyRecordingsContainer toMyRecordingsView={toMyRecordingsView} userInfo={userInfo} />
