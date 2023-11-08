@@ -2,7 +2,6 @@ import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import { useState } from "react";
 import ErrorBox from "./ErrorBox";
-import Header from "./Header";
 import "./LoginSignPage.css";
 import "./LoginForm.css";
 

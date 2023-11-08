@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
-import LoginForm from "./LoginForm";
 import RecordingPage from "./RecordingPage";
 import HomePage from "./HomePage";
 import { useState } from "react";
-import SignUpForm from "./SignUpForm";
 import LoginSignPage from "./loginSignPage";
-import Header from "./Header";
 
 function App() {
     const [screen, setScreen] = useState("loginSign");

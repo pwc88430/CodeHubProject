@@ -1,7 +1,5 @@
 import React from "react";
 import "./HomePage.css";
-import MyRecordingContainer from "./MyRecordingContainer";
-import RecordingPage from "./RecordingPage";
 import MyProfileContainer from "./homePageComponents/MyProfileContainer";
 import CreateNewRecordingContainer from "./homePageComponents/CreateNewRecordingContainer";
 import MyFeedContainer from "./homePageComponents/MyFeedContainer";
