@@ -7,6 +7,9 @@ import MyRecordingsContainer from "./homePageComponents/MyRecordingsContainer";
 import SearchContainer from "./homePageComponents/SearchContainer";
 import FiltersContainer from "./homePageComponents/FiltersContainer";
 
+import logo from "./icon.svg";
+import microphone from "./microphone.svg";
+
 function HomePage({ userInfo, signOutUser }) {
     function getRecordings() {
         const xhr = new XMLHttpRequest();
@@ -29,76 +32,29 @@ function HomePage({ userInfo, signOutUser }) {
         xhr.send(JSON.stringify(body));
     }
 
-    function toProfileView() {
-        const homePageContainerEl = document.querySelector("#homePageContainer");
-        if (homePageContainerEl.classList.contains("newRecordingMyRecordings")) {
-            homePageContainerEl.removeAttribute("class");
-            homePageContainerEl.classList.add("profileMyRecordings");
-        } else if (homePageContainerEl.classList.contains("newRecordingSearch")) {
-            homePageContainerEl.removeAttribute("class");
-            homePageContainerEl.classList.add("profileSearch");
-        }
-    }
-
-    function toMyRecordingsView() {
-        const homePageContainerEl = document.querySelector("#homePageContainer");
-        if (homePageContainerEl.classList.contains("profileSearch")) {
-            homePageContainerEl.removeAttribute("class");
-            homePageContainerEl.classList.add("profileMyRecordings");
-        } else if (homePageContainerEl.classList.contains("newRecordingSearch")) {
-            homePageContainerEl.removeAttribute("class");
-            homePageContainerEl.classList.add("newRecordingMyRecordings");
-        }
-    }
-
-    function toCreateView() {
-        const homePageContainerEl = document.querySelector("#homePageContainer");
-        if (homePageContainerEl.classList.contains("profileMyRecordings")) {
-            homePageContainerEl.removeAttribute("class");
-            homePageContainerEl.classList.add("newRecordingMyRecordings");
-        } else if (homePageContainerEl.classList.contains("profileSearch")) {
-            homePageContainerEl.removeAttribute("class");
-            homePageContainerEl.classList.add("newRecordingSearch");
-        }
-    }
-
-    function toSearchView() {
-        const homePageContainerEl = document.querySelector("#homePageContainer");
-        if (homePageContainerEl.classList.contains("profileMyRecordings")) {
-            homePageContainerEl.removeAttribute("class");
-            homePageContainerEl.classList.add("profileSearch");
-        } else if (homePageContainerEl.classList.contains("newRecordingMyRecordings")) {
-            homePageContainerEl.removeAttribute("class");
-            homePageContainerEl.classList.add("newRecordingSearch");
-        }
-    }
-
     return (
         <div id="homePageContainer" className="profileMyRecordings">
             <header className="page-header">
-                <img src="/logo.png" alt="logo" className="logo" />
-                <div className="header-icons">
-                    <button className="home-button">
-                        <img src="/homeButton.png" alt="home" />
-                    </button>
-                    <button className="message-button">
-                        <img src="/messageButton.png" alt="messages" />
-                    </button>
-                    <button className="notification-button">
-                        <img src="/notiBell.png" alt="notifications" />
-                    </button>
-                </div>
+                <img src={logo} alt="logo" className="logo" />
 
-                <button id="back" className="button" onClick={signOutUser}>
+                <button id="signOutButton" className="button" onClick={signOutUser}>
                     Sign Out
                 </button>
+
+                <SearchContainer />
             </header>
-            <FiltersContainer />
-            <MyProfileContainer toProfileView={toProfileView} userInfo={userInfo} />
-            <MyFeedContainer userInfo={userInfo} />
-            <MyRecordingsContainer toMyRecordingsView={toMyRecordingsView} userInfo={userInfo} />
-            <CreateNewRecordingContainer toCreateView={toCreateView} userInfo={userInfo} />
-            <SearchContainer toSearchView={toSearchView} />
+
+            <section className="wrapper">
+                <MyFeedContainer userInfo={userInfo} />
+                {/* <CreateNewRecordingContainer userInfo={userInfo} /> */}
+            </section>
+
+            <div id="createPost">
+                <img src={microphone} alt="create post"></img>
+            </div>
+            {/* <FiltersContainer /> */}
+            {/* <MyProfileContainer toProfileView={toProfileView} userInfo={userInfo} /> */}
+            {/* <MyRecordingsContainer userInfo={userInfo} /> */}
         </div>
     );
 }

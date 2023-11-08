@@ -6,8 +6,7 @@ export default function SearchContainer({ toSearchView }) {
     const [foundPosts, setFoundPosts] = useState([]);
 
     function updateText(event) {
-        setEnteredSearch(event.target.value);
-        console.log("changed");
+        // setEnteredSearch(event.target.value);
     }
 
     const foundUsersList = foundUsers.map((user) => <li>{user.name}</li>);
@@ -55,18 +54,18 @@ export default function SearchContainer({ toSearchView }) {
 
     return (
         <div onClick={toSearchView} id="searchContainer">
-            <textarea placeholder="Search" onChange={updateText}></textarea>
-            <button onClick={search} className="button">
+            <input id="search" placeholder="Search" maxLength={20} onKeyDown={updateText}></input>
+            {/* <button onClick={search} className="button">
                 Search
-            </button>
-            <div id="userSearch">
+            </button> */}
+            {/* <div id="userSearch">
                 Users
                 <ul>{foundUsersList}</ul>
             </div>
             <div id="postSearch">
                 Posts
                 <ul>{foundPostsList}</ul>
-            </div>
+            </div> */}
         </div>
     );
 }
