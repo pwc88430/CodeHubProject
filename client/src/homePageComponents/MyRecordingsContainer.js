@@ -38,7 +38,7 @@ export default function MyRecordingsContainer({ toMyRecordingsView, userInfo }) 
     }
 
     const loadedPosts = posts.map((post) => {
-        return <Post post={post} />;
+        return post.postData !== null ? <Post post={post} /> : <div />;
     });
 
     return (

@@ -1,13 +1,10 @@
 import React, { useEffect } from "react";
 import LoginForm from "./LoginForm";
-import "./LoginForm.css";
 import RecordingPage from "./RecordingPage";
-import "./RecordingPage.css";
 import HomePage from "./HomePage";
 import { useState } from "react";
 import SignUpForm from "./SignUpForm";
 import LoginSignPage from "./loginSignPage";
-import "./LoginSignPage.css";
 import Header from "./Header";
 
 function App() {

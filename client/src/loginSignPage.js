@@ -3,6 +3,8 @@ import SignUpForm from "./SignUpForm";
 import { useState } from "react";
 import ErrorBox from "./ErrorBox";
 import Header from "./Header";
+import "./LoginSignPage.css";
+import "./LoginForm.css";
 
 export default function LoginSignPage({ signInUser }) {
     const [error, setError] = useState("");

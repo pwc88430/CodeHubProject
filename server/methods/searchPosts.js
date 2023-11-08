@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Helper = require("./other/Helper");
+var { db } = require("../firebaseInit");
 
 router.post("/", async (req, res) => {
     // TODO: limit amount sent back + check if this even works + filter by visibility

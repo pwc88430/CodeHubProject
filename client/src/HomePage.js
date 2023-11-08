@@ -97,7 +97,7 @@ function HomePage({ userInfo, signOutUser }) {
             </header>
             <FiltersContainer />
             <MyProfileContainer toProfileView={toProfileView} userInfo={userInfo} />
-            <MyFeedContainer />
+            <MyFeedContainer userInfo={userInfo} />
             <MyRecordingsContainer toMyRecordingsView={toMyRecordingsView} userInfo={userInfo} />
             <CreateNewRecordingContainer toCreateView={toCreateView} userInfo={userInfo} />
             <SearchContainer toSearchView={toSearchView} />

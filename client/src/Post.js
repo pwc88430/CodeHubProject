@@ -3,7 +3,7 @@ import "./Post.css";
 export default function Post({ post }) {
     return (
         <div id="post">
-            <h4 id="title">{post.postData.title}</h4>
+            <h3 id="title">{post.postData.title}</h3>
             <audio src={post.audioURL} controls></audio>
             <h3 id="author">{post.postData.author}</h3>
             <div>
