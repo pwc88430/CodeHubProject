@@ -56,7 +56,9 @@ export default function SearchContainer({ toSearchView }) {
     return (
         <div onClick={toSearchView} id="searchContainer">
             <textarea placeholder="Search" onChange={updateText}></textarea>
-            <button onClick={search}>Go</button>
+            <button onClick={search} className="button">
+                Search
+            </button>
             <div id="userSearch">
                 Users
                 <ul>{foundUsersList}</ul>

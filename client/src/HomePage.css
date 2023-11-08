@@ -194,6 +194,7 @@ body {
     overflow: hidden;
     border-radius: 20px;
     padding-left: 20px;
+    position: relative;
 }
 
 #searchContainer textarea {
@@ -203,8 +204,20 @@ body {
     overflow: none;
     outline: none;
     padding: 15px;
-    height: auto;
+    height: 1.5rem;
     width: 60%;
     font-size: 20px;
     padding-left: 0px;
+}
+
+#searchContainer button {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    background-color: rgb(69, 176, 247);
+    border-radius: 10px;
+    border: none;
+    padding: 7px;
+    margin-top: 0;
+    margin-right: -1rem;
 }

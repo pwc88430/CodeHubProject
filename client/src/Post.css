@@ -15,3 +15,9 @@ h4 {
 #viewsLikes {
     align-items: end;
 }
+
+#post_data_container {
+    background-color: #faf3b3;
+    padding: 5px;
+    border-radius: 5px;
+}
