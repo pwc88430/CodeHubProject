@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Helper = require("./other/Helper");
+let { db } = require("../firebaseInit");
 
 router.post("/", async (req, res) => {
     // TODO: limit amount sent back + check if this even works + filter by visibility
@@ -10,6 +11,7 @@ router.post("/", async (req, res) => {
         .ref("/Posts/")
         .orderByChild("popularity")
         .on("value", (val) => {
+            console.log(val);
             if (val.title.includes(info.search)) {
                 arr.push(val);
             }
