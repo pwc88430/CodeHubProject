@@ -88,3 +88,19 @@ audio::-webkit-media-controls-panel {
     margin: 0;
     padding: 0;
 }
+
+#upload.active {
+    background-color: orange;
+    width: 8rem;
+}
+
+#upload.inactive {
+}
+
+#discard.active {
+    background-color: red;
+    width: 5rem;
+}
+#discard.inactive {
+    background-color: rgb(120, 2, 2);
+}

@@ -28,6 +28,7 @@ router.post("/", async (req, res) => {
         authorName: info.userData.displayName,
         visibility: info.visibility,
         edited: false,
+        description: info.description,
     };
 
     let storageResult = await Helper.uploadFile(info.audioChunks, info.userData.username, currentTime).catch((err) => {

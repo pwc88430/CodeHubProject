@@ -1,6 +1,12 @@
 import { useState } from "react";
 
 function RecordingBlock({ audioURL, clipLabel, handleClick, chunks, userInfo }) {
+    const [enteredDescription, setEnteredDescription] = useState("");
+
+    function updateDescription(event) {
+        setEnteredDescription(event.target.value);
+    }
+
     async function uploadClip() {
         const textAreaEl = document.querySelector("#newDescription");
 
@@ -32,6 +38,7 @@ function RecordingBlock({ audioURL, clipLabel, handleClick, chunks, userInfo }) 
                     postTitle: clipLabel,
                     audioChunks: base64String,
                     secretKey: userInfo.secretKey,
+                    description: enteredDescription,
                 });
 
                 xhr.onload = () => {
@@ -58,15 +65,11 @@ function RecordingBlock({ audioURL, clipLabel, handleClick, chunks, userInfo }) 
                 <h4 id="audioTrackLabel">{clipLabel}</h4>
                 <audio src={audioURL} controls></audio>
                 <h4 id="newDescription">Description</h4>
-                <textarea onChange={handleWcChange} maxlength="100"></textarea>
+                <textarea onChange={updateDescription} maxlength="100"></textarea>
             </div>
 
             <button id="uploadTrackButton" onClick={uploadClip}>
                 Upload
-            </button>
-
-            <button onClick={handleClick} id="deleteTrackButton">
-                Discard
             </button>
         </div>
     );

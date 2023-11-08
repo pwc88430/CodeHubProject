@@ -1,5 +1,5 @@
 #post {
-    background-color: #ffffff50;
+    background-color: rgb(221, 219, 219);
     width: auto;
     height: fit-content;
     padding: 10px;
@@ -12,17 +12,12 @@ h4 {
     margin: 0;
 }
 
-h3 {
-    color: black;
-    font-weight: bolder;
-    font-family: Calibri;
-}
-
 #viewsLikes {
     align-items: end;
 }
 
-audio {
-    width: 100%;
-    border-radius: 0;
+#post_data_container {
+    background-color: #faf3b3;
+    padding: 5px;
+    border-radius: 5px;
 }

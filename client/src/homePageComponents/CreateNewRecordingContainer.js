@@ -166,6 +166,12 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                 <button id="stop" className="button">
                     Stop
                 </button>
+                <button id="upload" className="button active">
+                    Upload
+                </button>
+                <button id="discard" className="button active" onClick={() => setRecording([])}>
+                    Discard
+                </button>
             </div>
             <ol id="recordingList">{recordingListDisplay}</ol>
         </div>
