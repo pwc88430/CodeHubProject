@@ -91,7 +91,7 @@ function HomePage({ userInfo, signOutUser }) {
             <div id="createPost">
                 <img src={microphone} alt="create post" onClick={toggleShowNewRecordingContainer}></img>
             </div>
-            <CreateNewRecordingContainer userInfo={asdf} />
+            <CreateNewRecordingContainer userInfo={userInfo} />
             {/* <FiltersContainer /> */}
             {/* <MyProfileContainer toProfileView={toProfileView} userInfo={userInfo} /> */}
             {/* <MyRecordingsContainer userInfo={userInfo} /> */}

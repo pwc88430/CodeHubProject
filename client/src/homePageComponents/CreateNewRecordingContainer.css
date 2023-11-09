@@ -97,9 +97,6 @@ audio::-webkit-media-controls-panel {
     width: 8rem;
 }
 
-#upload.inactive {
-}
-
 #discard.active {
     background-color: red;
     width: 5rem;
