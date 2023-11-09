@@ -108,7 +108,7 @@ audio::-webkit-media-controls-panel {
 #blackBg {
     width: 100vw;
     height: 100vh;
-    background-color: #ffffffaa;
+    background-color: #ffffffab;
     position: fixed;
     left: 0;
     bottom: 0;
