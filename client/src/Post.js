@@ -1,18 +1,33 @@
 import "./Post.css";
+import like from "./like.svg";
+import listens from "./listens.svg";
+import user from "./assets/default_user.svg";
 
 export default function Post({ post }) {
+    function toggleLike(event) {
+        event.target.classList.toggle("liked");
+    }
+
+    let date = new Date(post.postData.dateCreated);
     return (
         <div id="post">
-            <h3 id="title">{post.postData.title}</h3>
+            <h3 id="post_author">
+                <img id="post_user_image" src={user}></img>
+                {post.postData.author}
+            </h3>
+            <h3 id="post_title">{post.postData.title}</h3>
             <audio src={post.audioURL} controls></audio>
-            <h3 id="author">{post.postData.author}</h3>
-            <div id="post_data_container">
-                <div id="viewsLikes">
-                    <h4 id="views">Views: {post.postData.views}</h4>
-                    <h4 id="likes">Likes: {post.postData.likes}</h4>
-                </div>
-                <h4 id="date">{post.postData.dateCreated}</h4>
+
+            <div id="post_description">
                 Description: <p>{post.postData.description}</p>
+            </div>
+            <div id="post_stats">
+                {date.toLocaleString("en-US")}
+                <div id="viewsLikes">
+                    <img src={listens} alt="listens"></img>
+                    {post.postData.views} <img onClick={toggleLike} id="post_like_icon" src={like} alt="listens"></img>
+                    {post.postData.likes}
+                </div>
             </div>
         </div>
     );

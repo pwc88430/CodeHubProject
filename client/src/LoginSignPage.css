@@ -1,20 +1,29 @@
 .tabs {
     margin-top: 200px;
-    background: #cbe1f7;
+    background: #4a90e2;
     border-radius: 0.5rem;
     grid-template-rows: auto 1fr;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
-    min-width: 500px;
+    width: 400px;
+}
+
+.tabs h2 {
+    margin-bottom: 20px;
+}
+
+body {
+    background-color: #f5f5f5;
 }
 
 .mainButton {
     padding: 1rem 0;
     border: none;
     font-size: 1rem;
-    background: #b6c9f0;
+    background: #f8dd9f;
     cursor: pointer;
     transition: all 0.1s linear;
     letter-spacing: 0.25rem;
+    width: 100%;
 }
 
 .btn-container {
@@ -31,7 +40,7 @@
 }
 
 .mainButton:hover:not(.live) {
-    background: #6485f2;
+    background: #ffd166;
     color: white;
 }
 
@@ -60,12 +69,12 @@
 }
 
 .mainButton.live {
-    background: #cbe1f7;
+    background: #4a90e2;
 }
 
 #error-box-bad {
     margin-top: 10px;
-    width: 500px;
+    width: 400px;
     height: fit-content;
     background-color: rgb(247, 228, 228);
     border-radius: 0.5rem;
@@ -82,7 +91,7 @@
 
 #error-box-good {
     margin-top: 10px;
-    width: 500px;
+    width: 400px;
     height: fit-content;
     background-color: rgb(233, 247, 228);
     border-radius: 0.5rem;
@@ -114,4 +123,58 @@
     60% {
         transform: translate3d(4px, 0, 0);
     }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button {
+    background: #ffd166;
+
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #f5b624;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+label {
+    width: 120px;
+    margin: 5px;
+    color: black;
+}
+
+input {
+    margin: 5px;
+    width: 250px;
 }

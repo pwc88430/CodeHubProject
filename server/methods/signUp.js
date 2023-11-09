@@ -32,6 +32,7 @@ router.post("/", async (req, res) => {
         password: password,
         displayName: displayName,
         dateCreated: new Date().getTime(),
+        userIcon: "default",
     });
 
     // if account creation is unsuccessful, return error

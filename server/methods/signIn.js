@@ -27,6 +27,7 @@ router.post("/", async (req, res) => {
                 secretKey: Helper.stringToHash(username + password),
                 displayName: data.displayName,
                 type: "Account Info",
+                userIcon: data.userIcon,
             };
 
             res.send(output);

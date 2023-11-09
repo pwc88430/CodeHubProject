@@ -32,12 +32,22 @@ function LoginForm({ changeScreen, toHomePage, signInUser, setErrorMessage, toSi
             <h2>Login</h2>
             <div id="form">
                 <div>
-                    <label htmlFor="username">Username:</label>
-                    <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input
+                        placeholder="Username"
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
                 </div>
                 <div>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input
+                        placeholder="Password"
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                 </div>
                 <button id="loginButton" className="button" type="submit" onClick={signIn}>
                     Log in

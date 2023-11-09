@@ -60,10 +60,6 @@ header {
     margin-top: 30px;
 }
 
-#feedContainer h3 {
-    text-align: center;
-}
-
 #createPost {
     background: #ffd166;
     border-radius: 50px;
