@@ -48,7 +48,7 @@ export default function MyFeedContainer({ userInfo }) {
         <div>
             <h3>My Posts</h3>
             <hr></hr>
-            <div id="post-container">{loadedPosts}</div>
+            <div>{loadedPosts}</div>
         </div>
     );
 }
