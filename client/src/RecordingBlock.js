@@ -33,7 +33,7 @@ function RecordingBlock({ audioURL, clipLabel, handleClick, duration, chunks, us
                         username: userInfo.username,
                         displayName: userInfo.displayName,
                         password: userInfo.password,
-                        userIcon: userInfo.userIcon,
+                        userIcon: userInfo.userIcon || "./user.png",
                     },
                     visibility: 0,
                     postTitle: clipLabel,

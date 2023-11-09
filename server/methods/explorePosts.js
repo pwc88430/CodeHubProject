@@ -15,10 +15,12 @@ router.post("/", async (req, res) => {
         if (i >= keys.length) break;
         if (!viewedPosts || !(keys[i] in viewedPosts)) {
             await Helper.uploadToDb(`Users/${username}/viewedPosts/${keys[i]}`, "");
-            await Helper.uploadToDb(`Posts/${keys[i]}/popularity`, info[keys[i]].popularity - 10);
+            await Helper.uploadToDb(`Posts/${keys[i]}`, { popularity: info[keys[i]].popularity - 10, views: info[keys[i]].views + 1 });
+            info[keys[i]].popularity -= 10;
+            info[keys[i]].views++;
             arr.push({
                 audioURL: await Helper.recieveFile(info[keys[i]].audioLocation + ".mp3"),
-                postData: await Helper.recieveFromDb("/Posts/" + keys[i]),
+                postData: info[keys[i]],
             });
             total++;
         }
