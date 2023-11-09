@@ -163,7 +163,7 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
     });
 
     return (
-        <div onClick={toCreateView} id="createNewRecordingContainer">
+        <div onClick={toCreateView} className="hidden" id="createNewRecordingContainer">
             <div id="blackBg"></div>
             <h3>Create New Post</h3>
             <canvas className="visualizer" height="60px"></canvas>

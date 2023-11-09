@@ -38,15 +38,6 @@ function HomePage({ userInfo, signOutUser }) {
         createNewRecordingContainerEl.classList.toggle("hidden");
     }
 
-    function displayNewRecording() {
-        let newRecording = document.getElementById("createNewRecordingContainer");
-        if (newRecording.style.display != "block") {
-            newRecording.style.display = "block";
-        } else {
-            newRecording.style.display = "none";
-        }
-    }
-
     let loadingMore = true;
     var oldOffsetY = 0;
     function checkForMoreAudio() {
