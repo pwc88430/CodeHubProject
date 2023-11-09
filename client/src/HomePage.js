@@ -50,6 +50,7 @@ function HomePage({ userInfo, signOutUser }) {
     let loadingMore = true;
     var oldOffsetY = 0;
     function checkForMoreAudio() {
+        if (document.getElementById("loadMoreAudio") == null) return;
         let moreAudio = document.getElementById("loadMoreAudio");
         let rectY = moreAudio.getBoundingClientRect().y;
         if (moreAudio.offsetTop != oldOffsetY) {
@@ -60,14 +61,14 @@ function HomePage({ userInfo, signOutUser }) {
         if (rectY <= (window.innerHeight || document.documentElement.clientHeight)) {
             if (!loadingMore) {
                 loadingMore = true;
-                let a = document.getElementById("loadMoreAudio").click();
+                document.getElementById("loadMoreAudio").click();
             }
         }
     }
 
     useEffect(() => {
         oldOffsetY = document.getElementById("loadMoreAudio").offsetTop;
-        setInterval(checkForMoreAudio, 1000);
+        var checkAudio = setInterval(checkForMoreAudio, 1000);
     }, []);
 
     return (
