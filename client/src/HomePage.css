@@ -45,14 +45,20 @@ header {
     left: 2vw;
 }
 
-#signOutButton {
+#profileButton {
     position: absolute;
     right: 2vw;
     top: 0;
     bottom: 0;
     height: 40px;
     margin: auto;
-    background: #ffd166;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#profileButton img {
+    height: 100%;
 }
 
 #searchContainer {
@@ -149,4 +155,12 @@ header {
 #createNewRecordingContainer > #innerContainer {
     z-index: 1;
     position: relative;
+}
+
+#loadMoreAudio {
+    position: absolute;
+    bottom: 1000px;
+    width: 0;
+    height: 0;
+    z-index: 10;
 }

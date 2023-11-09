@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./HomePage.css";
 import MyProfileContainer from "./homePageComponents/MyProfileContainer";
 import CreateNewRecordingContainer from "./homePageComponents/CreateNewRecordingContainer";
@@ -9,6 +9,7 @@ import FiltersContainer from "./homePageComponents/FiltersContainer";
 
 import logo from "./icon.svg";
 import microphone from "./microphone.svg";
+import userIcon from "./user.png";
 
 function HomePage({ userInfo, signOutUser }) {
     function getRecordings() {
@@ -41,20 +42,43 @@ function HomePage({ userInfo, signOutUser }) {
         }
     }
 
+    let loadingMore = true;
+    var oldOffsetY = 0;
+    function checkForMoreAudio() {
+        let moreAudio = document.getElementById("loadMoreAudio");
+        let rectY = moreAudio.getBoundingClientRect().y;
+        if (moreAudio.offsetTop != oldOffsetY) {
+            console.log("changed");
+            loadingMore = false;
+            oldOffsetY = moreAudio.offsetTop;
+        }
+        if (rectY <= (window.innerHeight || document.documentElement.clientHeight)) {
+            if (!loadingMore) {
+                loadingMore = true;
+                let a = document.getElementById("loadMoreAudio").click();
+            }
+        }
+    }
+
+    useEffect(() => {
+        oldOffsetY = document.getElementById("loadMoreAudio").offsetTop;
+        setInterval(checkForMoreAudio, 1000);
+    }, []);
+
     return (
         <div id="homePageContainer" className="profileMyRecordings">
             <header className="page-header">
                 <img src={logo} alt="logo" className="logo" />
 
-                <button id="signOutButton" className="button" onClick={signOutUser}>
-                    Sign Out
+                <button id="profileButton" onClick={signOutUser}>
+                    <img src={userIcon}></img>
                 </button>
 
                 <SearchContainer />
             </header>
 
             <section className="wrapper">
-                <div></div>
+                <MyProfileContainer userInfo={userInfo}></MyProfileContainer>
                 <MyFeedContainer userInfo={userInfo} />
                 <div></div>
             </section>

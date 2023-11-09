@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Helper = require("./other/Helper");
+var { db } = require("../firebaseInit");
 
 router.post("/", async (req, res) => {
     let info = req.body;
@@ -8,11 +9,11 @@ router.post("/", async (req, res) => {
     if (
         !info.username ||
         !info.password ||
-        !info.secretToken ||
+        !info.secretKey ||
         !info.postId ||
-        !Helper.authorized(info.secretToken, info.username, info.password)
+        !Helper.authorized(info.secretKey, info.username, info.password)
     ) {
-        res.send(null);
+        res.send(Helper.Error("Necessary parameters not given."));
         return;
     }
 
@@ -25,13 +26,17 @@ router.post("/", async (req, res) => {
     let userLikes = await Helper.recieveFromDb("/Users/" + info.username + "/likedPosts/" + info.postId);
     if (userLikes == null) {
         await Helper.uploadToDb("/Users/" + info.username + "/likedPosts/" + info.postId, "");
-        await Helper.uploadToDb("/Posts/" + info.postId, { likes: result.likes + 1, popularity: result.popularity + 50 });
+        await Helper.uploadToDb("/Posts/" + info.postId + "/likes", result.likes + 1);
+        await Helper.uploadToDb("/Posts/" + info.postId + "/popularity", result.popularity + 50);
     } else {
-        await db.remove("/Users/" + info.username + "/likedPosts/" + info.postId);
-        await Helper.uploadToDb("/Posts/" + info.postId, { likes: result.likes - 1, popularity: result.popularity - 50 });
+        await db.ref("/Users/" + info.username + "/likedPosts/" + info.postId).remove();
+        await Helper.uploadToDb("/Posts/" + info.postId + "/likes", result.likes - 1);
+        await Helper.uploadToDb("/Posts/" + info.postId + "/popularity", result.popularity - 50);
     }
 
-    res.send(0);
+    console.log("liked post");
+
+    res.send("Done");
 });
 
 module.exports = router;

@@ -4,14 +4,30 @@ var Helper = require("./other/Helper");
 var { db } = require("../firebaseInit");
 
 router.post("/", async (req, res) => {
-    let { username, password, secretCode } = req.body;
+    let { username, password, secretCode, startIndex, toIfExists } = req.body;
     let arr = [];
-    let info = (await db.ref("/Posts/").orderByChild("popularity").once("value")).val();
-    let i = 0;
+    let info = (
+        await new Promise((resolve, reject) => {
+            db.ref("/Posts/")
+                .orderByChild("popularity")
+                .once(
+                    "value",
+                    (data) => {
+                        resolve(data);
+                    },
+                    (error) => {
+                        reject(error);
+                    }
+                );
+        })
+    ).val();
+    let i = startIndex;
     let total = 0;
     var viewedPosts = await Helper.recieveFromDb(`Users/${username}/viewedPosts`);
     var keys = Object.keys(info);
-    while (total < 50 && i < 200) {
+    keys.reverse();
+
+    while (total < toIfExists - startIndex && i < toIfExists * 2) {
         if (i >= keys.length) break;
         if (!viewedPosts || !(keys[i] in viewedPosts)) {
             await Helper.uploadToDb(`Users/${username}/viewedPosts/${keys[i]}`, "");
@@ -21,19 +37,22 @@ router.post("/", async (req, res) => {
             arr.push({
                 audioURL: await Helper.recieveFile(info[keys[i]].audioLocation + ".mp3"),
                 postData: info[keys[i]],
+                liked: false,
             });
             total++;
         }
         i++;
     }
-    i = 0;
-    if (arr.length < 50) {
-        while (i < 50) {
+    i = startIndex;
+    if (arr.length < toIfExists - startIndex) {
+        while (i < toIfExists) {
             if (i >= keys.length) break;
             if (keys[i] in viewedPosts) {
+                console.log(info[keys[i]].popularity);
                 arr.push({
                     audioURL: await Helper.recieveFile(info[keys[i]].audioLocation + ".mp3"),
                     postData: await Helper.recieveFromDb("/Posts/" + keys[i]),
+                    liked: (await Helper.recieveFromDb("Users/" + username + "/likedPosts/" + keys[i])) !== null,
                 });
                 total++;
             }

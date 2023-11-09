@@ -8,9 +8,41 @@ import pauseButton from "./pause.svg";
 import like from "./like.svg";
 import listens from "./listens.svg";
 
-export default function Post({ post }) {
-    function toggleLike(event) {
-        event.target.classList.toggle("liked");
+export default function Post({ post, userInfo }) {
+    function toggleLike(element, changeLikes) {
+        element.classList.toggle("liked");
+        let elementText = element.parentNode.querySelector("p");
+
+        if (!changeLikes) return;
+
+        if (element.className.includes("liked")) {
+            elementText.textContent = parseInt(elementText.textContent) + 1;
+        } else {
+            elementText.textContent = parseInt(elementText.textContent) - 1;
+        }
+
+        console.log(post.postData.author + ":" + post.postData.dateCreated);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:8000/likePost");
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        const body = {
+            username: userInfo.username,
+            password: userInfo.password,
+            secretKey: userInfo.secretKey,
+            postId: post.postData.author + ":" + post.postData.dateCreated,
+        };
+
+        xhr.onload = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.response);
+                return xhr.response;
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };
+        xhr.send(JSON.stringify(body));
     }
 
     function setPosition(e) {
@@ -93,9 +125,24 @@ export default function Post({ post }) {
             <div id="post_stats">
                 {date.toLocaleString("en-US")}
                 <div id="viewsLikes">
-                    <img src={listens} alt="listens"></img>
-                    {post.postData.views} <img onClick={toggleLike} id="post_like_icon" src={like} alt="listens"></img>
-                    {post.postData.likes}
+                    <div style={{ display: "flex" }}>
+                        <img src={listens} alt="listens"></img>
+                        <p>{post.postData.views}</p>
+                    </div>
+                    <div style={{ display: "flex" }}>
+                        <img
+                            onLoad={(e) => {
+                                if (post.liked) {
+                                    toggleLike(e.target, false);
+                                }
+                            }}
+                            onClick={(e) => toggleLike(e.target, true)}
+                            id="post_like_icon"
+                            src={like}
+                            alt="listens"
+                        ></img>
+                        <p>{post.postData.likes}</p>
+                    </div>
                 </div>
             </div>
         </div>
