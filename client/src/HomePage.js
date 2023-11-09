@@ -32,6 +32,11 @@ function HomePage({ userInfo, signOutUser }) {
         xhr.send(JSON.stringify(body));
     }
 
+    function toggleShowNewRecordingContainer() {
+        const createNewRecordingContainerEl = document.querySelector("#createNewRecordingContainer");
+        createNewRecordingContainerEl.classList.toggle("hidden");
+    }
+
     return (
         <div id="homePageContainer" className="profileMyRecordings">
             <header className="page-header">
@@ -50,8 +55,9 @@ function HomePage({ userInfo, signOutUser }) {
             </section>
 
             <div id="createPost">
-                <img src={microphone} alt="create post"></img>
+                <img src={microphone} alt="create post" onClick={toggleShowNewRecordingContainer}></img>
             </div>
+            <CreateNewRecordingContainer />
             {/* <FiltersContainer /> */}
             {/* <MyProfileContainer toProfileView={toProfileView} userInfo={userInfo} /> */}
             {/* <MyRecordingsContainer userInfo={userInfo} /> */}

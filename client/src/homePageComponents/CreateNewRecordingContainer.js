@@ -52,11 +52,11 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
 
                         analyser.getByteTimeDomainData(dataArray);
 
-                        canvasCtx.fillStyle = " rgb(183, 220, 250)";
+                        canvasCtx.fillStyle = " #4a90e2";
                         canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
                         canvasCtx.lineWidth = 0.5;
-                        canvasCtx.strokeStyle = "	rgb(256,256,256)";
+                        canvasCtx.strokeStyle = "	rgb(255, 42, 0)";
 
                         canvasCtx.beginPath();
 
@@ -156,13 +156,12 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
     });
 
     return (
-        <div onClick={toCreateView} id="createNewRecordingContainer">
+        <div onClick={toCreateView} className="hidden" id="createNewRecordingContainer">
             <h3>Create New Post</h3>
             <canvas className="visualizer" height="60px"></canvas>
             <div>
-                <button id="record" className="button">
-                    Record
-                </button>
+                <div id="record"></div>
+
                 <button id="stop" className="button">
                     Stop
                 </button>

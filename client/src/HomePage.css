@@ -92,3 +92,38 @@ header {
 #createPost:hover img {
     filter: invert(100%);
 }
+
+#createNewRecordingContainer {
+    width: 300px;
+    height: 500px;
+    background-color: #4a90e2;
+    padding: 10px;
+    border-radius: 10px;
+    position: fixed;
+    left: 20px;
+    bottom: 120px;
+    animation-name: grow;
+    animation-duration: 0.3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+#createNewRecordingContainer.hidden {
+    display: none;
+}
+
+@keyframes grow {
+    0% {
+        width: 0px;
+        height: 0px;
+    }
+
+    90% {
+        width: 310px;
+        height: 510px;
+    }
+
+    100% {
+        width: 300px;
+        height: 500px;
+    }
+}
