@@ -45,10 +45,9 @@ export default function MyFeedContainer({ userInfo }) {
     }
 
     return (
-        <div>
-            <h3>My Posts</h3>
-            <hr></hr>
-            <div>{loadedPosts}</div>
+        <div id="feedContainer">
+            <h3>Popular Posts</h3>
+            <div id="feed">{loadedPosts}</div>
         </div>
     );
 }
