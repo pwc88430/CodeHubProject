@@ -34,10 +34,10 @@ function HomePage({ userInfo, signOutUser }) {
 
     function displayNewRecording() {
         let newRecording = document.getElementById("createNewRecordingContainer");
-        if (newRecording.style.display != "none") {
-            newRecording.style.display = "none";
-        } else {
+        if (newRecording.style.display != "block") {
             newRecording.style.display = "block";
+        } else {
+            newRecording.style.display = "none";
         }
     }
 

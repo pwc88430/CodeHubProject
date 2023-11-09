@@ -30,18 +30,19 @@
     cursor: pointer;
     outline: none;
     border: none;
-    background: transparent;
     transition: 0.2s;
     filter: brightness(100%) saturate(100%) drop-shadow(0 0 10px #101015);
     margin-right: 10px;
     display: block;
     height: fit-content;
     float: right;
-    margin-top: 10px;
+    margin-top: 0;
+    background: transparent;
 }
 
 .postContainer button:hover {
     filter: brightness(120%) saturate(0%) drop-shadow(0 0 10px #101015);
+    background: transparent;
 }
 
 .postContainer button img {
@@ -55,12 +56,17 @@
 
 .customSlider {
     position: relative;
+    height: 20px;
+    display: block;
 }
 
 .customSlider::before {
     background: black;
     width: 100%;
-    position: relative;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
     height: 5px;
     display: block;
     content: "";
@@ -74,7 +80,11 @@
     z-index: 1;
     top: 0;
     bottom: 0;
+    right: 0;
+    margin: auto;
+    padding: 0;
     opacity: 0;
+    display: block;
 }
 
 .customTrack {
@@ -85,6 +95,8 @@
     left: 0;
     top: 0;
     bottom: 0;
+    margin: auto;
+    display: block;
 }
 
 #post_author {

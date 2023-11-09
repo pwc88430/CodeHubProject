@@ -44,7 +44,7 @@ export default function LoginSignPage({ signInUser }) {
     }
 
     return (
-        <>
+        <div>
             <header className="page-header">
                 <img src={logo} alt="logo" className="logo" />
             </header>
