@@ -11,6 +11,7 @@ function App() {
         password: sessionStorage.getItem("voxPassword"),
         secretKey: sessionStorage.getItem("voxSecretKey"),
         secretKey: sessionStorage.getItem("voxDisplayName"),
+        userIcon: sessionStorage.getItem("voxUserIcon"),
     });
     const [error, setError] = useState("");
 
@@ -44,12 +45,14 @@ function App() {
                     sessionStorage.setItem("voxPassword", result.password);
                     sessionStorage.setItem("voxSecretKey", result.secretKey);
                     sessionStorage.setItem("voxDisplayName", result.displayName);
+                    sessionStorage.setItem("vosUserIcon", result.userIcon);
                     console.log(result.displayName);
                     setUserInfo({
                         username: result.username,
                         password: result.password,
                         secretKey: result.secretKey,
                         displayName: result.displayName,
+                        userIcon: result.userIcon,
                     });
 
                     if (result.username != null) toHomePage();
@@ -65,10 +68,12 @@ function App() {
         sessionStorage.setItem("voxUsername", "");
         sessionStorage.setItem("voxPassword", "");
         sessionStorage.setItem("voxSecretKey", "");
+        sessionStorage.setItem("voxUserIcon", "");
         setUserInfo({
             username: "",
             password: "",
             secretKey: "",
+            userIcon: "",
         });
         toLoginSignup();
         console.log(userInfo);

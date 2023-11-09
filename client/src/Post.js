@@ -81,8 +81,9 @@ export default function Post({ post }) {
 
             <div className="">
                 <div id="viewsLikes">
-                    <h4 id="views">Views: {post.postData.views}</h4>
-                    <h4 id="likes">Likes: {post.postData.likes}</h4>
+                    <img src={listens} alt="listens"></img>
+                    {post.postData.views} <img onClick={toggleLike} id="post_like_icon" src={like} alt="listens"></img>
+                    {post.postData.likes}
                 </div>
                 <h4 id="date">{date}</h4>
                 <h4>{post.postData.duration} seconds</h4>

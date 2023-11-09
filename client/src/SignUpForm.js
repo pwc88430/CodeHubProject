@@ -1,3 +1,5 @@
+import logo from "./icon.svg";
+
 export default function SignUpForm({ setErrorMessage }) {
     function logResult(result) {
         console.log(result);
@@ -45,17 +47,14 @@ export default function SignUpForm({ setErrorMessage }) {
         <>
             <h2>Sign Up</h2>
             <div>
-                <label>Username:</label>
-                <input id="signupUsername"></input>
+                <input placeholder="Username" id="signupUsername"></input>
             </div>
             <div>
-                <label>Password:</label>
-                <input id="signupPassword"></input>
+                <input placeholder="Password" id="signupPassword"></input>
             </div>
 
             <div>
-                <label>Display Name:</label>
-                <input id="displayName"></input>
+                <input placeholder="Display Name" id="displayName"></input>
             </div>
 
             <button className="button" onClick={signUpUser}>

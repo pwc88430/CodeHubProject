@@ -3,7 +3,8 @@ import SignUpForm from "./SignUpForm";
 import { useState } from "react";
 import ErrorBox from "./ErrorBox";
 import "./LoginSignPage.css";
-import "./LoginForm.css";
+
+import logo from "./icon.svg";
 
 export default function LoginSignPage({ signInUser }) {
     const [error, setError] = useState("");
@@ -43,7 +44,10 @@ export default function LoginSignPage({ signInUser }) {
     }
 
     return (
-        <div id="loginSignup">
+        <>
+            <header className="page-header">
+                <img src={logo} alt="logo" className="logo" />
+            </header>
             <div className="tabs" onClick={changeTabs}>
                 <div className="btn-container" onClick={() => setError("")}>
                     <button id="sign-up-tab-button" className="mainButton live" data-id="signup">
