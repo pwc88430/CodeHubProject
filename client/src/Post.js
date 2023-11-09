@@ -5,7 +5,14 @@ import React from "react";
 import playButton from "./play.svg";
 import pauseButton from "./pause.svg";
 
+import like from "./like.svg";
+import listens from "./listens.svg";
+
 export default function Post({ post }) {
+    function toggleLike(event) {
+        event.target.classList.toggle("liked");
+    }
+
     function setPosition(e) {
         let audioElement = e.target.parentNode.parentNode.querySelector("audio");
         let customTrack = e.target.parentNode.querySelector(".customTrack");
@@ -79,15 +86,17 @@ export default function Post({ post }) {
                 ></audio>
             </button>
 
-            <div className="">
+            <h4>{post.postData.duration} seconds</h4>
+            <div id="post_description">
+                Description: <p>{post.postData.description}</p>
+            </div>
+            <div id="post_stats">
+                {date.toLocaleString("en-US")}
                 <div id="viewsLikes">
                     <img src={listens} alt="listens"></img>
                     {post.postData.views} <img onClick={toggleLike} id="post_like_icon" src={like} alt="listens"></img>
                     {post.postData.likes}
                 </div>
-                <h4 id="date">{date}</h4>
-                <h4>{post.postData.duration} seconds</h4>
-                Description: <p>{post.postData.description}</p>
             </div>
         </div>
     );

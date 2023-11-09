@@ -86,3 +86,52 @@
     top: 0;
     bottom: 0;
 }
+
+#post_author {
+    text-align: left;
+    align-content: center;
+    color: gray;
+    font-size: smaller;
+}
+
+#post_title {
+    margin: 10px 0;
+}
+
+#viewsLikes {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    width: max-content;
+    color: black;
+}
+
+#post_description {
+    background-color: rgb(211, 208, 208);
+    padding: 5px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+#post_stats {
+    display: flex;
+    justify-content: space-between;
+    color: gray;
+}
+
+#post_user_image {
+    width: 2rem;
+    border-radius: 50%;
+    border: 1px solid black;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+#post_like_icon.liked {
+    filter: invert(33%) sepia(100%) saturate(6230%) hue-rotate(331deg) brightness(101%) contrast(101%);
+    transform: scale(1.1);
+}
+
+#post_like_icon:hover:not(.liked) {
+    transform: scale(1.1);
+}
