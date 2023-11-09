@@ -50,13 +50,15 @@ module.exports = class FirebaseStorage {
         // create stream to destination
         const writeStream = file.createWriteStream({
             metadata: {
-                // audio/mpeg (mp3)
                 contentType: "audio/mpeg",
             },
         });
 
         // pipe buffer to stream (upload buffer to Storage)
-        writeStream.end(buffer);
+        await new Promise((resolve, reject) => {
+            writeStream.on("error", (error) => reject(error)).on("finish", () => resolve());
+            writeStream.end(buffer);
+        });
 
         // return file location so server can add it to whatever it needs
         return `${userLocation}/${givenTime}.mp3`;

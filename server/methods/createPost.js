@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
 
     let post = {
         likes: 0,
-        views: 1,
+        views: 0,
         title: info.postTitle,
         audioLocation: `audioFiles/${info.userData.username}/${currentTime}`,
         popularity: 100,
@@ -29,6 +29,7 @@ router.post("/", async (req, res) => {
         visibility: info.visibility,
         edited: false,
         description: info.description,
+        duration: info.duration,
         userIcon: info.userData.userIcon,
     };
 

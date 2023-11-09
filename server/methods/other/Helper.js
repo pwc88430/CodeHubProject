@@ -85,7 +85,7 @@ module.exports = class Helper {
             byteNumbers[i] = byteCharacters.charCodeAt(i);
         } // for
         const byteArray = new Uint8Array(byteNumbers);
-        const audioBlob = new Blob([byteArray], { type: "audio/ogg; codecs=opus" });
+        const audioBlob = new Blob([byteArray], { type: "audio/mpeg; codecs=opus;" });
 
         let result = await FirebaseStorage.uploadFile(audioBlob, username, currentTime)
             .then(() => {

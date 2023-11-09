@@ -10,6 +10,17 @@ body {
 
 .wrapper {
     width: 1024px;
+    display: flex;
+    column-gap: 25px;
+    justify-content: baseline;
+    position: relative;
+    z-index: 0;
+    margin-top: 20px;
+}
+
+.wrapper > div {
+    flex: 1;
+    margin-top: 0;
 }
 
 .button {
@@ -17,11 +28,13 @@ body {
 }
 
 header {
-    background: #4a90e2;
+    background: #0077ffaa;
+    backdrop-filter: blur(5px);
     height: 70px;
     position: sticky;
     top: 0;
     box-shadow: #87a8cd 0 0 5px 2px;
+    z-index: 1;
 }
 
 .logo {
@@ -32,14 +45,20 @@ header {
     left: 2vw;
 }
 
-#signOutButton {
+#profileButton {
     position: absolute;
     right: 2vw;
     top: 0;
     bottom: 0;
     height: 40px;
     margin: auto;
-    background: #ffd166;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#profileButton img {
+    height: 100%;
 }
 
 #searchContainer {
@@ -52,12 +71,26 @@ header {
     bottom: 0;
 }
 
-#search {
+#searchContainer > input {
     outline: none;
+    border: none;
+    text-indent: 25px;
+    background: #f5f5f5;
+    border-radius: 25px;
+    padding: 10px;
+    width: 250px;
+}
+
+#searchContainer > img {
+    width: 25px;
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
 }
 
 #feedContainer {
-    margin-top: 30px;
+    flex: 2;
 }
 
 #createPost {
@@ -72,9 +105,10 @@ header {
     left: 20px;
     bottom: 50px;
     transition: 0.2s;
+    z-index: 5;
 }
 
-#createPost img {
+#createPost > img {
     position: absolute;
     left: 0;
     right: 0;
@@ -85,14 +119,13 @@ header {
 }
 
 #createPost:hover {
-    background: #4a90e2;
+    background: #0077ff;
     box-shadow: #87a8cd 0 0 5px 1px;
 }
 
-#createPost:hover img {
+#createPost:hover > img {
     filter: invert(100%);
 }
-
 #createNewRecordingContainer {
     width: 300px;
     height: 500px;
@@ -126,4 +159,11 @@ header {
         width: 300px;
         height: 500px;
     }
+}
+#loadMoreAudio {
+    position: absolute;
+    bottom: 1000px;
+    width: 0;
+    height: 0;
+    z-index: 10;
 }

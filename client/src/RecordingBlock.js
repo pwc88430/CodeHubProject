@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function RecordingBlock({ audioURL, clipLabel, handleClick, chunks, userInfo }) {
+function RecordingBlock({ audioURL, clipLabel, handleClick, duration, chunks, userInfo }) {
     const [enteredDescription, setEnteredDescription] = useState("");
 
     function updateDescription(event) {
@@ -33,11 +33,12 @@ function RecordingBlock({ audioURL, clipLabel, handleClick, chunks, userInfo }) 
                         username: userInfo.username,
                         displayName: userInfo.displayName,
                         password: userInfo.password,
-                        userIcon: userInfo.userIcon,
+                        userIcon: userInfo.userIcon || "./user.png",
                     },
                     visibility: 0,
                     postTitle: clipLabel,
                     audioChunks: base64String,
+                    duration: duration,
                     secretKey: userInfo.secretKey,
                     description: enteredDescription,
                 });
