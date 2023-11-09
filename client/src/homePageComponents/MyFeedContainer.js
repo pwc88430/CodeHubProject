@@ -46,7 +46,6 @@ export default function MyFeedContainer({ userInfo }) {
 
     return (
         <div id="feedContainer">
-            <h3>Popular Posts</h3>
             <div id="feed">{loadedPosts}</div>
         </div>
     );

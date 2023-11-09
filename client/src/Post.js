@@ -1,17 +1,91 @@
 import "./Post.css";
+import userIcon from "./user.png";
+import React from "react";
+
+import playButton from "./play.svg";
+import pauseButton from "./pause.svg";
 
 export default function Post({ post }) {
+    function setPosition(e) {
+        let audioElement = e.target.parentNode.parentNode.querySelector("audio");
+        let customTrack = e.target.parentNode.querySelector(".customTrack");
+        customTrack.style.width = (e.target.value / e.target.max) * 100 + "%";
+        console.log((e.target.value / e.target.maxValue) * 100);
+        audioElement.onTimeUpdate = () => {};
+        audioElement.currentTime = e.target.value;
+        audioElement.onTimeUpdate = (e) => {
+            audioChanged(e);
+        };
+    }
+    function playAudio(e) {
+        let audioElement = e.target.parentNode.querySelector("audio");
+        if (audioElement.paused) {
+            e.target.src = pauseButton;
+            audioElement.play();
+        } else {
+            e.target.src = playButton;
+            audioElement.pause();
+        }
+    }
+    function audioChanged(e) {
+        let audioElement = e.target;
+        let radioSelector = e.target.parentNode.parentNode.querySelector(".audioBar");
+        let customTrack = e.target.parentNode.parentNode.querySelector(".customTrack");
+        radioSelector.value = audioElement.currentTime;
+        customTrack.style.width = (radioSelector.value / radioSelector.max) * 100 + "%";
+    }
+
+    var date = new Date(post.postData.dateCreated)
+        .toLocaleDateString("en-us", {
+            weekday: "long",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        })
+        .toString();
     return (
-        <div id="post">
+        <div className="postContainer">
+            <div id="authorInfo">
+                <img src={userIcon}></img>
+                <div id="handles">
+                    <h3 id="author">{post.postData.authorName}</h3>
+                    <h4>@{post.postData.author}</h4>
+                </div>
+            </div>
             <h3 id="title">{post.postData.title}</h3>
-            <audio src={post.audioURL} controls></audio>
-            <h3 id="author">{post.postData.author}</h3>
-            <div id="post_data_container">
+
+            <div className="customSlider">
+                <input
+                    className="audioBar"
+                    type="range"
+                    min={0}
+                    max={post.postData.duration}
+                    step={0.01}
+                    onInput={(e) => setPosition(e)}
+                ></input>
+                <div className="customTrack"></div>
+            </div>
+
+            <button onClick={(e) => playAudio(e)}>
+                <img src={playButton}></img>
+                <audio
+                    // style={{ display: "none" }}
+                    className="audio"
+                    src={post.audioURL}
+                    preload="auto"
+                    onTimeUpdate={(e) => audioChanged(e)}
+                ></audio>
+            </button>
+
+            <div className="">
                 <div id="viewsLikes">
                     <h4 id="views">Views: {post.postData.views}</h4>
                     <h4 id="likes">Likes: {post.postData.likes}</h4>
                 </div>
-                <h4 id="date">{post.postData.dateCreated}</h4>
+                <h4 id="date">{date}</h4>
+                <h4>{post.postData.duration} seconds</h4>
                 Description: <p>{post.postData.description}</p>
             </div>
         </div>

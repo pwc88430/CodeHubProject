@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
-app.use(express.json());
+app.use(express.json({ limit: "500mb" }));
+app.use(express.urlencoded({ limit: "500mb", extended: true }));
 var cors = require("cors");
 
 const createPostRoute = require("./methods/createPost");
@@ -17,8 +18,8 @@ const signUpRoute = require("./methods/signUp");
 
 app.use(
     cors({
-        allowedHeaders: ["Content-Type"],
-        exposedHeaders: ["Content-Type"],
+        allowedHeaders: ["Content-Type", "Access-Control-Allow-Methods"],
+        exposedHeaders: ["Content-Type", "Access-Control-Allow-Methods"],
         origin: true,
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         preflightContinue: true,

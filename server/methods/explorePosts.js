@@ -24,6 +24,20 @@ router.post("/", async (req, res) => {
         }
         i++;
     }
+    i = 0;
+    if (arr.length < 50) {
+        while (i < 50) {
+            if (i >= keys.length) break;
+            if (keys[i] in viewedPosts) {
+                arr.push({
+                    audioURL: await Helper.recieveFile(info[keys[i]].audioLocation + ".mp3"),
+                    postData: await Helper.recieveFromDb("/Posts/" + keys[i]),
+                });
+                total++;
+            }
+            i++;
+        }
+    }
     res.send(arr);
 });
 

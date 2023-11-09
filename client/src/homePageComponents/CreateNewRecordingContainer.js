@@ -91,6 +91,7 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                     record.style.background = "red";
                     record.style.color = "black";
                 };
+
                 //creates chuncks array to hold audio data
                 let chunks = [];
 
@@ -105,7 +106,7 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                     record.style.background = "";
                     record.style.color = "";
                 };
-                mediaRecorder.onstop = (e) => {
+                mediaRecorder.onstop = async (e) => {
                     console.log("recorder stopped");
 
                     //asks for the clip name
@@ -116,11 +117,16 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                     const audioURL = window.URL.createObjectURL(blob);
                     //adds recording info to state of RecordingPage object, triggering a re-render
 
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const arrayBuffer = await blob.arrayBuffer();
+                    const decodedData = await audioContext.decodeAudioData(arrayBuffer);
+
                     setRecording([
                         ...recording,
                         {
                             url: audioURL,
                             name: clipName,
+                            duration: decodedData.duration,
                             raw: blob,
                         },
                     ]);
@@ -150,30 +156,35 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                 clipLabel={recording.name}
                 handleClick={deleteRecording}
                 chunks={recording.raw}
+                duration={recording.duration}
                 userInfo={userInfo}
             />
         );
     });
 
     return (
-        <div onClick={toCreateView} id="createNewRecordingContainer">
-            <h3>Create New Post</h3>
-            <canvas className="visualizer" height="60px"></canvas>
-            <div>
-                <button id="record" className="button">
-                    Record
-                </button>
-                <button id="stop" className="button">
-                    Stop
-                </button>
-                <button id="upload" className="button active">
-                    Upload
-                </button>
-                <button id="discard" className="button active" onClick={() => setRecording([])}>
-                    Discard
-                </button>
+        <div id="createNewRecordingContainer">
+            <div id="blackBg"></div>
+
+            <div id="innerContainer">
+                <h3>Create New Post</h3>
+                <canvas className="visualizer" height="60px"></canvas>
+                <div>
+                    <button id="record" className="button">
+                        Record
+                    </button>
+                    <button id="stop" className="button">
+                        Stop
+                    </button>
+                    <button id="upload" className="button active">
+                        Upload
+                    </button>
+                    <button id="discard" className="button active" onClick={() => setRecording([])}>
+                        Discard
+                    </button>
+                </div>
+                <ol id="recordingList">{recordingListDisplay}</ol>
             </div>
-            <ol id="recordingList">{recordingListDisplay}</ol>
         </div>
     );
 }

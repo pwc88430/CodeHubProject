@@ -8,7 +8,7 @@ label {
     margin-bottom: 5px;
 }
 
-input {
+#loginSignup input {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -23,10 +23,6 @@ input {
     border-radius: 4px;
     cursor: pointer;
     margin: 5px;
-}
-
-button:hover {
-    background-color: #0056b3;
 }
 
 h2 {
@@ -47,7 +43,7 @@ label {
     color: black;
 }
 
-input {
+#loginSignup input {
     margin: 5px;
     width: 250px;
 }

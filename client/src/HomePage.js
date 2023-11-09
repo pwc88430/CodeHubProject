@@ -32,6 +32,15 @@ function HomePage({ userInfo, signOutUser }) {
         xhr.send(JSON.stringify(body));
     }
 
+    function displayNewRecording() {
+        let newRecording = document.getElementById("createNewRecordingContainer");
+        if (newRecording.style.display != "none") {
+            newRecording.style.display = "none";
+        } else {
+            newRecording.style.display = "block";
+        }
+    }
+
     return (
         <div id="homePageContainer" className="profileMyRecordings">
             <header className="page-header">
@@ -45,11 +54,14 @@ function HomePage({ userInfo, signOutUser }) {
             </header>
 
             <section className="wrapper">
+                <div></div>
                 <MyFeedContainer userInfo={userInfo} />
-                {/* <CreateNewRecordingContainer userInfo={userInfo} /> */}
+                <div></div>
             </section>
 
-            <div id="createPost">
+            <CreateNewRecordingContainer userInfo={userInfo} />
+
+            <div id="createPost" onClick={displayNewRecording}>
                 <img src={microphone} alt="create post"></img>
             </div>
             {/* <FiltersContainer /> */}

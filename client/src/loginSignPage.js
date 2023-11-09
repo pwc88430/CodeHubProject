@@ -43,7 +43,7 @@ export default function LoginSignPage({ signInUser }) {
     }
 
     return (
-        <>
+        <div id="loginSignup">
             <div className="tabs" onClick={changeTabs}>
                 <div className="btn-container" onClick={() => setError("")}>
                     <button id="sign-up-tab-button" className="mainButton live" data-id="signup">
@@ -63,6 +63,6 @@ export default function LoginSignPage({ signInUser }) {
                 </div>
             </div>
             <ErrorBox error={error} />
-        </>
+        </div>
     );
 }

@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import searchIcon from "../search.svg";
+
 export default function SearchContainer({ toSearchView }) {
     const [enteredSearch, setEnteredSearch] = useState("");
     const [foundUsers, setFoundUsers] = useState([]);
@@ -53,8 +55,9 @@ export default function SearchContainer({ toSearchView }) {
     } // search
 
     return (
-        <div onClick={toSearchView} id="searchContainer">
+        <div id="searchContainer">
             <input id="search" placeholder="Search" maxLength={20} onKeyDown={updateText}></input>
+            <img id="searchIcon" src={searchIcon} alt="search image"></img>
             {/* <button onClick={search} className="button">
                 Search
             </button> */}

@@ -1,23 +1,88 @@
-#post {
-    background-color: rgb(221, 219, 219);
-    width: auto;
+.postContainer {
     height: fit-content;
     padding: 10px;
-    border-radius: 20px;
+    box-shadow: #10101555 5px 5px 10px;
+    background: linear-gradient(to top left, #0000, #0001);
+    margin-bottom: 20px;
+}
+
+.postContainer #authorInfo {
+    width: fit-content;
+    margin-left: 0;
+    display: flex;
+    cursor: pointer;
+}
+
+.postContainer #authorInfo img {
+    background: pink;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.postContainer #authorInfo #handles {
+    height: fit-content;
+    position: relative;
+    margin-left: 10px;
+}
+
+.postContainer button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: transparent;
+    transition: 0.2s;
+    filter: brightness(100%) saturate(100%) drop-shadow(0 0 10px #101015);
+    margin-right: 10px;
+    display: block;
+    height: fit-content;
+    float: right;
     margin-top: 10px;
-    margin-bottom: 10px;
 }
 
-h4 {
-    margin: 0;
+.postContainer button:hover {
+    filter: brightness(120%) saturate(0%) drop-shadow(0 0 10px #101015);
 }
 
-#viewsLikes {
-    align-items: end;
+.postContainer button img {
+    width: 25px;
 }
 
-#post_data_container {
-    background-color: #faf3b3;
-    padding: 5px;
-    border-radius: 5px;
+#handles h4 {
+    color: grey;
+    font-weight: lighter;
+}
+
+.customSlider {
+    position: relative;
+}
+
+.customSlider::before {
+    background: black;
+    width: 100%;
+    position: relative;
+    height: 5px;
+    display: block;
+    content: "";
+}
+
+.audioBar {
+    cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+}
+
+.customTrack {
+    position: absolute;
+    background: #0077ff;
+    height: 5px;
+    width: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
 }
