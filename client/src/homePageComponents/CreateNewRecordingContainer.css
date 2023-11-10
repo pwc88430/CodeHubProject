@@ -8,27 +8,6 @@
     background-color: rgb(255, 42, 0);
 }
 
-#recordingPage {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    align-items: center;
-}
-
-#back {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-}
-
-#record {
-    background-color: red;
-    padding: 10px 20px;
-    border-radius: 100%;
-    width: 100px;
-    height: 100px;
-}
-
 #stop {
     padding: 10px 20px;
 }
@@ -103,14 +82,4 @@ audio::-webkit-media-controls-panel {
 }
 #discard.inactive {
     background-color: rgb(120, 2, 2);
-}
-
-#blackBg {
-    width: 100vw;
-    height: 100vh;
-    background-color: #ffffffab;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    backdrop-filter: blur(3px);
 }

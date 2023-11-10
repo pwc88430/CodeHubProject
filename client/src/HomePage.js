@@ -35,7 +35,9 @@ function HomePage({ userInfo, signOutUser }) {
 
     function toggleShowNewRecordingContainer() {
         const createNewRecordingContainerEl = document.querySelector("#createNewRecordingContainer");
+        const backgroundBlurEl = document.querySelector("#blackBg");
         createNewRecordingContainerEl.classList.toggle("hidden");
+        backgroundBlurEl.classList.toggle("hidden");
     }
 
     let loadingMore = true;

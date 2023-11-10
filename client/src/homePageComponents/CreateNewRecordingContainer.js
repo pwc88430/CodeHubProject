@@ -1,11 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RecordingBlock from "../RecordingBlock";
 import "./CreateNewRecordingContainer.css";
+import resetIcon from "./reset.svg";
+import playPause from "./playPause.svg";
 
 export default function CreateNewRecordingContainer({ toCreateView, userInfo }) {
-    const [recording, setRecording] = useState([]);
+    const [time, setTime] = useState(0);
+    const [isRunning, setIsRunning] = useState(false);
+
+    // useEffect(() => {
+    //     let intervalId;
+    //     if (isRunning) {
+    //         // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
+    //         intervalId = setInterval(() => setTime(time + 1), 10);
+    //     }
+    //     return () => clearInterval(intervalId);
+    // }, [isRunning, time]);
+
+    // Hours calculation
+    const hours = Math.floor(time / 360000);
+
+    // Minutes calculation
+    const minutes = Math.floor((time % 360000) / 6000);
+
+    // Seconds calculation
+    const seconds = Math.floor((time % 6000) / 100);
+
+    // Milliseconds calculation
+    const milliseconds = time % 100;
+
+    // Method to start and stop timer
+    const startAndStop = () => {
+        setIsRunning(!isRunning);
+    };
+    let chunks = [];
+    // Method to reset timer back to 0
+    const reset = () => {
+        setTime(0);
+        chunks = [];
+    };
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         console.log("getUserMedia supported.");
+
         navigator.mediaDevices
             .getUserMedia(
                 // constraints - only audio needed for this app
@@ -17,10 +53,10 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
             // Success callback
             .then((stream) => {
                 const mediaRecorder = new MediaRecorder(stream);
-                const record = document.querySelector("#record");
-                const stop = document.querySelector("#stop");
-                const soundClips = document.querySelector("#clips");
-                const canvas = document.querySelector(".visualizer");
+                const record = document.querySelector("#record_button");
+                const canvas = document.querySelector("#recording_visualizer");
+
+                //creates chuncks array to hold audio data
 
                 // sets up the audio visualizer
                 let audioCtx;
@@ -83,54 +119,34 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                 visualize(stream);
 
                 // creates eventhandler for record button
+
                 record.onclick = () => {
-                    mediaRecorder.start();
+                    if (record.classList.contains("live")) {
+                        record.classList.remove("live");
 
-                    console.log(mediaRecorder.state);
-                    console.log("recorder started");
-                    record.style.background = "red";
-                    record.style.color = "black";
+                        chunks = [];
+
+                        mediaRecorder.stop();
+                        console.log("stopped");
+                        console.log(mediaRecorder.state);
+                        console.log(chunks);
+                    } else {
+                        record.classList.add("live");
+
+                        mediaRecorder.start();
+                        console.log("started");
+                        console.log(mediaRecorder.state);
+                    }
                 };
-
-                //creates chuncks array to hold audio data
-                let chunks = [];
 
                 mediaRecorder.ondataavailable = (e) => {
                     chunks.push(e.data);
+                    console.log("puching Chunks");
                 };
                 //creates eventhandler for stop button
-                stop.onclick = () => {
-                    mediaRecorder.stop();
-                    console.log(mediaRecorder.state);
+
+                mediaRecorder.onstop = () => {
                     console.log("recorder stopped");
-                    record.style.background = "";
-                    record.style.color = "";
-                };
-                mediaRecorder.onstop = async (e) => {
-                    console.log("recorder stopped");
-
-                    //asks for the clip name
-                    //this will be changed to that a prompt is not used
-                    const clipName = prompt("Enter a name for your sound clip");
-                    const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
-
-                    const audioURL = window.URL.createObjectURL(blob);
-                    //adds recording info to state of RecordingPage object, triggering a re-render
-
-                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    const arrayBuffer = await blob.arrayBuffer();
-                    const decodedData = await audioContext.decodeAudioData(arrayBuffer);
-
-                    setRecording([
-                        ...recording,
-                        {
-                            url: audioURL,
-                            name: clipName,
-                            duration: decodedData.duration,
-                            raw: blob,
-                        },
-                    ]);
-                    chunks = [];
                 };
             })
 
@@ -142,44 +158,91 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
         console.log("getUserMedia not supported on your browser!");
     }
 
-    const recordingListDisplay = recording.map((recording, index) => {
-        console.log("reloading recording");
-        function deleteRecording(event) {
-            let evtTgt = event.target;
-            evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-            console.log("deleting recording");
+    async function uploadClip() {
+        const textAreaEl = document.querySelector("#description_box");
+        const clipNameEl = document.querySelector("#recording_title_input");
+
+        if (textAreaEl.value == "") {
+            // checking for a description
+            console.log("no description entered");
+        } else if (clipNameEl.clipLabel == "") {
+            // checking for a clip title
+            console.log("no clip title entered");
+        } else if (chunks.length < 1) {
+            console.log("please record some audio"); // checking to make sure recording is available
+        } else {
+            const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+            chunks = [];
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const audioURL = window.URL.createObjectURL(blob);
+
+            const arrayBuffer = await blob.arrayBuffer();
+            const decodedData = await audioContext.decodeAudioData(arrayBuffer);
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function () {
+                var base64String = reader.result;
+
+                // Simply Print the Base64 Encoded String,
+                // without additional data: Attributes.
+                console.log("Base64 String without Tags- ", base64String.substr(base64String.indexOf(", ") + 1));
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://localhost:8000/createPost");
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+                const body = JSON.stringify({
+                    userData: {
+                        username: userInfo.username,
+                        displayName: userInfo.displayName,
+                        password: userInfo.password,
+                        userIcon: userInfo.userIcon || "./user.png",
+                    },
+                    visibility: 0,
+                    postTitle: clipNameEl.value,
+                    audioChunks: base64String,
+                    duration: decodedData.duration,
+                    secretKey: userInfo.secretKey,
+                    description: textAreaEl.value,
+                });
+
+                xhr.onload = () => {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        const result = JSON.parse(xhr.responseText);
+                        if (result) {
+                            textAreaEl.value = "";
+                            clipNameEl.value = "";
+                        }
+                    } else {
+                        console.log(`Error: ${xhr.status}`);
+                    }
+                };
+                xhr.send(body);
+            };
         }
-        return (
-            <RecordingBlock
-                key={index}
-                audioURL={recording.url}
-                clipLabel={recording.name}
-                handleClick={deleteRecording}
-                chunks={recording.raw}
-                duration={recording.duration}
-                userInfo={userInfo}
-            />
-        );
-    });
+    }
 
     return (
         <div onClick={toCreateView} className="hidden" id="createNewRecordingContainer">
-            <div id="blackBg"></div>
-            <h3>Create New Post</h3>
-            <canvas className="visualizer" height="60px"></canvas>
-            <div>
-                <div id="record"></div>
-                <button id="stop" className="button">
-                    Stop
-                </button>
-                <button id="upload" className="button active">
-                    Upload
-                </button>
-                <button id="discard" className="button active" onClick={() => setRecording([])}>
-                    Discard
-                </button>
+            <div id="blackBg" className="hidden"></div>
+            <div id="recording_contents">
+                <input id="recording_title_input" placeholder="My Post Title"></input>
+                <canvas id="recording_visualizer"></canvas>
+                <div id="time_stamp">
+                    {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}:{milliseconds.toString().padStart(2, "0")}
+                </div>
+                <div id="recording_buttons_container">
+                    <img id="delete_recording_button" alt="X" src={resetIcon} onClick={reset}></img>
+                    <div id="record_button_ring">
+                        <div id="record_button"></div>
+                    </div>
+                    <img id="play_pause_button" src={playPause} alt="play/pause"></img>
+                </div>
+                <textarea maxlength="100" placeholder="This post is about..." id="description_box"></textarea>
+                <div className="button" id="upload_button" onClick={uploadClip}>
+                    Create Post
+                </div>
             </div>
-            <ol id="recordingList">{recordingListDisplay}</ol>
         </div>
     );
 }
