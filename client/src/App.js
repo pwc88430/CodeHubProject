@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import RecordingPage from "./RecordingPage";
+
 import HomePage from "./HomePage";
 import { useState } from "react";
 import LoginSignPage from "./loginSignPage";
@@ -97,9 +97,7 @@ function App() {
         setScreen("signUpPage");
     }
 
-    if (screen === "recordingPage") {
-        return <RecordingPage changeScreen={toMainPage} />;
-    } else if (screen === "homePage") {
+    if (screen === "homePage") {
         return <HomePage signOutUser={signOutUser} userInfo={userInfo} />;
     } else if (screen == "loginSign") {
         return (

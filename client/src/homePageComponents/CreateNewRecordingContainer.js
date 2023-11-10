@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import RecordingBlock from "../RecordingBlock";
+
 import "./CreateNewRecordingContainer.css";
 import resetIcon from "./reset.svg";
 import playPause from "./playPause.svg";
 import StopWatch from "./StopWatch";
+import { useRef } from "react";
 
 export default function CreateNewRecordingContainer({ toCreateView, userInfo }) {
     let chunks = [];
@@ -111,6 +112,7 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
 
                 mediaRecorder.ondataavailable = (e) => {
                     chunks.push(e.data);
+
                     console.log("puching Chunks");
                 };
                 //creates eventhandler for stop button
@@ -192,17 +194,19 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
         }
     }
 
+    const childRef = useRef();
+
     return (
         <div onClick={toCreateView} className="hidden" id="createNewRecordingContainer">
             <div id="blackBg" className="hidden"></div>
             <div id="recording_contents">
                 <input id="recording_title_input" placeholder="My Post Title"></input>
                 <canvas id="recording_visualizer"></canvas>
-                <StopWatch />
+                <StopWatch ref={childRef} />
                 <div id="recording_buttons_container">
-                    <img id="delete_recording_button" alt="X" src={resetIcon}></img>
+                    <img onClick={() => childRef.current.reset()} id="delete_recording_button" alt="X" src={resetIcon}></img>
                     <div id="record_button_ring">
-                        <div id="record_button"></div>
+                        <div onClick={() => childRef.current.startStop()} id="record_button"></div>
                     </div>
                     <img id="play_pause_button" src={playPause} alt="play/pause"></img>
                 </div>

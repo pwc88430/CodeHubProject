@@ -1,8 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 
-export default function () {
+const StopWatch = forwardRef((props, ref) => {
     const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
+
+    useImperativeHandle(ref, () => {
+        return {
+            startStop: startAndStop,
+            reset: reset,
+        };
+    });
 
     useEffect(() => {
         let intervalId;
@@ -39,4 +46,6 @@ export default function () {
             {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}:{milliseconds.toString().padStart(2, "0")}
         </div>
     );
-}
+});
+
+export default StopWatch;
