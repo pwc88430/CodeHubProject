@@ -3,42 +3,12 @@ import RecordingBlock from "../RecordingBlock";
 import "./CreateNewRecordingContainer.css";
 import resetIcon from "./reset.svg";
 import playPause from "./playPause.svg";
+import StopWatch from "./StopWatch";
 
 export default function CreateNewRecordingContainer({ toCreateView, userInfo }) {
-    const [time, setTime] = useState(0);
-    const [isRunning, setIsRunning] = useState(false);
-
-    // useEffect(() => {
-    //     let intervalId;
-    //     if (isRunning) {
-    //         // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
-    //         intervalId = setInterval(() => setTime(time + 1), 10);
-    //     }
-    //     return () => clearInterval(intervalId);
-    // }, [isRunning, time]);
-
-    // Hours calculation
-    const hours = Math.floor(time / 360000);
-
-    // Minutes calculation
-    const minutes = Math.floor((time % 360000) / 6000);
-
-    // Seconds calculation
-    const seconds = Math.floor((time % 6000) / 100);
-
-    // Milliseconds calculation
-    const milliseconds = time % 100;
-
-    // Method to start and stop timer
-    const startAndStop = () => {
-        setIsRunning(!isRunning);
-    };
     let chunks = [];
     // Method to reset timer back to 0
-    const reset = () => {
-        setTime(0);
-        chunks = [];
-    };
+
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         console.log("getUserMedia supported.");
 
@@ -228,11 +198,9 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
             <div id="recording_contents">
                 <input id="recording_title_input" placeholder="My Post Title"></input>
                 <canvas id="recording_visualizer"></canvas>
-                <div id="time_stamp">
-                    {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}:{milliseconds.toString().padStart(2, "0")}
-                </div>
+                <StopWatch />
                 <div id="recording_buttons_container">
-                    <img id="delete_recording_button" alt="X" src={resetIcon} onClick={reset}></img>
+                    <img id="delete_recording_button" alt="X" src={resetIcon}></img>
                     <div id="record_button_ring">
                         <div id="record_button"></div>
                     </div>
