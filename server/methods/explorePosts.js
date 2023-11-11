@@ -59,6 +59,7 @@ router.post("/", async (req, res) => {
             i++;
         }
     }
+    console.log(arr);
     res.send(arr);
 });
 

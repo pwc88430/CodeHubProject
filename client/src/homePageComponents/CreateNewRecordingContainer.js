@@ -210,7 +210,7 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                     </div>
                     <img id="play_pause_button" src={playPause} alt="play/pause"></img>
                 </div>
-                <textarea maxlength="100" placeholder="This post is about..." id="description_box"></textarea>
+                <textarea maxLength="100" placeholder="This post is about..." id="description_box"></textarea>
                 <div className="button" id="upload_button" onClick={uploadClip}>
                     Create Post
                 </div>
