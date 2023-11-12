@@ -7,8 +7,7 @@ router.post("/", async (req, res) => {
     // TODO: limit amount sent back + check if this even works + filter by visibility
     let arr = [];
     let info = req.body;
-    await db
-        .ref("/Posts/")
+    db.ref("/Posts/")
         .orderByChild("popularity")
         .on("value", (val) => {
             console.log(val);

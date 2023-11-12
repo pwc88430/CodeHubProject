@@ -55,15 +55,17 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                         const WIDTH = canvas.width;
                         const HEIGHT = canvas.height;
 
+                        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
                         requestAnimationFrame(draw);
 
                         analyser.getByteTimeDomainData(dataArray);
 
-                        canvasCtx.fillStyle = " #4a90e2";
+                        canvasCtx.fillStyle = " #4a90e200";
                         canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
                         canvasCtx.lineWidth = 0.5;
-                        canvasCtx.strokeStyle = "	rgb(255, 42, 0)";
+                        canvasCtx.strokeStyle = "rgb(255, 42, 0)";
 
                         canvasCtx.beginPath();
 
