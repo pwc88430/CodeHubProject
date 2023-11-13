@@ -64,7 +64,7 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                         canvasCtx.fillStyle = " #4a90e200";
                         canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
-                        canvasCtx.lineWidth = 0.5;
+                        canvasCtx.lineWidth = 2;
                         canvasCtx.strokeStyle = "rgb(255, 42, 0)";
 
                         canvasCtx.beginPath();
@@ -136,12 +136,13 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
         const textAreaEl = document.querySelector("#description_box");
         const clipNameEl = document.querySelector("#recording_title_input");
 
-        if (textAreaEl.value == "") {
+        if (clipNameEl.value == "") {
             // checking for a description
-            console.log("no description entered");
-        } else if (clipNameEl.clipLabel == "") {
-            // checking for a clip title
+
             console.log("no clip title entered");
+        } else if (textAreaEl.value == "") {
+            // checking for a clip title
+            console.log("no description entered");
         } else if (chunks.length < 1) {
             console.log("please record some audio"); // checking to make sure recording is available
         } else {
@@ -202,7 +203,7 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
         <div onClick={toCreateView} className="hidden" id="createNewRecordingContainer">
             <div id="blackBg" className="hidden"></div>
             <div id="recording_contents">
-                <input id="recording_title_input" placeholder="My Post Title"></input>
+                <input id="recording_title_input" placeholder="My Post Title..."></input>
                 <canvas id="recording_visualizer"></canvas>
                 <StopWatch ref={childRef} />
                 <div id="recording_buttons_container">

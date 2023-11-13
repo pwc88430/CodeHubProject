@@ -25,6 +25,7 @@ router.post("/", async (req, res) => {
     let total = 0;
     var viewedPosts = await Helper.recieveFromDb(`Users/${username}/viewedPosts`);
     var keys = Object.keys(info);
+    console.log(keys);
     keys.reverse();
 
     while (total < toIfExists - startIndex && i < toIfExists * 2) {
@@ -48,7 +49,7 @@ router.post("/", async (req, res) => {
         while (i < toIfExists) {
             if (i >= keys.length) break;
             if (keys[i] in viewedPosts) {
-                console.log(info[keys[i]].popularity);
+                console.log(info[keys[i]]);
                 arr.push({
                     audioURL: await Helper.recieveFile(info[keys[i]].audioLocation + ".mp3"),
                     postData: await Helper.recieveFromDb("/Posts/" + keys[i]),
