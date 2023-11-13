@@ -13,6 +13,11 @@ router.post("/", async (req, res) => {
         views: 0,
     };
 
+    if (userInfo == null) {
+        res.send(output);
+        return;
+    }
+
     let keys = Object.keys(userInfo);
 
     output.posts = keys.length;
