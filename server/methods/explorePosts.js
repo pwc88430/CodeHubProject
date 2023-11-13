@@ -21,6 +21,11 @@ router.post("/", async (req, res) => {
                 );
         })
     ).val();
+    if (info == null) {
+        res.send(Helper.Error("No data"));
+        return;
+    }
+
     let i = startIndex;
     let total = 0;
     var viewedPosts = await Helper.recieveFromDb(`Users/${username}/viewedPosts`);
@@ -31,7 +36,8 @@ router.post("/", async (req, res) => {
         if (i >= keys.length) break;
         if (!viewedPosts || !(keys[i] in viewedPosts)) {
             await Helper.uploadToDb(`Users/${username}/viewedPosts/${keys[i]}`, "");
-            await Helper.uploadToDb(`Posts/${keys[i]}`, { popularity: info[keys[i]].popularity - 10, views: info[keys[i]].views + 1 });
+            await Helper.uploadToDb(`Posts/${keys[i]}/popularity`, info[keys[i]].popularity - 10);
+            await Helper.uploadToDb(`Posts/${keys[i]}/views`, info[keys[i]].views + 1);
             info[keys[i]].popularity -= 10;
             info[keys[i]].views++;
             arr.push({
@@ -44,11 +50,11 @@ router.post("/", async (req, res) => {
         i++;
     }
     i = startIndex;
-    if (arr.length < toIfExists - startIndex) {
+    if (arr.length < toIfExists - startIndex && viewedPosts) {
         while (i < toIfExists) {
             if (i >= keys.length) break;
             if (keys[i] in viewedPosts) {
-                console.log(info[keys[i]].popularity);
+                console.log(info[keys[i]]);
                 arr.push({
                     audioURL: await Helper.recieveFile(info[keys[i]].audioLocation + ".mp3"),
                     postData: await Helper.recieveFromDb("/Posts/" + keys[i]),
@@ -59,7 +65,6 @@ router.post("/", async (req, res) => {
             i++;
         }
     }
-    console.log(arr);
     res.send(arr);
 });
 

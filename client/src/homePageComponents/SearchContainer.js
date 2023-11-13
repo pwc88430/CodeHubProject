@@ -57,6 +57,7 @@ export default function SearchContainer({ toSearchView }) {
     return (
         <div id="searchContainer">
             <input id="search" placeholder="Search" maxLength={20} onKeyDown={updateText}></input>
+
             <img id="searchIcon" src={searchIcon} alt="search image"></img>
             {/* <button onClick={search} className="button">
                 Search
