@@ -39,7 +39,7 @@ app.use("/getLikedPosts", getLikedPostsRoute);
 app.use("/getPosts", getPostsRoute);
 app.use("/likePost", likePostRoute);
 app.use("/searchPosts", searchPostsRoute);
-app.use("/searchUser", searchUserRoute);
+app.use("/searchUsers", searchUserRoute);
 app.use("/signIn", signInRoute);
 app.use("/signUp", signUpRoute);
 app.use("/getExtraUserData", getExtraUserDataRoute);
