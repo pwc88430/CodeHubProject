@@ -28,11 +28,11 @@ export default function SearchContainer({ toSearchView }) {
             type: "search",
             search: enteredSearch,
         };
-        console.log(body);
 
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 setFoundPosts(xhr.response); /// will need to format response first
+                console.log(xhr.response);
             } else {
                 console.log(`Error: ${xhr.status}`);
             }
@@ -47,11 +47,11 @@ export default function SearchContainer({ toSearchView }) {
             type: "search",
             search: enteredSearch,
         };
-        console.log(body);
 
         xhr2.onload = () => {
             if (xhr2.readyState === 4 && xhr2.status === 200) {
                 setFoundUsers(xhr.response); // will need to format response first
+                console.log(xhr.response);
             } else {
                 console.log(`Error: ${xhr2.status}`);
             }
