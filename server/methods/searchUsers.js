@@ -12,11 +12,11 @@ router.post("/", async (req, res) => {
         let keys = Object.keys(val);
         for (let i = 0; i < keys.length; i++) {
             if (val[keys[i]].displayName.toLowerCase().includes(info.search.toLowerCase())) {
-                arr.push(val[keys[i]]);
+                arr.push(val[keys[i]].displayName);
             }
         }
+        res.send(arr);
     });
-    res.send(arr);
 });
 
 module.exports = router;

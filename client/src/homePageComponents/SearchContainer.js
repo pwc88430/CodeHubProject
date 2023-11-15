@@ -15,8 +15,8 @@ export default function SearchContainer({ toSearchView }) {
         }
     }
 
-    // const foundUsersList = foundUsers.map((user) => <li>{user.name}</li>);
-    // const foundPostsList = foundPosts.map((post) => <li>{post.title}</li>);
+    const foundUsersList = foundUsers.map((user) => <li>{user.name}</li>);
+    const foundPostsList = foundPosts.map((post) => <li>{post.title}</li>);
 
     function search() {
         console.log("searched");
@@ -51,7 +51,7 @@ export default function SearchContainer({ toSearchView }) {
         xhr2.onload = () => {
             if (xhr2.readyState === 4 && xhr2.status === 200) {
                 setFoundUsers(xhr.response); // will need to format response first
-                console.log(xhr.response);
+                console.log(xhr2.response);
             } else {
                 console.log(`Error: ${xhr2.status}`);
             }
@@ -62,19 +62,19 @@ export default function SearchContainer({ toSearchView }) {
     return (
         <div id="searchContainer">
             <input id="search" placeholder="Search" maxLength={20} onKeyDown={updateText}></input>
-
             <img id="searchIcon" src={searchIcon} alt="search image"></img>
-            {/* <button onClick={search} className="button">
+            <button onClick={search} className="button">
                 Search
-            </button> */}
-            {/* <div id="userSearch">
+            </button>{" "}
+            */ /*{" "}
+            <div id="userSearch">
                 Users
                 <ul>{foundUsersList}</ul>
             </div>
             <div id="postSearch">
                 Posts
                 <ul>{foundPostsList}</ul>
-            </div> */}
+            </div>
         </div>
     );
 }
