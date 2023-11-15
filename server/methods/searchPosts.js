@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
         .orderByChild("popularity")
         .once("value", (val) => {
             console.log(val);
-            if (val.title.includes(info.search)) {
+            if (val.displayName.includes(info.search)) {
                 arr.push(val);
             }
         });
