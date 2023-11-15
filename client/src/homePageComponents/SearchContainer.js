@@ -8,13 +8,18 @@ export default function SearchContainer({ toSearchView }) {
     const [foundPosts, setFoundPosts] = useState([]);
 
     function updateText(event) {
-        // setEnteredSearch(event.target.value);
+        setEnteredSearch(event.target.value);
+
+        if (event.key == "Enter") {
+            search();
+        }
     }
 
-    const foundUsersList = foundUsers.map((user) => <li>{user.name}</li>);
-    const foundPostsList = foundPosts.map((post) => <li>{post.title}</li>);
+    // const foundUsersList = foundUsers.map((user) => <li>{user.name}</li>);
+    // const foundPostsList = foundPosts.map((post) => <li>{post.title}</li>);
 
     function search() {
+        console.log("searched");
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:8000/searchPosts");
         xhr.setRequestHeader("Content-Type", "application/json");
