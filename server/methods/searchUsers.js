@@ -8,9 +8,12 @@ router.post("/", async (req, res) => {
     let arr = [];
     let info = req.body;
     db.ref("/Users/").once("value", (val) => {
-        console.log(val);
-        if (val.title.includes(info.search)) {
-            arr.push(val);
+        val = val.val();
+        let keys = Object.keys(val);
+        for (let i = 0; i < keys.length; i++) {
+            if (val[keys[i]].displayName.toLowerCase().includes(info.search.toLowerCase())) {
+                arr.push(val[keys[i]]);
+            }
         }
     });
     res.send(arr);
