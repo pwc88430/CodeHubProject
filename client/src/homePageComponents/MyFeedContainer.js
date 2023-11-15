@@ -41,7 +41,6 @@ export default function MyFeedContainer({ userInfo }) {
     var loadedPosts = <div />;
     if (posts.length !== 0 && posts !== null) {
         loadedPosts = posts.map((post) => {
-            console.log(post);
             return <Post post={post} userInfo={userInfo} />;
         });
     }

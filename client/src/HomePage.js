@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import MyProfileContainer from "./homePageComponents/MyProfileContainer";
 import CreateNewRecordingContainer from "./homePageComponents/CreateNewRecordingContainer";
@@ -6,6 +6,7 @@ import MyFeedContainer from "./homePageComponents/MyFeedContainer";
 import MyRecordingsContainer from "./homePageComponents/MyRecordingsContainer";
 import SearchContainer from "./homePageComponents/SearchContainer";
 import FiltersContainer from "./homePageComponents/FiltersContainer";
+import DropdownMenu from "./DropDownMenu";
 
 import logo from "./icon.svg";
 import microphone from "./microphone.svg";
@@ -59,18 +60,36 @@ function HomePage({ userInfo, signOutUser }) {
         }
     }
 
+    function mouseOver() {
+        console.log("moused over");
+        const hoverContainerEl = document.querySelector("#profileButtonExpanded");
+        hoverContainerEl.classList.toggle("hovered");
+    }
+
     useEffect(() => {
         oldOffsetY = document.getElementById("loadMoreAudio").offsetTop;
         var checkAudio = setInterval(checkForMoreAudio, 1000);
     }, []);
+
+    const [isDropdownVisible, setDropdownVisible] = useState(false);
+
+    const handleMouseEnter = () => {
+        setDropdownVisible(true);
+    };
+
+    const handleMouseLeave = () => {
+        setDropdownVisible(false);
+    };
 
     return (
         <div id="homePageContainer" className="profileMyRecordings">
             <header className="page-header">
                 <img src={logo} alt="logo" className="logo" />
 
-                <button id="profileButton" onClick={signOutUser}>
+                <button id="profileButton" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <img src={userIcon}></img>
+
+                    {isDropdownVisible && <DropdownMenu signOut={signOutUser} />}
                 </button>
 
                 <SearchContainer />

@@ -5,6 +5,7 @@ import "./MyProfileContainer.css";
 
 export default function MyProfileContainer({ userInfo }) {
     const [extraInfo, setExtraInfo] = useState("extraInfo");
+    const [expanded, setExpanded] = useState(false);
     function getUserData() {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:8000/getExtraUserData");
@@ -28,6 +29,13 @@ export default function MyProfileContainer({ userInfo }) {
         xhr.send(JSON.stringify(body));
     }
 
+    function handleEditClick(event) {
+        console.log(event.target.parent);
+        event.target.parentNode.classList.toggle("expanded");
+        setExpanded(!expanded);
+        console.log(expanded);
+    }
+
     useEffect(() => {
         getUserData();
     }, []);
@@ -41,7 +49,17 @@ export default function MyProfileContainer({ userInfo }) {
                     <h4>@{userInfo.username}</h4>
                 </div>
             </div>
-            <button id="editButton">Edit</button>
+            {expanded && (
+                <div id="expandedProfileContent">
+                    <input placeholder="username" defaultValue={userInfo.username}></input>
+
+                    <button className="button">Save</button>
+                </div>
+            )}
+            <button onClick={handleEditClick} id="editButton">
+                Edit
+            </button>
+
             <hr></hr>
             <div id="postsInfo">
                 <div>
