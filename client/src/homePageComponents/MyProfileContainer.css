@@ -14,8 +14,9 @@
 }
 
 #myProfileContainer.expanded {
-    height: 400px;
-    width: 300px;
+    height: fit-content;
+    width: fit-content;
+    padding: 10px;
 }
 
 #myProfileContainer #authorInfo {
@@ -94,4 +95,21 @@ hr {
 #expandedProfileContent {
     display: flex;
     flex-direction: column;
+}
+
+#new_icon_container {
+    height: 120px;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    margin-left: 7px;
+}
+
+#new_icon_container::-webkit-scrollbar {
+    display: none;
+}
+
+#new_icon_container img {
+    width: 50px;
+    padding: 2px;
 }

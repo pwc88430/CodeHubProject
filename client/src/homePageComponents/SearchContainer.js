@@ -11,7 +11,12 @@ export default function SearchContainer({ toSearchView }) {
         } else if (result == "Posts") {
             return <h3 key={index}>{result}</h3>;
         } else {
-            return <li key={index}>{"  " + result}</li>;
+            return (
+                <li key={index}>
+                    {result}
+                    <button>Follow</button>
+                </li>
+            );
         }
     });
 

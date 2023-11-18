@@ -2,6 +2,7 @@ import userIcon from "../user.png";
 import { useState } from "react";
 import React, { useEffect } from "react";
 import "./MyProfileContainer.css";
+import IconSelector from "./IconSelector";
 
 export default function MyProfileContainer({ userInfo }) {
     const [extraInfo, setExtraInfo] = useState("extraInfo");
@@ -51,6 +52,7 @@ export default function MyProfileContainer({ userInfo }) {
             </div>
             {expanded && (
                 <div id="expandedProfileContent">
+                    <IconSelector />
                     <input placeholder="username" defaultValue={userInfo.username}></input>
 
                     <button className="button">Save</button>
