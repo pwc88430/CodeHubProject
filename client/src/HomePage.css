@@ -68,8 +68,7 @@ header {
     position: absolute;
     left: 0;
     right: 0;
-    top: 0;
-    bottom: 0;
+    top: 10px;
 }
 
 #searchContainer > input {
@@ -79,15 +78,14 @@ header {
     background: #f5f5f5;
     border-radius: 25px;
     padding: 10px;
-    width: 250px;
+    width: 300px;
 }
 
 #searchContainer > img {
     width: 25px;
     position: absolute;
     left: 10px;
-    top: 0;
-    bottom: 0;
+    top: 10px;
 }
 
 #feedContainer {
@@ -297,4 +295,26 @@ header {
     display: flex;
     flex-direction: column-reverse;
     padding: 10px;
+}
+
+#results_container {
+    display: none;
+}
+
+#results_container.open {
+    display: block;
+    width: 300px;
+    height: fit-content;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#results_container li {
+    list-style-type: none;
+    padding: 3px;
+}
+
+#results_container li:hover {
+    background-color: rgb(227, 243, 247);
 }

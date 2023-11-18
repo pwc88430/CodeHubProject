@@ -3,87 +3,83 @@ import { useState } from "react";
 import searchIcon from "../search.svg";
 
 export default function SearchContainer({ toSearchView }) {
-    const [enteredSearch, setEnteredSearch] = useState("");
-    const [foundUsers, setFoundUsers] = useState([]);
-    const [foundPosts, setFoundPosts] = useState([]);
+    const [results, setResults] = useState([]);
 
-    function updateText(event) {
-        setEnteredSearch(event.target.value);
-
-        if (event.key == "Enter") {
-            search();
+    const searchResults = results.map((result, index) => {
+        if (result == "Users") {
+            return <h3 key={index}>{result}</h3>;
+        } else if (result == "Posts") {
+            return <h3 key={index}>{result}</h3>;
+        } else {
+            return <li key={index}>{"  " + result}</li>;
         }
-    }
+    });
 
-    let foundUsersList;
-    let foundPostsList;
+    function search(event) {
+        if (event.target.value == "") {
+            setResults([]);
+            const resultsEl = document.querySelector("#results_container");
+            resultsEl.classList.remove("open");
+        } else {
+            let newResults;
+            const resultsEl = document.querySelector("#results_container");
+            resultsEl.classList.add("open");
 
-    // if (foundUsers.length != 0) {
-    //     foundUsersList = foundUsers.map((user) => <li>{user.name}</li>);
-    // }
-    // if (foundPosts.length != 0) {
-    //     foundPostsList = foundPosts.map((post) => <li>{post.title}</li>);
-    // }
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8000/searchPosts");
+            xhr.setRequestHeader("Content-Type", "application/json");
 
-    function search() {
-        console.log("searched");
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:8000/searchPosts");
-        xhr.setRequestHeader("Content-Type", "application/json");
+            const body = {
+                type: "search",
+                search: event.target.value,
+            };
 
-        const body = {
-            type: "search",
-            search: enteredSearch,
-        };
+            xhr.onload = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    if (JSON.parse(xhr.response).length == 0) {
+                        newResults = ["No Posts found"];
+                    } else {
+                        newResults = [...JSON.parse(xhr.response)];
+                        newResults = newResults.map((post) => post.title);
+                    }
 
-        xhr.onload = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                setFoundPosts(xhr.response); /// will need to format response first
-                console.log(xhr.response);
-            } else {
-                console.log(`Error: ${xhr.status}`);
-            }
-        };
-        xhr.send(JSON.stringify(body));
+                    const xhr2 = new XMLHttpRequest();
+                    xhr2.open("POST", "http://localhost:8000/searchUsers");
+                    xhr2.setRequestHeader("Content-Type", "application/json");
 
-        const xhr2 = new XMLHttpRequest();
-        xhr2.open("POST", "http://localhost:8000/searchUsers");
-        xhr2.setRequestHeader("Content-Type", "application/json");
+                    const body2 = {
+                        type: "search",
+                        search: event.target.value,
+                    };
 
-        const body2 = {
-            type: "search",
-            search: enteredSearch,
-        };
-
-        xhr2.onload = () => {
-            if (xhr2.readyState === 4 && xhr2.status === 200) {
-                setFoundUsers(xhr.response); // will need to format response first
-                console.log(xhr2.response);
-            } else {
-                console.log(`Error: ${xhr2.status}`);
-            }
-        };
-        xhr2.send(JSON.stringify(body));
+                    xhr2.onload = () => {
+                        if (xhr2.readyState === 4 && xhr2.status === 200) {
+                            if (JSON.parse(xhr2.response).length == 0) {
+                                newResults = ["Users", "No Users Found", "Posts", ...newResults];
+                            } else {
+                                newResults = ["Users", ...JSON.parse(xhr2.response), "Posts", ...newResults];
+                            }
+                            setResults(newResults);
+                        } else {
+                            console.log(`Error: ${xhr2.status}`);
+                        }
+                    };
+                    xhr2.send(JSON.stringify(body));
+                } else {
+                    console.log(`Error: ${xhr.status}`);
+                }
+            };
+            xhr.send(JSON.stringify(body));
+        }
     } // search
 
     return (
         <div id="searchContainer">
-            <input id="search" placeholder="Search" maxLength={20} onKeyDown={updateText}></input>
+            <input id="search" placeholder="Search" maxLength={20} onKeyDown={search}></input>
 
             <img id="searchIcon" src={searchIcon} alt="search image"></img>
 
-            {foundUsersList && foundUsers.length != 0}
-            {/* <button onClick={search} className="button">
-                Search
-            </button> */}
-            {/* <div id="userSearch">
-                Users
-                <ul>{foundUsersList}</ul>
-            </div>
-            <div id="postSearch">
-                Posts
-                <ul>{foundPostsList}</ul>
-            </div> */}
+            <div id="results_container">{searchResults}</div>
         </div>
     );
 }
