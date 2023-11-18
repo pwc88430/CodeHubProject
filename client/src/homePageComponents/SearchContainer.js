@@ -15,8 +15,15 @@ export default function SearchContainer({ toSearchView }) {
         }
     }
 
-    const foundUsersList = foundUsers.map((user) => <li>{user.name}</li>);
-    const foundPostsList = foundPosts.map((post) => <li>{post.title}</li>);
+    let foundUsersList;
+    let foundPostsList;
+
+    // if (foundUsers.length != 0) {
+    //     foundUsersList = foundUsers.map((user) => <li>{user.name}</li>);
+    // }
+    // if (foundPosts.length != 0) {
+    //     foundPostsList = foundPosts.map((post) => <li>{post.title}</li>);
+    // }
 
     function search() {
         console.log("searched");
@@ -62,19 +69,21 @@ export default function SearchContainer({ toSearchView }) {
     return (
         <div id="searchContainer">
             <input id="search" placeholder="Search" maxLength={20} onKeyDown={updateText}></input>
+
             <img id="searchIcon" src={searchIcon} alt="search image"></img>
-            <button onClick={search} className="button">
+
+            {foundUsersList && foundUsers.length != 0}
+            {/* <button onClick={search} className="button">
                 Search
-            </button>{" "}
-            */ /*{" "}
-            <div id="userSearch">
+            </button> */}
+            {/* <div id="userSearch">
                 Users
                 <ul>{foundUsersList}</ul>
             </div>
             <div id="postSearch">
                 Posts
                 <ul>{foundPostsList}</ul>
-            </div>
+            </div> */}
         </div>
     );
 }

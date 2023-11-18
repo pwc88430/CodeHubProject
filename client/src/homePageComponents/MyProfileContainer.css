@@ -10,11 +10,12 @@
     position: sticky;
     top: 90px;
     transition: 0.5s ease-in-out;
+    width: 300px;
 }
 
 #myProfileContainer.expanded {
     height: 400px;
-    width: auto;
+    width: 300px;
 }
 
 #myProfileContainer #authorInfo {
