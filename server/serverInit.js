@@ -46,7 +46,7 @@ app.use("/signIn", signInRoute);
 app.use("/signUp", signUpRoute);
 app.use("/getExtraUserData", getExtraUserDataRoute);
 app.use("/followUser", followUserRoute);
-app.use("./updateUserData", updateUserData);
+app.use("/updateUserData", updateUserData);
 
 var PORT = 8000;
 app.listen(PORT, () => {

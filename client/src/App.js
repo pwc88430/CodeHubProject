@@ -35,6 +35,7 @@ function App() {
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 const result = JSON.parse(xhr.response);
+                console.log(result);
                 if (result.type == "Error") {
                     if (handleError != null) {
                         handleError(result.error);
@@ -45,7 +46,7 @@ function App() {
                     sessionStorage.setItem("voxPassword", result.password);
                     sessionStorage.setItem("voxSecretKey", result.secretKey);
                     sessionStorage.setItem("voxDisplayName", result.displayName);
-                    sessionStorage.setItem("vosUserIcon", result.userIcon);
+                    sessionStorage.setItem("voxUserIcon", result.userIcon);
                     console.log(result.displayName);
                     setUserInfo({
                         username: result.username,

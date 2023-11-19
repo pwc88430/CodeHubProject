@@ -38,6 +38,36 @@ export default function MyProfileContainer({ userInfo }) {
         console.log(expanded);
     }
 
+    function updateUserData() {
+        const xhr2 = new XMLHttpRequest();
+        xhr2.open("POST", "http://localhost:8000/updateUserData");
+        xhr2.setRequestHeader("Content-Type", "application/json");
+
+        const newUsernameEl = document.querySelector("#newUsernameInput");
+        const authorEl = document.querySelector("#author");
+        const newIconHolderEl = document.querySelector("#new_icon_container");
+        const iconEls = newIconHolderEl.querySelectorAll("img");
+
+        authorEl.innerHTML = newUsernameEl.value;
+        userInfo.displayName = newUsernameEl.value;
+
+        const body = {
+            username: userInfo.username,
+            newUsername: newUsernameEl.value,
+            newUserIcon: "Animals-avatar_4.svg",
+        };
+        xhr2.onload = () => {
+            if (xhr2.readyState === 4 && xhr2.status === 200) {
+                setExtraInfo(JSON.parse(xhr2.response));
+                console.log(JSON.parse(xhr2.response));
+                return xhr2.response;
+            } else {
+                console.log(`Error: ${xhr2.status}`);
+            }
+        };
+        xhr2.send(JSON.stringify(body));
+    }
+
     useEffect(() => {
         getUserData();
     }, []);
@@ -45,7 +75,7 @@ export default function MyProfileContainer({ userInfo }) {
     return (
         <div id="myProfileContainer">
             <div id="authorInfo">
-                <img src={userIcon}></img>
+                <img src={"/icons/" + sessionStorage.getItem("voxUserIcon")}></img>
                 <div id="handles">
                     <h3 id="author">{userInfo.displayName}</h3>
                     <h4>@{userInfo.username}</h4>
@@ -54,9 +84,11 @@ export default function MyProfileContainer({ userInfo }) {
             {expanded && (
                 <div id="expandedProfileContent">
                     <IconSelector />
-                    <input placeholder="username" defaultValue={userInfo.username}></input>
+                    <input id="newUsernameInput" defaultValue={userInfo.displayName}></input>
 
-                    <button className="button">Save</button>
+                    <button className="button" onClick={updateUserData}>
+                        Save
+                    </button>
                 </div>
             )}
             <button onClick={handleEditClick} id="editButton">

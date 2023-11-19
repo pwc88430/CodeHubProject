@@ -12,6 +12,7 @@ router.post("/", async (req, res) => {
         likes: 0,
         views: 0,
         following: null,
+        icon: null,
     };
 
     if (userInfo == null) {
@@ -37,7 +38,9 @@ router.post("/", async (req, res) => {
     output.likes = likes;
     output.views = views;
     output.following = keys2;
+    let icon = await Helper.recieveFromDb("Users/" + targetUser + "/userIcon");
 
+    output.icon = icon;
     console.log(`sending extra data: \n Likes: ${output.likes} \n Views: ${output.views} \n Posts: ${output.posts}`);
 
     res.send(output);
