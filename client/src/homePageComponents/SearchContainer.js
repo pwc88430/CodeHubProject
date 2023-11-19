@@ -2,8 +2,38 @@ import { useState } from "react";
 
 import searchIcon from "../search.svg";
 
-export default function SearchContainer({ toSearchView }) {
+export default function SearchContainer({ userInfo }) {
     const [results, setResults] = useState([]);
+
+    function follow(user) {
+        console.log("following " + user);
+
+        const xhr3 = new XMLHttpRequest();
+        xhr3.open("POST", "http://localhost:8000/followUser");
+        xhr3.setRequestHeader("Content-Type", "application/json");
+
+        const body = {
+            userData: {
+                username: userInfo.username,
+                displayName: userInfo.displayName,
+                password: userInfo.password,
+                userIcon: userInfo.userIcon,
+            },
+            secretKey: userInfo.secretKey,
+            userToFollow: user,
+        };
+
+        xhr3.onload = () => {
+            if (xhr3.readyState === 4 && xhr3.status === 200) {
+                if (JSON.parse(xhr3.response).length == 0) {
+                } else {
+                }
+            } else {
+                console.log(`Error: ${xhr3.status}`);
+            }
+        };
+        xhr3.send(JSON.stringify(body));
+    }
 
     const searchResults = results.map((result, index) => {
         if (result == "Users") {
@@ -14,7 +44,7 @@ export default function SearchContainer({ toSearchView }) {
             return (
                 <li key={index}>
                     {result}
-                    <button>Follow</button>
+                    <button onClick={() => follow(result)}>Follow</button>
                 </li>
             );
         }

@@ -16,6 +16,7 @@ const searchUserRoute = require("./methods/searchUsers");
 const signInRoute = require("./methods/signIn");
 const signUpRoute = require("./methods/signUp");
 const getExtraUserDataRoute = require("./methods/getExtraUserData");
+const followUserRoute = require("./methods/followUser");
 
 app.use(
     cors({
@@ -43,6 +44,7 @@ app.use("/searchUsers", searchUserRoute);
 app.use("/signIn", signInRoute);
 app.use("/signUp", signUpRoute);
 app.use("/getExtraUserData", getExtraUserDataRoute);
+app.use("/followUser", followUserRoute);
 
 var PORT = 8000;
 app.listen(PORT, () => {

@@ -92,7 +92,7 @@ function HomePage({ userInfo, signOutUser }) {
                     {isDropdownVisible && <DropdownMenu signOut={signOutUser} />}
                 </button>
 
-                <SearchContainer />
+                <SearchContainer userInfo={userInfo} />
             </header>
 
             <section className="wrapper">

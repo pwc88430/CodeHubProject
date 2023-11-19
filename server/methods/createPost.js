@@ -5,7 +5,6 @@ var Helper = require("./other/Helper");
 router.post("/", async (req, res) => {
     // TODO: test, make sure needed variables are sent
     let info = req.body;
-    console.log("Request recieved");
 
     if (!Helper.authorized(info.secretKey, info.userData.username, info.userData.password)) {
         res.send(false);
