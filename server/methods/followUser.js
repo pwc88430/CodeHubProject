@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
         return;
     }
 
-    let databaseResult = await Helper.uploadToDb("/Users/" + info.userData.username + "/followers/" + info.userToFollow, "").catch(
+    let databaseResult = await Helper.uploadToDb("/Users/" + info.userData.username + "/following/" + info.userToFollow, "").catch(
         (err) => {
             console.log(err);
             return false;

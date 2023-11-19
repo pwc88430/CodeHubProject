@@ -22,6 +22,7 @@ export default function MyProfileContainer({ userInfo }) {
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 setExtraInfo(JSON.parse(xhr.response));
+                console.log(JSON.parse(xhr.response));
                 return xhr.response;
             } else {
                 console.log(`Error: ${xhr.status}`);
@@ -75,6 +76,10 @@ export default function MyProfileContainer({ userInfo }) {
                 <div>
                     <p>Views:</p>
                     <p>{extraInfo.views}</p>
+                </div>
+                <div>
+                    <p>Following</p>
+                    <p>{extraInfo.following}</p>
                 </div>
             </div>
         </div>

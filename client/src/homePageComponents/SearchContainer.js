@@ -6,8 +6,6 @@ export default function SearchContainer({ userInfo }) {
     const [results, setResults] = useState([]);
 
     function follow(user) {
-        console.log("following " + user);
-
         const xhr3 = new XMLHttpRequest();
         xhr3.open("POST", "http://localhost:8000/followUser");
         xhr3.setRequestHeader("Content-Type", "application/json");
