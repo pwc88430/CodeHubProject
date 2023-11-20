@@ -7,6 +7,7 @@ import IconSelector from "./IconSelector";
 export default function MyProfileContainer({ userInfo }) {
     const [extraInfo, setExtraInfo] = useState("extraInfo");
     const [expanded, setExpanded] = useState(false);
+
     function getUserData() {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:8000/getExtraUserData");
@@ -22,6 +23,7 @@ export default function MyProfileContainer({ userInfo }) {
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 setExtraInfo(JSON.parse(xhr.response));
+                icon = extraInfo.icon;
                 console.log(JSON.parse(xhr.response));
                 return xhr.response;
             } else {
@@ -36,6 +38,11 @@ export default function MyProfileContainer({ userInfo }) {
         event.target.parentNode.classList.toggle("expanded");
         setExpanded(!expanded);
         console.log(expanded);
+    }
+
+    var icon = null;
+    function setIcon(newIcon) {
+        icon = newIcon;
     }
 
     function updateUserData() {
@@ -54,7 +61,7 @@ export default function MyProfileContainer({ userInfo }) {
         const body = {
             username: userInfo.username,
             newUsername: newUsernameEl.value,
-            newUserIcon: "Animals-avatar_4.svg",
+            newUserIcon: icon || userIcon.userIcon,
         };
         xhr2.onload = () => {
             if (xhr2.readyState === 4 && xhr2.status === 200) {
@@ -75,7 +82,7 @@ export default function MyProfileContainer({ userInfo }) {
     return (
         <div id="myProfileContainer">
             <div id="authorInfo">
-                <img src={"/icons/" + sessionStorage.getItem("voxUserIcon")}></img>
+                <img src={userInfo.userIcon}></img>
                 <div id="handles">
                     <h3 id="author">{userInfo.displayName}</h3>
                     <h4>@{userInfo.username}</h4>
@@ -83,7 +90,7 @@ export default function MyProfileContainer({ userInfo }) {
             </div>
             {expanded && (
                 <div id="expandedProfileContent">
-                    <IconSelector />
+                    <IconSelector setIcon={setIcon} />
                     <input id="newUsernameInput" defaultValue={userInfo.displayName}></input>
 
                     <button className="button" onClick={updateUserData}>

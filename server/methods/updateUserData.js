@@ -9,6 +9,10 @@ router.post("/", async (req, res) => {
     let databaseResult2 = await Helper.uploadToDb("/Users/" + info.username + "/userIcon/", info.newUserIcon);
 
     console.log(databaseResult && databaseResult2);
+
+    console.log(info);
+
+    res.send({});
 });
 
 module.exports = router;

@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
         password: password,
         displayName: displayName,
         dateCreated: new Date().getTime(),
-        userIcon: "default_user.svg",
+        userIcon: "/icons/default_user.svg",
     });
 
     // if account creation is unsuccessful, return error
@@ -47,6 +47,7 @@ router.post("/", async (req, res) => {
         password: password,
         secretKey: Helper.stringToHash(username + password),
         displayName: displayName,
+        userIcon: "/icons/default_user.svg",
     };
 
     res.send(JSON.stringify(output));

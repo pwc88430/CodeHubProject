@@ -171,7 +171,7 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                         username: userInfo.username,
                         displayName: userInfo.displayName,
                         password: userInfo.password,
-                        userIcon: userInfo.userIcon || "./user.png",
+                        userIcon: userInfo.userIcon,
                     },
                     visibility: 0,
                     postTitle: clipNameEl.value,

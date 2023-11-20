@@ -87,7 +87,7 @@ function HomePage({ userInfo, signOutUser }) {
                 <img src={logo} alt="logo" className="logo" />
 
                 <button id="profileButton" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                    <img src={"/icons/" + sessionStorage.getItem("voxUserIcon")}></img>
+                    <img src={sessionStorage.getItem("voxUserIcon")}></img>
 
                     {isDropdownVisible && <DropdownMenu signOut={signOutUser} />}
                 </button>

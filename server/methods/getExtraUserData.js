@@ -33,7 +33,8 @@ router.post("/", async (req, res) => {
 
     let following = await Helper.recieveFromDb("Users/" + targetUser + "/following/");
 
-    let keys2 = Object.keys(following);
+    let keys2 = [];
+    if (following !== null) keys2 = Object.keys(following);
 
     output.likes = likes;
     output.views = views;

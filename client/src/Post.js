@@ -1,5 +1,4 @@
 import "./Post.css";
-import userIcon from "./user.png";
 import React from "react";
 import { useRef, useEffect } from "react";
 
@@ -240,7 +239,7 @@ export default function Post({ post, userInfo }) {
     return (
         <div className="postContainer">
             <div id="authorInfo">
-                <img src={userIcon}></img>
+                <img src={post.postData.userIcon}></img>
                 <div id="handles">
                     <h3 id="author">{post.postData.authorName}</h3>
                     <h4>@{post.postData.author}</h4>
