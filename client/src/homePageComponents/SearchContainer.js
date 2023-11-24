@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import searchIcon from "../search.svg";
 
 export default function SearchContainer({ userInfo }) {
     const [results, setResults] = useState([]);
+    const [followingList, setFollowingList] = useState([]);
 
     function follow(user) {
         const xhr3 = new XMLHttpRequest();
@@ -33,11 +34,42 @@ export default function SearchContainer({ userInfo }) {
         xhr3.send(JSON.stringify(body));
     }
 
+    function getUserData() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:8000/getExtraUserData");
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        const body = {
+            username: userInfo.username,
+            password: userInfo.password,
+            secretKey: userInfo.secretKey,
+            targetUser: userInfo.username,
+        };
+
+        xhr.onload = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let following = JSON.parse(xhr.response);
+                console.log(following.following);
+                setFollowingList(following.following);
+                console.log(followingList);
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };
+        xhr.send(JSON.stringify(body));
+    }
+
+    useEffect(() => {
+        getUserData();
+    }, []);
+
     const searchResults = results.map((result, index) => {
         if (result == "Users") {
             return <h3 key={index}>{result}</h3>;
         } else if (result == "Posts") {
             return <h3 key={index}>{result}</h3>;
+        } else if (result == "No Posts found" || result == "No Users Found") {
+            return <h5 key={index}>{result}</h5>;
         } else {
             return (
                 <li key={index}>

@@ -311,6 +311,19 @@ header {
 #results_container li {
     list-style-type: none;
     padding: 3px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#results_container li button {
+    margin: 0;
+    border: none;
+    background-color: #ffd166;
+    padding: 3px 6px;
+    border-radius: 8px;
+}
+#results_container li button:hover {
+    background-color: #cca751;
 }
 
 #results_container li:hover {
