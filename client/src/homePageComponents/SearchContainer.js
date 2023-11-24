@@ -49,9 +49,8 @@ export default function SearchContainer({ userInfo }) {
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 let following = JSON.parse(xhr.response);
-                console.log(following.following);
+
                 setFollowingList(following.following);
-                console.log(followingList);
             } else {
                 console.log(`Error: ${xhr.status}`);
             }
@@ -70,11 +69,13 @@ export default function SearchContainer({ userInfo }) {
             return <h3 key={index}>{result}</h3>;
         } else if (result == "No Posts found" || result == "No Users Found") {
             return <h5 key={index}>{result}</h5>;
+        } else if (result.substring(result.length - 4, result.length) == "post") {
+            return <li key={index}>{result}</li>;
         } else {
             return (
                 <li key={index}>
                     {result}
-                    <button onClick={() => follow(result)}>Follow</button>
+                    <button onClick={() => follow(result)}>{followingList.includes(result) ? "Unfollow" : "Follow"}</button>
                 </li>
             );
         }
@@ -105,7 +106,7 @@ export default function SearchContainer({ userInfo }) {
                         newResults = ["No Posts found"];
                     } else {
                         newResults = [...JSON.parse(xhr.response)];
-                        newResults = newResults.map((post) => post.title);
+                        newResults = newResults.map((post) => post.title + "post");
                     }
 
                     const xhr2 = new XMLHttpRequest();
