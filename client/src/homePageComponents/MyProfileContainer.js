@@ -75,6 +75,17 @@ export default function MyProfileContainer({ userInfo }) {
         xhr2.send(JSON.stringify(body));
     }
 
+    let followingList;
+
+    if (extraInfo.following != null) {
+        followingList = extraInfo.following.map((follower) => (
+            <li>
+                {follower}
+                <img src="/icons/default_user.svg"></img>
+            </li>
+        ));
+    }
+
     useEffect(() => {
         getUserData();
     }, []);
@@ -117,8 +128,8 @@ export default function MyProfileContainer({ userInfo }) {
                     <p>{extraInfo.views}</p>
                 </div>
                 <div>
-                    <p>Following</p>
-                    <p>{extraInfo.following}</p>
+                    <h4>Following</h4>
+                    <ol>{followingList}</ol>
                 </div>
             </div>
         </div>

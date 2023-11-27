@@ -113,3 +113,26 @@ hr {
     width: 50px;
     padding: 2px;
 }
+
+#postsInfo ol li {
+    list-style-type: none;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h4 {
+    margin-top: 10px;
+}
+
+#postsInfo ol img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+#postsInfo ol {
+    background-color: rgb(207, 205, 205);
+    padding: 5px;
+    border-radius: 5px;
+}

@@ -180,6 +180,7 @@ export default function CreateNewRecordingContainer({ toCreateView, userInfo }) 
                     secretKey: userInfo.secretKey,
                     description: textAreaEl.value,
                 });
+                console.log(userInfo.userIcon);
 
                 xhr.onload = () => {
                     if (xhr.readyState === 4 && xhr.status === 200) {
