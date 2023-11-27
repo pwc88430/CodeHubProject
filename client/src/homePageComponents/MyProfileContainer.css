@@ -119,7 +119,11 @@ hr {
     margin-left: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+}
+
+#postsInfo ol li:hover {
+    background-color: rgb(231, 247, 249);
+    border-radius: 5px;
 }
 
 h4 {
@@ -129,10 +133,14 @@ h4 {
 #postsInfo ol img {
     width: 40px;
     border-radius: 50%;
+    margin: 0;
 }
 
 #postsInfo ol {
-    background-color: rgb(207, 205, 205);
+    background-color: rgb(227, 224, 224);
     padding: 5px;
     border-radius: 5px;
+    max-height: 200px;
+    overflow: scroll;
+    margin-top: 5px;
 }

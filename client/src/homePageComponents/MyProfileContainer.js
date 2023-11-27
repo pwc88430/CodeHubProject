@@ -80,8 +80,8 @@ export default function MyProfileContainer({ userInfo }) {
     if (extraInfo.following != null) {
         followingList = extraInfo.following.map((follower) => (
             <li>
-                {follower}
                 <img src="/icons/default_user.svg"></img>
+                {follower}
             </li>
         ));
     }
