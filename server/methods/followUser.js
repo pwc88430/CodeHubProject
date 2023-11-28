@@ -13,14 +13,19 @@ router.post("/", async (req, res) => {
         return;
     }
 
-    let databaseResult = await Helper.uploadToDb("/Users/" + info.userData.username + "/following/" + info.userToFollow, "").catch(
-        (err) => {
-            console.log(err);
-            return false;
-        }
-    );
+    if (info.follow) {
+        let databaseResult = await Helper.uploadToDb("/Users/" + info.userData.username + "/following/" + info.userToFollow, "").catch(
+            (err) => {
+                console.log(err);
+                return false;
+            }
+        );
 
-    res.send(databaseResult);
+        res.send(databaseResult);
+    } else {
+        let databaseResult = await Helper.removeFromDb("/Users/" + info.userData.username + "/following/" + info.userToFollow);
+        res.send(databaseResult);
+    }
 });
 
 module.exports = router;

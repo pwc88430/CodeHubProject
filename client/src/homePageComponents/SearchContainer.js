@@ -10,34 +10,61 @@ export default function SearchContainer({ userInfo }) {
         console.log(event.target);
         if (event.target.innerHTML == "Follow") {
             event.target.innerHTML = "Unfollow";
+            const xhr3 = new XMLHttpRequest();
+            xhr3.open("POST", "http://localhost:8000/followUser");
+            xhr3.setRequestHeader("Content-Type", "application/json");
+
+            const body = {
+                userData: {
+                    username: userInfo.username,
+                    displayName: userInfo.displayName,
+                    password: userInfo.password,
+                    userIcon: userInfo.userIcon,
+                },
+                secretKey: userInfo.secretKey,
+                userToFollow: user,
+                follow: true,
+            };
+
+            xhr3.onload = () => {
+                if (xhr3.readyState === 4 && xhr3.status === 200) {
+                    if (JSON.parse(xhr3.response).length == 0) {
+                    } else {
+                    }
+                } else {
+                    console.log(`Error: ${xhr3.status}`);
+                }
+            };
+            xhr3.send(JSON.stringify(body));
         } else if (event.target.innerHTML == "Unfollow") {
             event.target.innerHTML = "Follow";
-        }
-        const xhr3 = new XMLHttpRequest();
-        xhr3.open("POST", "http://localhost:8000/followUser");
-        xhr3.setRequestHeader("Content-Type", "application/json");
+            const xhr3 = new XMLHttpRequest();
+            xhr3.open("POST", "http://localhost:8000/followUser");
+            xhr3.setRequestHeader("Content-Type", "application/json");
 
-        const body = {
-            userData: {
-                username: userInfo.username,
-                displayName: userInfo.displayName,
-                password: userInfo.password,
-                userIcon: userInfo.userIcon,
-            },
-            secretKey: userInfo.secretKey,
-            userToFollow: user,
-        };
+            const body = {
+                userData: {
+                    username: userInfo.username,
+                    displayName: userInfo.displayName,
+                    password: userInfo.password,
+                    userIcon: userInfo.userIcon,
+                },
+                secretKey: userInfo.secretKey,
+                userToFollow: user,
+                follow: false,
+            };
 
-        xhr3.onload = () => {
-            if (xhr3.readyState === 4 && xhr3.status === 200) {
-                if (JSON.parse(xhr3.response).length == 0) {
+            xhr3.onload = () => {
+                if (xhr3.readyState === 4 && xhr3.status === 200) {
+                    if (JSON.parse(xhr3.response).length == 0) {
+                    } else {
+                    }
                 } else {
+                    console.log(`Error: ${xhr3.status}`);
                 }
-            } else {
-                console.log(`Error: ${xhr3.status}`);
-            }
-        };
-        xhr3.send(JSON.stringify(body));
+            };
+            xhr3.send(JSON.stringify(body));
+        }
     }
 
     function getUserData() {
