@@ -6,7 +6,13 @@ export default function SearchContainer({ userInfo }) {
     const [results, setResults] = useState([]);
     const [followingList, setFollowingList] = useState([]);
 
-    function follow(user) {
+    function follow(event, user) {
+        console.log(event.target);
+        if (event.target.innerHTML == "Follow") {
+            event.target.innerHTML = "Unfollow";
+        } else if (event.target.innerHTML == "Unfollow") {
+            event.target.innerHTML = "Follow";
+        }
         const xhr3 = new XMLHttpRequest();
         xhr3.open("POST", "http://localhost:8000/followUser");
         xhr3.setRequestHeader("Content-Type", "application/json");
@@ -51,6 +57,7 @@ export default function SearchContainer({ userInfo }) {
                 let following = JSON.parse(xhr.response);
 
                 setFollowingList(following.following);
+                console.log(following.following);
             } else {
                 console.log(`Error: ${xhr.status}`);
             }
@@ -70,12 +77,14 @@ export default function SearchContainer({ userInfo }) {
         } else if (result == "No Posts found" || result == "No Users Found") {
             return <h5 key={index}>{result}</h5>;
         } else if (result.substring(result.length - 4, result.length) == "post") {
-            return <li key={index}>{result}</li>;
+            return <li key={index}>{result.substring(0, result.length - 4)}</li>;
         } else {
             return (
                 <li key={index}>
                     {result}
-                    <button onClick={() => follow(result)}>{followingList.includes(result) ? "Unfollow" : "Follow"}</button>
+                    <button id={result} onClick={(e) => follow(e, result)}>
+                        {followingList.includes(result) ? "Unfollow" : "Follow"}
+                    </button>
                 </li>
             );
         }
@@ -123,7 +132,8 @@ export default function SearchContainer({ userInfo }) {
                             if (JSON.parse(xhr2.response).length == 0) {
                                 newResults = ["Users", "No Users Found", "Posts", ...newResults];
                             } else {
-                                newResults = ["Users", ...JSON.parse(xhr2.response), "Posts", ...newResults];
+                                console.log(xhr2.response);
+                                newResults = ["Users", ...JSON.parse(xhr2.response).displayNames, "Posts", ...newResults];
                             }
                             setResults(newResults);
                         } else {

@@ -78,12 +78,16 @@ export default function MyProfileContainer({ userInfo }) {
     let followingList;
 
     if (extraInfo.following != null) {
-        followingList = extraInfo.following.map((follower) => (
-            <li>
-                <img src="/icons/default_user.svg"></img>
-                {follower}
-            </li>
-        ));
+        console.log(extraInfo.following);
+        followingList = extraInfo.following.map((follower) => {
+            console.log(follower);
+            return (
+                <li>
+                    <img src="/icons/default_user.svg"></img>
+                    {follower}
+                </li>
+            );
+        });
     }
 
     useEffect(() => {
