@@ -329,3 +329,24 @@ header {
 #results_container li:hover {
     background-color: rgb(227, 243, 247);
 }
+
+#feedButtons {
+    display: flex;
+    margin-bottom: 2vh;
+}
+
+#feedButtons > div,
+#feedButtons > p {
+    width: fit-content;
+    font-weight: bolder;
+    transition: 0.2s;
+}
+
+#feedButtons > p {
+    user-select: none;
+}
+
+#feedButtons > div:hover {
+    cursor: pointer;
+    color: grey;
+}

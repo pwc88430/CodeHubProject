@@ -3,7 +3,7 @@ var router = express.Router();
 var Helper = require("./other/Helper");
 
 router.post("/", async (req, res) => {
-    const { username, password, secretKey, targetUser } = req.body;
+    const { targetUser } = req.body;
 
     let userInfo = await Helper.recieveFromDb("Users/" + targetUser + "/Posts");
 
@@ -42,7 +42,8 @@ router.post("/", async (req, res) => {
     let icon = await Helper.recieveFromDb("Users/" + targetUser + "/userIcon");
 
     output.icon = icon;
-    console.log(`sending extra data: \n Likes: ${output.likes} \n Views: ${output.views} \n Posts: ${output.posts}`);
+
+    // console.log(`sending extra data: \n Likes: ${output.likes} \n Views: ${output.views} \n Posts: ${output.posts}`);
 
     res.send(output);
 });
