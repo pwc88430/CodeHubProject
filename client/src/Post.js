@@ -74,6 +74,8 @@ export default function Post({ post, userInfo }) {
         customTrack.style.width = (radioSelector.value / radioSelector.max) * 100 + "%";
     }
 
+    if (post.postData == null) return;
+
     var date = new Date(post.postData.dateCreated)
         .toLocaleDateString("en-us", {
             weekday: "long",
@@ -144,7 +146,6 @@ export default function Post({ post, userInfo }) {
      * Retrieves audio from an external source, then initializes the drawing function
      * @param {String} url the url of the audio we'd like to fetch
      */
-    console.log(post.audioURL);
     const drawAudio = async (url) => {
         //const audio = await new Audio(url);
         await fetch(url)
@@ -233,12 +234,21 @@ export default function Post({ post, userInfo }) {
         ctx.lineTo(x + width, 0);
         ctx.stroke();
     };
-    console.log(post.audioURL);
     //drawAudio(post.audioURL);
+
+    function changePosts(user) {
+        sessionStorage.setItem("voxLoadUser", user);
+        document.getElementById("loadMoreAudio").click();
+    }
 
     return (
         <div className="postContainer">
-            <div id="authorInfo">
+            <div
+                id="authorInfo"
+                onClick={() => {
+                    changePosts(post.postData.author);
+                }}
+            >
                 <img src={post.postData.userIcon}></img>
                 <div id="handles">
                     <h3 id="author">{post.postData.authorName}</h3>

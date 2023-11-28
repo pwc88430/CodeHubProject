@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import "./MyProfileContainer.css";
 import IconSelector from "./IconSelector";
 
-export default function MyProfileContainer({ userInfo }) {
+export default function MyProfileContainer({ userInfo, currentUser }) {
     const [extraInfo, setExtraInfo] = useState("extraInfo");
     const [expanded, setExpanded] = useState(false);
 
@@ -14,17 +14,15 @@ export default function MyProfileContainer({ userInfo }) {
         xhr.setRequestHeader("Content-Type", "application/json");
 
         const body = {
-            username: userInfo.username,
-            password: userInfo.password,
-            secretKey: userInfo.secretKey,
             targetUser: userInfo.username,
         };
 
         xhr.onload = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(JSON.parse(xhr.response));
+
                 setExtraInfo(JSON.parse(xhr.response));
                 icon = extraInfo.icon;
-                console.log(JSON.parse(xhr.response));
                 return xhr.response;
             } else {
                 console.log(`Error: ${xhr.status}`);
@@ -46,6 +44,7 @@ export default function MyProfileContainer({ userInfo }) {
     }
 
     function updateUserData() {
+        if (!currentUser) return;
         const xhr2 = new XMLHttpRequest();
         xhr2.open("POST", "http://localhost:8000/updateUserData");
         xhr2.setRequestHeader("Content-Type", "application/json");
@@ -92,7 +91,7 @@ export default function MyProfileContainer({ userInfo }) {
 
     useEffect(() => {
         getUserData();
-    }, []);
+    }, [userInfo]);
 
     return (
         <div id="myProfileContainer">
@@ -113,9 +112,11 @@ export default function MyProfileContainer({ userInfo }) {
                     </button>
                 </div>
             )}
-            <button onClick={handleEditClick} id="editButton">
-                Edit
-            </button>
+            {currentUser && (
+                <button onClick={handleEditClick} id="editButton">
+                    Edit
+                </button>
+            )}
 
             <hr></hr>
             <div id="postsInfo">

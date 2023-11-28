@@ -13,6 +13,8 @@ import microphone from "./microphone.svg";
 import userIcon from "./user.png";
 
 function HomePage({ userInfo, signOutUser }) {
+    const [currentProfile, setProfile] = useState([]);
+
     function getRecordings() {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:8000/getPosts");
@@ -68,6 +70,7 @@ function HomePage({ userInfo, signOutUser }) {
 
     useEffect(() => {
         oldOffsetY = document.getElementById("loadMoreAudio").offsetTop;
+        setProfile(<MyProfileContainer userInfo={userInfo} currentUser={true}></MyProfileContainer>);
         var checkAudio = setInterval(checkForMoreAudio, 1000);
     }, []);
 
@@ -80,6 +83,34 @@ function HomePage({ userInfo, signOutUser }) {
     const handleMouseLeave = () => {
         setDropdownVisible(false);
     };
+
+    function changeProfile(req) {
+        console.log("Changing profile to: " + req + "\nYou are: " + userInfo.username);
+        if (req === userInfo.username) {
+            setProfile(<MyProfileContainer userInfo={userInfo} currentUser={true}></MyProfileContainer>);
+            return;
+        }
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:8000/getPublicUserData");
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        const body = {
+            username: userInfo.username,
+            password: userInfo.password,
+            secretKey: userInfo.secretKey,
+            targetUsername: req,
+        };
+
+        xhr.onload = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                setProfile(<MyProfileContainer userInfo={JSON.parse(xhr.response)} currentUser={false}></MyProfileContainer>);
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };
+        xhr.send(JSON.stringify(body));
+    }
 
     return (
         <div id="homePageContainer" className="profileMyRecordings">
@@ -96,8 +127,8 @@ function HomePage({ userInfo, signOutUser }) {
             </header>
 
             <section className="wrapper">
-                <MyProfileContainer userInfo={userInfo}></MyProfileContainer>
-                <MyFeedContainer userInfo={userInfo} />
+                {currentProfile}
+                <MyFeedContainer changeProfile={changeProfile} userInfo={userInfo} />
                 <div></div>
             </section>
 
@@ -105,9 +136,6 @@ function HomePage({ userInfo, signOutUser }) {
                 <img src={microphone} alt="create post" onClick={toggleShowNewRecordingContainer}></img>
             </div>
             <CreateNewRecordingContainer userInfo={userInfo} />
-            {/* <FiltersContainer /> */}
-            {/* <MyProfileContainer toProfileView={toProfileView} userInfo={userInfo} /> */}
-            {/* <MyRecordingsContainer userInfo={userInfo} /> */}
         </div>
     );
 }
