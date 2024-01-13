@@ -1,3 +1,6 @@
+[![GitHub contributors](https://img.shields.io/github/contributors/pwc88430/CodeHubProject?style=for-the-badge)](https://github.com/pwc88430/CodeHubProject/graphs/contributors)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/pwc88430/CodeHubProject?style=for-the-badge)
+
 ## **Ditch the text, share your voice.**
 
 ![VoiceNotes](https://i.ibb.co/tH2jwfC/vox.png)
