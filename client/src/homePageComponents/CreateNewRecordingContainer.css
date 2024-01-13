@@ -1,0 +1,85 @@
+#createRecording {
+    background-color: greenyellow;
+}
+
+.visualizer {
+    width: 100%;
+    height: 100px;
+    background-color: rgb(255, 42, 0);
+}
+
+#stop {
+    padding: 10px 20px;
+}
+
+#record-buttons {
+    background-color: rgb(67, 82, 245);
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+audio::-webkit-media-controls-panel {
+    background-color: #4a90e2;
+}
+
+#uploadTrackButton {
+    background-color: rgb(119, 239, 119);
+
+    border: none;
+    border-radius: 5px;
+    margin: 0;
+    margin-left: 10px;
+}
+
+#deleteTrackButton {
+    display: block;
+    background-color: red;
+    height: fit-content;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 0;
+}
+
+#audioTrackLabel {
+    background-color: #56aeff;
+    border-radius: 20px;
+    padding: 3px 10px;
+    width: fit-content;
+    margin-bottom: 5px;
+    min-width: 10px;
+    min-height: 20px;
+    margin-top: 0;
+}
+
+.RecordingBlock {
+    background-color: rgb(61, 203, 246);
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: auto;
+    display: flex;
+    margin-top: 20px;
+}
+
+.recordingBlockComponent {
+    display: inline;
+}
+
+#recordingList {
+    margin: 0;
+    padding: 0;
+}
+
+#upload.active {
+    background-color: orange;
+    width: 8rem;
+}
+
+#discard.active {
+    background-color: red;
+    width: 5rem;
+}
+#discard.inactive {
+    background-color: rgb(120, 2, 2);
+}

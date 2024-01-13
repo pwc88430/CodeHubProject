@@ -5,13 +5,34 @@ const { bucket, app } = require("./firebaseInit");
 
 module.exports = class FirebaseStorage {
     static async requestFile(fileLocation) {
+        console.log(fileLocation);
         const file = bucket.file(fileLocation);
-        const readStream = file.createReadStream();
+        const getUrlPromise = new Promise(async (resolve, reject) => {
+            file.getSignedUrl(
+                {
+                    action: "read",
+                    expires: "01-01-2150",
+                },
+                (err, url) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(url);
+                    }
+                }
+            );
+        });
 
-        return readStream;
+        let output = null;
+        try {
+            output = await getUrlPromise;
+        } catch (err) {
+            console.error(err);
+        }
+        return output;
     }
 
-    static async uploadFile(audioObj, userName) {
+    static async uploadFile(audioObj, userName, givenTime) {
         //const blob = new Blob(audioObj, {
         // audio/mpeg (mp3)
         // type: "audio/mpeg",
@@ -22,23 +43,24 @@ module.exports = class FirebaseStorage {
         const buffer = Buffer.from(arrayBuffer);
 
         var userLocation = userName;
-        var fileName = new Date().getTime();
 
         // file from destination for Firebase Storage (there is no file there yet)
-        const file = bucket.file(`audioFiles/${userLocation}/${fileName}.mp3`);
+        const file = bucket.file(`audioFiles/${userLocation}/${givenTime}.mp3`);
 
         // create stream to destination
         const writeStream = file.createWriteStream({
             metadata: {
-                // audio/mpeg (mp3)
                 contentType: "audio/mpeg",
             },
         });
 
         // pipe buffer to stream (upload buffer to Storage)
-        writeStream.end(buffer);
+        await new Promise((resolve, reject) => {
+            writeStream.on("error", (error) => reject(error)).on("finish", () => resolve());
+            writeStream.end(buffer);
+        });
 
         // return file location so server can add it to whatever it needs
-        return `${userLocation}/${fileName}.mp3`;
+        return `${userLocation}/${givenTime}.mp3`;
     }
 };
