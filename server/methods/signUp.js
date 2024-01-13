@@ -3,6 +3,7 @@ var router = express.Router();
 var Helper = require("./other/Helper");
 
 router.post("/", async (req, res) => {
+    console.log("sign up request recieved");
     let info = req.body;
 
     if (!info.username || !info.password || !info.displayName) {
