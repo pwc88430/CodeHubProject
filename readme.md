@@ -3,11 +3,13 @@
 
 ## **Ditch the text, share your voice.**
 
-![VoiceNotes](https://i.ibb.co/tH2jwfC/vox.png)
+[![VoiceNotes](https://i.ibb.co/tH2jwfC/vox.png)](https://voicenotes.vercel.app/)
 
 # **Project Description**
 
 A simple social media app where the focus is on sharing audio instead of text or images. Features include a login system, recording audio, small recommendation feature, search for users/audio, and customizable user profile.
+
+View the project here: [https://voicenotes.vercel.app/](https://voicenotes.vercel.app/)
 
 # Built with
 
